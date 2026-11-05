@@ -49,6 +49,29 @@ def _with_retry(fn, attempts=6):
             time.sleep(min(60, 2 ** i + random.random()))
 
 
+_warned = set()
+
+
+def clean_key(names):
+    """Returns the first key found under `names`, without spaces or line breaks.
+
+    A key pasted twice, or with a line break, would otherwise make every request fail with
+    "Illegal header value". If the value has several lines, the first non-empty line is used."""
+    for name in names:
+        raw = os.environ.get(name)
+        if raw:
+            lines = [l.strip() for l in raw.replace("\r", "\n").split("\n") if l.strip()]
+            if not lines:
+                continue
+            key = lines[0].strip().strip('"').strip("'")
+            if (len(lines) > 1 or raw != raw.strip()) and name not in _warned:
+                _warned.add(name)
+                print(f"Note: {name} contained spaces or line breaks. Only the first line is used. "
+                      f"Check the value where you stored the key.", flush=True)
+            return key
+    return None
+
+
 def load_env(*folders):
     """Reads KEY=VALUE lines from a .env file into the environment (without overwriting)."""
     for folder in folders or (Path.cwd(),):
@@ -69,7 +92,7 @@ class AnthropicProvider:
 
     def __init__(self, model, max_tokens=6000, temperature=None, force_tool=False, debrief_max_tokens=4000):
         import anthropic
-        self.client = anthropic.Anthropic(max_retries=5)
+        self.client = anthropic.Anthropic(api_key=clean_key(self.key_names), max_retries=5)
         self.model, self.max_tokens, self.temperature = model, max_tokens, temperature
         self.force_tool, self.debrief_max_tokens = force_tool, debrief_max_tokens
 
@@ -126,7 +149,7 @@ class GoogleProvider:
         from google import genai
         from google.genai import types
         self.types = types
-        self.client = genai.Client()
+        self.client = genai.Client(api_key=clean_key(self.key_names))
         self.model, self.max_tokens, self.temperature = model, max_tokens, temperature
         self.debrief_max_tokens = debrief_max_tokens
 

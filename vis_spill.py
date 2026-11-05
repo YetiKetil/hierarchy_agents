@@ -21,7 +21,7 @@ L = {
            "wd": "{f} trakk tilbake forespørselen til {t}", "rej": "AVVIST {r} ({h}): {g}", "end": "Sluttkort: ",
            "chan": "Meldinger per kanal: ", "sys": "SYSTEMPROMPT FOR {r}", "turn": "{r} er på tur (runde {n})",
            "writes": "skriver", "acts": "handler", "err": "FEIL", "q": "«{x}»",
-           "utfall": {"løst": "løst", "stillstand": "stillstand", "tidsgrense": "tidsgrense"}},
+           "utfall": {"løst": "løst", "stillstand": "stillstand", "tidsgrense": "tidsgrense", "api_feil": "API-feil"}},
     "en": {"head": "Condition: {b}   seed: {s}   outcome: {u} after {r} rounds", "start": "Starting hands: ",
            "round": "=== Round {n} ===   shortfall {a} → {b}   complete hands: {k}", "hands": "Hands at start: ",
            "thinks": "thinks", "lost": " [LOST]", "cut": " [truncated]", "req": "{f} asks {t} for {n} card(s), offering {k}",
@@ -29,7 +29,7 @@ L = {
            "wd": "{f} withdrew the request to {t}", "rej": "REJECTED {r} ({h}): {g}", "end": "Final cards: ",
            "chan": "Messages per channel: ", "sys": "SYSTEM PROMPT FOR {r}", "turn": "{r}'s turn (round {n})",
            "writes": "writes", "acts": "acts", "err": "ERROR", "q": "“{x}”",
-           "utfall": {"løst": "solved", "stillstand": "standstill", "tidsgrense": "time limit"}},
+           "utfall": {"løst": "solved", "stillstand": "standstill", "tidsgrense": "time limit", "api_feil": "API error"}},
 }
 
 

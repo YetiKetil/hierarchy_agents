@@ -37,12 +37,16 @@ UT = {
            "ferdig": "{e} FERDIG: {utfall} etter {r} runder, {m} meldinger, {b} bytter. Sluttkort: {kort}",
            "lagret": "Lagret {fil}  ({utfall}, {r} runder, {b} bytter, {k} API-kall{x})", "avkuttet": ", {n} avkuttede svar",
            "forhistorie": "{navn}: bruker forhistorie fra {fil} ({innhold})",
-           "utfall": {"løst": "løst", "stillstand": "stillstand", "tidsgrense": "tidsgrense"}},
+           "apifeil": "{e} API-FEIL for {r}: {feil}",
+           "apistopp": "{e} Alle API-kall feilet i to runder på rad. Spillet stoppes. Sjekk modellnavnet og API-nøkkelen.",
+           "utfall": {"løst": "løst", "stillstand": "stillstand", "tidsgrense": "tidsgrense", "api_feil": "API-feil"}},
     "en": {"status": "{e} round {n:>2} | active {a:<7} | messages {m} | swaps {b} | rejected {v} | shortfall {u:>2} | complete {k}",
            "ferdig": "{e} FINISHED: {utfall} after {r} rounds, {m} messages, {b} swaps. Final cards: {kort}",
            "lagret": "Saved {fil}  ({utfall}, {r} rounds, {b} swaps, {k} API calls{x})", "avkuttet": ", {n} truncated answers",
            "forhistorie": "{navn}: using history from {fil} ({innhold})",
-           "utfall": {"løst": "solved", "stillstand": "standstill", "tidsgrense": "time limit reached"}},
+           "apifeil": "{e} API ERROR for {r}: {feil}",
+           "apistopp": "{e} Every API call failed in two rounds in a row. Stopping the game. Check the model name and your API key.",
+           "utfall": {"løst": "solved", "stillstand": "standstill", "tidsgrense": "time limit reached", "api_feil": "API error"}},
 }
 
 
@@ -146,6 +150,7 @@ def kjor_spill(cfg, seed, klient=None, modus="llm", stille=False):
     tokens = {r: Counter() for r in spill.roller}
     perspektiv = {r: [] for r in spill.roller}
     etikett = f"[{cfg['navn']} s{seed:03d}]"
+    sette_feil, feilrunder = set(), 0
 
     with ThreadPoolExecutor(max_workers=cfg.get("samtidige_kall") or len(spill.roller)) as pool:
         while not spill.ferdig:
@@ -161,6 +166,13 @@ def kjor_spill(cfg, seed, klient=None, modus="llm", stille=False):
                                   "feil": int(bool(info["feil"])), "avkuttet": info.get("avkuttet", 0)})
                 perspektiv[r].append({"runde": spill.runde, "prompt": prompts[r], "handling": h,
                                       "tekst": info["tekst"], "feil": info["feil"], "stopp": info.get("stopp")})
+            feil_runde = [(r, perspektiv[r][-1]["feil"]) for r in aktive if perspektiv[r][-1]["feil"]]
+            for r, feil in feil_runde:
+                if feil not in sette_feil:          # vis hver ulike feil én gang
+                    sette_feil.add(feil)
+                    print(ut(cfg, "apifeil").format(e=etikett, r=r, feil=str(feil)[:500]), flush=True)
+            alle_feilet = bool(aktive) and len(feil_runde) == len(aktive)
+            feilrunder = feilrunder + 1 if alle_feilet else 0
             spill.behandle_runde(handlinger)
             if not stille:
                 siste = spill.runder_logg[-1]
@@ -168,9 +180,12 @@ def kjor_spill(cfg, seed, klient=None, modus="llm", stille=False):
                 print(ut(cfg, "status").format(e=etikett, n=siste["runde"], a="".join(aktive), m=typer["melding"],
                                                b=typer["bytte"], v=typer["avvist"], u=siste["uorden_etter"],
                                                k=siste["komplette_hender"]), flush=True)
+            if feilrunder >= 2 and not spill.ferdig:
+                print(ut(cfg, "apistopp").format(e=etikett), flush=True)
+                spill.avslutt("api_feil")
 
         debrief = {}
-        if cfg.get("debrief", {}).get("aktiv") and modus != "fasit":
+        if cfg.get("debrief", {}).get("aktiv") and modus != "fasit" and spill.utfall != "api_feil":
             framtid = {r: pool.submit(agenter[r].debrief, system[r], debrief_prompt(spill, r)) for r in spill.roller}
             for r, f in framtid.items():
                 tekst, info = f.result()
