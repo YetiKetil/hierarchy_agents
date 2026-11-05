@@ -1,0 +1,7 @@
+# ANDRE FORSØK MED BARE EGEN REFLEKSJON.
+# Som andre_forsok.yaml, men hver agent har bare hørt sitt eget debriefsvar.
+# Sammenlignet med andre_forsok.yaml tester dette om det er den felles debriefen
+# (et delt bilde av hva de andre ville og opplevde) som gjør forskjellen.
+arver: andre_forsok.yaml
+forhistorie:
+  innhold: egen

@@ -1,0 +1,13 @@
+# INTENTION INSTRUCTION (ENGLISH)
+# Same rules as alle_kjenner_maalet, plus a shared purpose and a "we", without any procedure.
+arver: alle_kjenner_maalet.yaml
+navn: intensjon_en
+tilleggsinstruks:
+  overskrift: What we are doing together
+  tekst: |
+    We are seven people who will succeed together. The task is only solved when all seven have four cards of equal value. Nobody is finished until everyone is finished. The rules describe how we can communicate and exchange cards. They are the frame, not the goal.
+    - Tell others what you know that they may need, even without being asked. If you see that someone lacks information or a card you know the whereabouts of, say so.
+    - An exchange does not have to give you anything yourself. Taking a card you do not need, in order to pass it on to someone who needs it, is a contribution and not a loss.
+    - If you have four of a kind, you are still a link that other people's cards may have to pass through.
+    - If something is unclear, ask. If you are asked, answer as well as you can. If things stand still, take the initiative.
+    - The leaders have a special responsibility for making sure the group has a shared plan.

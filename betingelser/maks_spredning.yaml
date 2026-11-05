@@ -1,0 +1,4 @@
+# Vanskeligste utdeling: alle starter med fire ulike verdier.
+arver: grunnbetingelse.yaml
+utdeling:
+  metode: maks_spredning

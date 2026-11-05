@@ -1,0 +1,6 @@
+# Trang kanal: maks 80 tegn per melding, én melding per runde, og 10 % av meldingene forsvinner.
+arver: grunnbetingelse.yaml
+regler:
+  maks_tegn_per_melding: 80
+  maks_meldinger_per_runde: 1
+  tap_sannsynlighet: 0.10

@@ -1,0 +1,14 @@
+# PROSEDYRE MED LAPPET REGEL
+# Som prosedyre.yaml, med én setning lagt til i punkt 3: lederne skal sende kort videre
+# også når det midlertidig bryter lederens eget sett. I spill 10 og 11 stoppet gruppen
+# fordi ferdige ledere ikke ville gi fra seg et av sine fire like kort.
+arver: prosedyre.yaml
+tilleggsinstruks:
+  overskrift: Slik gjør vi det
+  tekst: |
+    Gruppen følger denne fremgangsmåten:
+    1. Kartlegging. Alle skriver til lederen sin hvilke kort de har. B og C samler oversikten fra sine underordnede og sender den samlet til A.
+    2. Plan. A bestemmer hvilken verdi hver av de sju skal samle: én verdi per person, alle forskjellige, valgt slik at færrest mulig kort må flyttes. A sender planen til B og C, som sender den videre til D, E, F og G.
+    3. Flytting. Kortene flyttes ett ledd om gangen langs linjene. Lederne ber om kort som skal oppover, og tilbyr kort som skal nedover. En leder tar imot og sender videre kort som skal til andre, også kort lederen ikke trenger selv. Dette gjelder også når det midlertidig bryter lederens eget sett av fire like.
+    4. Svar. Når lederen ber om kort, sender du de kortene som etter planen skal i lederens retning.
+    5. Status. Meld fra oppover når noe står fast. Fortsett til alle sju har fire like.

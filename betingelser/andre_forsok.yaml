@@ -1,0 +1,15 @@
+# ANDRE FORSØK: som i menneskeversjonen.
+# Gruppen har gjennomført grunnbetingelsen én gang og hatt en felles debrief.
+# Nå kjenner alle målet, og alle har hørt alles debriefsvar fra forrige gang.
+# Kjør med en annen seed enn forrige spill, f.eks. --seed 2.
+arver: alle_kjenner_maalet.yaml
+forhistorie:
+  kilde: logger/grunnbetingelse     # det nyeste spillet i denne mappen
+  innhold: plenum
+debrief:
+  sporsmal:
+    - Hva tror du oppgaven gikk ut på?
+    - Hvordan opplevde du kommunikasjonen med dem du kunne skrive til?
+    - Hva hindret gruppen mest?
+    - Hva ville du gjort annerledes?
+    - Hva gjorde du annerledes enn forrige gang, og hvorfor?

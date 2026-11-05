@@ -1,0 +1,90 @@
+# GRUNNBETINGELSE
+# Øvelsen slik den er beskrevet i originalinstruksjonene. Alle andre betingelser
+# arver herfra og endrer bare det de skal teste.
+
+navn: grunnbetingelse
+sprak: no                       # no = norsk, en = engelsk (se mappen betingelser/en)
+
+# --- Modeller --------------------------------------------------------------
+modell: claude-haiku-5-5        # standard for alle roller (kan overstyres per rolle under «roller»)
+                                # Gemini: f.eks. gemini-3.5-flash-lite eller gemini-3.8-flash
+leverandor: null                # anthropic | google; null = gjettes ut fra modellnavnet
+samtidige_kall: null            # maks samtidige API-kall per spill; sett 1–2 ved strenge grenser (gratisnivå)
+maks_tokens: 6000               # øvre grense per svar (var 1500 i spill 1–5, og det kuttet svar)
+temperatur: null                # null = modellens standard
+tving_verktoybruk: false        # true = tvinger verktøykall (støttes ikke av alle modeller)
+
+# --- Spillets rammer -------------------------------------------------------
+maks_runder: 60                 # var 40 i spill 1–5
+agentene_kan_vente: true        # agenter kan be om å ikke bli kalt før noe nytt skjer (sparer kall)
+vis_tidsgrense: true            # agentene ser «Runde n av 60» (nytt etter spill 5)
+vekk_alle_hver: 5               # alle kalles opp hver 5. runde med en påminnelse om tiden (null = av)
+stillstand_etter_tomme_runder: 5   # spillet stopper etter så mange runder uten meldinger, forespørsler
+                                   # eller bytter (null = av). Den som har en ubesvart kortforespørsel,
+                                   # kalles alltid opp.
+hukommelse_runder: null         # null = hele historikken; f.eks. 5 = bare de siste 5 rundene
+
+utdeling:
+  metode: tilfeldig             # tilfeldig | maks_spredning | manuell
+  # Ved «manuell»: oppgi hendene, fire av hver verdi totalt:
+  # hender:
+  #   A: [ess, ess, konge, dame]
+  #   ...
+
+struktur:
+  leder_av: {B: A, C: A, D: B, E: B, F: C, G: C}
+  sidekanaler: []               # f.eks. [[B, C]] gir B og C lov til å skrive til hverandre
+
+regler:
+  maks_kort_per_bytte: 2
+  underordnet_kan_be_om_bytte: false   # originalen: bare lederen kan be om kort
+  kortomtale_oppover: fritt            # fritt = agentene tolker «ikke vise kortene» selv
+                                       # blokkert = motoren stopper meldinger til lederen som nevner kortverdier
+  maks_tegn_per_melding: null
+  maks_meldinger_per_runde: null
+  tap_sannsynlighet: 0.0               # sannsynlighet for at en melding forsvinner sporløst
+
+# --- Instruksjonen alle får ------------------------------------------------
+# Oversatt fra originalen (HIERARCHY.doc / HIERARCHYA.doc, J.K. Arnulf):
+#   "Your group consists of 7 persons in the following organizational structure:
+#    B and C report to A and are allowed to exchange written information with him/her but not with each other.
+#    D and E report to B, and are allowed to contact him/her by written messages. F and G are in the same way
+#    allowed to contact C. No other form of communication is allowed.
+#    You may not show your cards to your leader. If he/she asks you to send cards, you may do so, but maximally
+#    2 cards at the time, provided you receive the same number in return. Nobody is allowed to possess more
+#    than 4 cards simultaneously, except from the moment when you are exchanging."
+#   A-versjonen har i tillegg: "The task is accomplished when all members have 4 cards of equal value."
+instruks: |
+  Gruppen din består av 7 personer i følgende organisasjonsstruktur:
+  B og C rapporterer til A og har lov til å utveksle skriftlig informasjon med ham/henne, men ikke med hverandre.
+  D og E rapporterer til B og har lov til å kontakte ham/henne med skriftlige meldinger. F og G har på samme måte lov til å kontakte C. Ingen annen form for kommunikasjon er tillatt.
+  Du får ikke vise kortene dine til lederen din. Hvis han/hun ber deg sende kort, kan du gjøre det, men maksimalt 2 kort om gangen, og bare hvis du får like mange tilbake. Ingen kan ha mer enn 4 kort samtidig, bortsett fra i øyeblikket da man bytter.
+
+maal_tekst: Oppgaven er løst når alle medlemmene har 4 kort av samme verdi.
+maal_kjent_for: [A]
+
+# --- Per-rolle-overstyringer -------------------------------------------------
+# Eksempel:
+# roller:
+#   A:
+#     modell: claude-opus-5-5
+#     tillegg: "Tekst om personlighet eller lederstil som legges til A sin instruks."
+roller: {}
+
+# --- Forhistorie: et tidligere spill som agentene «husker» --------------------
+# kilde: en loggfil eller en loggmappe (da brukes det nyeste spillet i mappen).
+# innhold: plenum = alle hører alles debriefsvar; egen = hver agent får bare sitt eget svar.
+# Bruk en annen seed enn i det tidligere spillet, ellers kjenner agentene igjen kortene.
+forhistorie:
+  kilde: null
+  innhold: plenum
+
+# --- Debrief etter spillet ----------------------------------------------------
+debrief:
+  aktiv: true
+  maks_tokens: 4000             # egen grense, så svarene ikke kuttes midt i en setning
+  sporsmal:
+    - Hva tror du oppgaven gikk ut på?
+    - Hvordan opplevde du kommunikasjonen med dem du kunne skrive til?
+    - Hva hindret gruppen mest?
+    - Hva ville du gjort annerledes?

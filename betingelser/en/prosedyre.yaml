@@ -1,0 +1,13 @@
+# PROCEDURE INSTRUCTION (ENGLISH)
+# Same rules as alle_kjenner_maalet, plus a fixed procedure: a recipe, not a purpose.
+arver: alle_kjenner_maalet.yaml
+navn: prosedyre_en
+tilleggsinstruks:
+  overskrift: How we do it
+  tekst: |
+    The group follows this procedure:
+    1. Mapping. Everyone writes to their leader which cards they have. B and C collect the overview from their subordinates and send it, combined, to A.
+    2. Plan. A decides which value each of the seven will collect: one value per person, all different, chosen so that as few cards as possible have to be moved. A sends the plan to B and C, who pass it on to D, E, F and G.
+    3. Moving. Cards are moved one link at a time along the lines. Leaders ask for cards that are to go upwards and offer cards that are to go downwards. A leader receives and passes on cards meant for others, including cards the leader does not need.
+    4. Replies. When your leader asks for cards, send the cards that according to the plan are to go in your leader's direction.
+    5. Status. Report upwards when something is stuck. Continue until all seven have four of a kind.

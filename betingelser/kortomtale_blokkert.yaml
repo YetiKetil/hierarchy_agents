@@ -1,0 +1,5 @@
+# Streng tolkning av «du får ikke vise kortene dine til lederen din»:
+# motoren stopper meldinger oppover som nevner kortverdier.
+arver: grunnbetingelse.yaml
+regler:
+  kortomtale_oppover: blokkert

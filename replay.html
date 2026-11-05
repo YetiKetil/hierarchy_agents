@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>HIERARKI – avspilling</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Fraunces:opsz,wght@9..144,500;9..144,700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F3F5F3; --flate: #FFFFFF; --tekst: #18231F; --dempet: #5C6A64; --linje: #D3DCD7;
+  --filt: #1F4D3A; --filt-dyp: #163828; --filt-linje: #6F9483; --rod: #B8323A; --gull: #C9A13B;
+  --rod-lys: #F6E3E4; --gull-lys: #F7EED6; --kort: #FFFFFF; --kort-tekst: #18231F; --node: #2A5E47;
+  --skala: 1;
+  color-scheme: light;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0F1714; --flate: #17221D; --tekst: #E6ECE8; --dempet: #9FB0A8; --linje: #2C3B34;
+    --filt: #173B2C; --filt-dyp: #0F2A1F; --filt-linje: #5E8573; --rod: #E0646B; --gull: #D9B451;
+    --rod-lys: #3A2124; --gull-lys: #3A3220; --node: #21493A; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0F1714; --flate: #17221D; --tekst: #E6ECE8; --dempet: #9FB0A8; --linje: #2C3B34;
+  --filt: #173B2C; --filt-dyp: #0F2A1F; --filt-linje: #5E8573; --rod: #E0646B; --gull: #D9B451;
+  --rod-lys: #3A2124; --gull-lys: #3A3220; --node: #21493A; color-scheme: dark;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { height: 100%; font-size: calc(16px * var(--skala)); scroll-padding-top: env(safe-area-inset-top, 0px); }
+body {
+  margin: 0; min-height: 100%; background: var(--bg); color: var(--tekst);
+  font-family: "Atkinson Hyperlegible", "Segoe UI", Helvetica, Arial, sans-serif; line-height: 1.45;
+}
+button, select, input { font: inherit; color: inherit; }
+button {
+  background: var(--flate); border: 1px solid var(--linje); border-radius: 8px; padding: .45rem .8rem; cursor: pointer;
+}
+button:hover { border-color: var(--filt-linje); }
+button:focus-visible, select:focus-visible, input:focus-visible, .spor:focus-visible { outline: 3px solid var(--gull); outline-offset: 2px; }
+button.hoved { background: var(--filt); color: #fff; border-color: var(--filt); min-width: 7.5rem; }
+select { background: var(--flate); border: 1px solid var(--linje); border-radius: 8px; padding: .4rem .6rem; max-width: 100%; }
+
+header.topp {
+  display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1rem; padding: .9rem 1.2rem;
+  border-bottom: 1px solid var(--linje); background: var(--flate);
+}
+header.topp h1 { font-family: Fraunces, Georgia, serif; font-weight: 700; font-size: 1.35rem; margin: 0; letter-spacing: .01em; }
+header.topp .fyll { flex: 1; }
+.valg { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; min-width: 0; max-width: 100%; }
+#velgLogg { min-width: 0; width: 34rem; max-width: 100%; text-overflow: ellipsis; }
+@media (max-width: 700px) { .valg { width: 100%; } #velgLogg { width: 100%; } }
+.skjult { display: none !important; }
+.feil { background: var(--rod-lys); border-left: 4px solid var(--rod); padding: .6rem .9rem; border-radius: 8px; margin: 0 0 1rem; }
+
+main { max-width: 1500px; margin: 0 auto; padding: 1rem 1.2rem 2rem; }
+.tom {
+  margin: 3rem auto; max-width: 38rem; text-align: center; padding: 2.5rem 1.5rem; border: 2px dashed var(--filt-linje);
+  border-radius: 16px; background: var(--flate);
+}
+.tom h2 { font-family: Fraunces, Georgia, serif; margin: 0 0 .5rem; font-size: 1.5rem; }
+.tom p { color: var(--dempet); margin: .4rem 0 1.2rem; }
+body.drar .tom, body.drar .scene { outline: 3px dashed var(--gull); outline-offset: 6px; }
+
+.sammendrag { margin: 0 0 .9rem; font-size: 1.05rem; }
+.sammendrag strong { font-family: Fraunces, Georgia, serif; font-size: 1.25rem; }
+.scene { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 1rem; align-items: start; }
+@media (max-width: 900px) { .scene { grid-template-columns: 1fr; } }
+
+.bord {
+  background: radial-gradient(ellipse at 50% 35%, var(--filt) 0%, var(--filt-dyp) 100%);
+  border-radius: 18px; padding: .6rem; color: #F4F7F5; position: relative;
+}
+.bord svg { display: block; width: 100%; height: auto; }
+.rundeskilt {
+  position: absolute; left: 1rem; top: .7rem; font-family: Fraunces, Georgia, serif; font-size: 1.3rem; font-weight: 700;
+}
+.rundeskilt small { display: block; font-family: "Atkinson Hyperlegible", sans-serif; font-weight: 400; font-size: .85rem; opacity: .8; }
+
+.logg {
+  background: var(--flate); border: 1px solid var(--linje); border-radius: 14px; padding: .8rem;
+  max-height: 72vh; overflow-y: auto;
+}
+.logg h2 { font-family: Fraunces, Georgia, serif; font-size: 1.15rem; margin: .1rem .2rem .6rem; }
+.hendelse { padding: .55rem .7rem; border-radius: 10px; margin-bottom: .45rem; border-left: 4px solid transparent; opacity: .72; }
+.hendelse.na { opacity: 1; background: var(--rod-lys); border-left-color: var(--rod); }
+.hendelse.na.bytte { background: var(--gull-lys); border-left-color: var(--gull); }
+.hendelse .hvem { font-weight: 700; font-size: .92rem; }
+.hendelse .tekst { font-size: 1.12rem; margin-top: .15rem; overflow-wrap: anywhere; }
+.hendelse.na .tekst { font-size: 1.3rem; }
+.hendelse.system .tekst { font-size: 1rem; color: var(--dempet); }
+.merke { display: inline-block; font-size: .78rem; padding: .05rem .45rem; border-radius: 99px; border: 1px solid var(--linje); margin-left: .3rem; font-weight: 400; }
+.tanker { border: 1px solid var(--linje); border-radius: 10px; padding: .5rem .7rem; margin-bottom: .7rem; }
+.tanker summary { cursor: pointer; font-weight: 700; }
+.tanke { margin: .45rem 0; font-size: .98rem; color: var(--dempet); }
+.tanke b { color: var(--tekst); }
+.stille { color: var(--dempet); font-style: italic; padding: .3rem .4rem; }
+
+.kontroller {
+  display: flex; flex-wrap: wrap; align-items: center; gap: .5rem .8rem; margin-top: 1rem; padding: .8rem;
+  background: var(--flate); border: 1px solid var(--linje); border-radius: 14px;
+}
+.kontroller label { display: flex; align-items: center; gap: .4rem; color: var(--dempet); }
+.spor { flex: 1 1 22rem; min-width: 14rem; cursor: pointer; }
+.spor svg { width: 100%; height: 56px; display: block; }
+.hjelp { color: var(--dempet); font-size: .85rem; margin-top: .5rem; }
+
+dialog {
+  border: none; border-radius: 16px; padding: 0; max-width: min(56rem, 94vw); width: 100%;
+  background: var(--flate); color: var(--tekst);
+}
+dialog::backdrop { background: rgba(10, 20, 15, .55); }
+dialog .innhold { padding: 1.2rem 1.4rem; max-height: 80vh; overflow-y: auto; }
+dialog h2 { font-family: Fraunces, Georgia, serif; margin: 0 0 .8rem; }
+dialog h3 { font-family: Fraunces, Georgia, serif; margin: 1.1rem 0 .3rem; font-size: 1.1rem; }
+dialog .debrieftekst { white-space: pre-wrap; font-size: 1.02rem; }
+dialog footer { padding: .8rem 1.4rem; border-top: 1px solid var(--linje); text-align: right; }
+
+@keyframes puls { from { stroke-dashoffset: 40; } to { stroke-dashoffset: 0; } }
+.aktiv-linje { stroke-dasharray: 14 6; animation: puls .9s linear infinite; }
+@media (prefers-reduced-motion: reduce) { .aktiv-linje { animation: none; stroke-dasharray: none; } }
+</style>
+</head>
+<body>
+<header class="topp">
+  <h1 id="tittel">Avspilling av HIERARKI</h1>
+  <div class="fyll"></div>
+  <div class="valg">
+    <select id="velgLogg" class="skjult" aria-label="Logg"></select>
+    <button id="apne" type="button">Åpne logger</button>
+    <input id="filer" type="file" accept=".json,application/json" multiple class="skjult">
+    <button id="sprak" type="button" aria-label="Language">English</button>
+    <button id="storTekst" type="button" aria-pressed="false">Stor tekst</button>
+  </div>
+</header>
+
+<main>
+  <p id="feilmelding" class="feil skjult" role="alert"></p>
+  <section id="tom" class="tom">
+    <h2 id="tomTittel">Ingen logg er åpnet ennå</h2>
+    <p id="tomTekst">Velg én eller flere loggfiler fra mappen «logger» i hierarki-mappen, eller slipp dem her. Filene slutter på .json.</p>
+    <button id="apne2" type="button" class="hoved">Åpne logger</button>
+  </section>
+
+  <section id="visning" class="skjult">
+    <p class="sammendrag" id="sammendrag"></p>
+    <div class="scene">
+      <div class="bord">
+        <div class="rundeskilt" id="rundeskilt"></div>
+        <svg id="kart" viewBox="0 0 1000 640" role="img" aria-label="Organisasjonskart"></svg>
+      </div>
+      <div class="logg" id="logg" aria-live="polite"></div>
+    </div>
+    <div class="kontroller">
+      <button id="forrigeRunde" type="button">⏮ <span data-t="forrigeRunde">Forrige runde</span></button>
+      <button id="stegTilbake" type="button">◀ <span data-t="stegTilbake">Ett steg tilbake</span></button>
+      <button id="spill" type="button" class="hoved">Spill av</button>
+      <button id="stegFram" type="button"><span data-t="stegFram">Ett steg fram</span> ▶</button>
+      <button id="nesteRunde" type="button"><span data-t="nesteRunde">Neste runde</span> ⏭</button>
+      <div class="spor" id="spor" tabindex="0" role="slider" aria-valuemin="0"></div>
+      <label><span data-t="tempo">Tempo</span> <input id="tempo" type="range" min="0.4" max="3" step="0.1" value="1.4"></label>
+      <label><input id="visTanker" type="checkbox"> <span data-t="visTanker">Vis tanker</span></label>
+      <label><span data-t="folg">Følg</span> <select id="folg"></select></label>
+      <button id="debriefKnapp" type="button" data-t="debrief">Debrief</button>
+    </div>
+    <p class="hjelp" id="hjelp"></p>
+  </section>
+</main>
+
+<dialog id="debrief">
+  <div class="innhold" id="debriefInnhold"></div>
+  <footer><button id="lukk" type="button" data-t="lukk">Lukk</button></footer>
+</dialog>
+
+<script>
+(function () {
+  "use strict";
+
+  // ---------------------------------------------------------------- tekster
+  const T = {
+    no: {
+      tittel: "Avspilling av HIERARKI", apne: "Åpne logger", sprakKnapp: "English", storTekst: "Stor tekst",
+      tomTittel: "Ingen logg er åpnet ennå",
+      tomTekst: "Velg én eller flere loggfiler fra mappen «logger» i hierarki-mappen, eller slipp dem her. Filene slutter på .json.",
+      forrigeRunde: "Forrige runde", stegTilbake: "Ett steg tilbake", stegFram: "Ett steg fram", nesteRunde: "Neste runde",
+      spill: "Spill av", pause: "Pause", tempo: "Tempo", visTanker: "Vis tanker", folg: "Følg", alle: "Alle",
+      debrief: "Debrief", lukk: "Lukk", runde: "Runde", av: "av", slutt: "Slutt",
+      engelskKjort: " (kjørt på engelsk)", oversattMerke: ", oversatt til engelsk",
+      hjelp: "Mellomrom spiller av og setter på pause. Piltastene går ett steg fram eller tilbake, og med Shift en hel runde.",
+      toppsjef: "Toppsjef", mellomleder: "Mellomleder", medarbeider: "Medarbeider", venter: "venter", fireLike: "fire like",
+      tankerTittel: "Hva agentene tenkte i denne runden", ingenHendelser: "Ingen meldinger, forespørsler eller bytter i denne runden.",
+      trykkFram: "Trykk «Ett steg fram» eller «Spill av» for å se hva som skjer i runden.",
+      tapt: "forsvant underveis", avkortet: "avkortet", ikkeAktiv: "Ikke kalt opp denne runden",
+      ingenDebrief: "Denne loggen har ingen debrief.", debriefTittel: "Debrief etter spillet",
+      feil: (f) => `Kunne ikke lese ${f}. Velg en loggfil fra mappen «logger».`,
+      utfall: { "løst": "Oppgaven ble løst", "stillstand": "Spillet stoppet i stillstand", "tidsgrense": "Tidsgrensen ble nådd" },
+      sammendrag: (b, seed, u, r, by, m) => `<strong>${b}</strong><br>Kortutdeling ${seed}. ${u} etter ${r} runder, med ${by} kortbytter og ${m} meldinger.`,
+      sluttTekst: (u, f) => `${u}. ${f}`,
+      ferdige: (n) => n === 7 ? "Alle sju har fire like kort." : n === 0 ? "Ingen har fire like kort." : `${n} av sju har fire like kort.`,
+      melding: "skriver til", foresporsel: (f, t, n, k) => `${f} ber ${t} om ${n} kort og tilbyr ${k}.`,
+      bytte: (f, t, a, b) => `Bytte mellom ${f} og ${t}. ${f} ga ${a}, ${t} ga ${b}.`,
+      avslag: (f, t) => `${t} avslo forespørselen fra ${f}.`, trukket: (f, t) => `${f} trakk tilbake forespørselen til ${t}.`,
+      avvist: (r, h, g) => `Motoren stoppet ${r} (${h}): ${g}`, og: "og",
+      kort: { ess: "ess", konge: "konge", dame: "dame", knekt: "knekt", tier: "tier", nier: "nier", "åtter": "åtter" },
+      betingelser: {
+        grunnbetingelse: "Grunnbetingelsen: bare A kjenner målet", alle_kjenner_maalet: "Alle kjenner målet",
+        intensjon: "Intensjonsinstruks", prosedyre: "Prosedyreinstruks", andre_forsok: "Andre forsøk, felles debrief",
+        andre_forsok_egen: "Andre forsøk, egen debrief", prosedyre_lappet: "Prosedyre med lappet regel", FASIT: "Fasit (algoritme med full oversikt)", TEST: "Test med tilfeldige agenter",
+      },
+    },
+    en: {
+      tittel: "HIERARCHY replay", apne: "Open logs", sprakKnapp: "Norsk", storTekst: "Large text",
+      tomTittel: "No log is open yet",
+      tomTekst: "Choose one or more log files from the “logger” folder inside the hierarki folder, or drop them here. The files end in .json.",
+      forrigeRunde: "Previous round", stegTilbake: "One step back", stegFram: "One step forward", nesteRunde: "Next round",
+      spill: "Play", pause: "Pause", tempo: "Speed", visTanker: "Show thoughts", folg: "Follow", alle: "Everyone",
+      debrief: "Debrief", lukk: "Close", runde: "Round", av: "of", slutt: "End",
+      engelskKjort: " (run in English)", oversattMerke: ", translated from Norwegian",
+      hjelp: "Space plays and pauses. The arrow keys step forward or back, and with Shift a whole round.",
+      toppsjef: "Top manager", mellomleder: "Middle manager", medarbeider: "Employee", venter: "waiting", fireLike: "four of a kind",
+      tankerTittel: "What the agents were thinking this round", ingenHendelser: "No messages, requests or swaps this round.",
+      trykkFram: "Press “One step forward” or “Play” to see what happens in this round.",
+      tapt: "lost on the way", avkortet: "truncated", ikkeAktiv: "Not called this round",
+      ingenDebrief: "This log has no debrief.", debriefTittel: "Debrief after the game",
+      feil: (f) => `Could not read ${f}. Choose a log file from the “logger” folder.`,
+      utfall: { "løst": "The task was solved", "stillstand": "The game came to a standstill", "tidsgrense": "The time limit was reached" },
+      sammendrag: (b, seed, u, r, by, m) => `<strong>${b}</strong><br>Card deal ${seed}. ${u} after ${r} rounds, with ${by} card swaps and ${m} messages.`,
+      sluttTekst: (u, f) => `${u}. ${f}`,
+      ferdige: (n) => n === 7 ? "All seven have four of a kind." : n === 0 ? "Nobody has four of a kind." : `${n} of seven have four of a kind.`,
+      melding: "writes to", foresporsel: (f, t, n, k) => `${f} asks ${t} for ${n} card${n > 1 ? "s" : ""}, offering ${k}.`,
+      bytte: (f, t, a, b) => `Swap between ${f} and ${t}. ${f} gave ${a}, ${t} gave ${b}.`,
+      avslag: (f, t) => `${t} declined the request from ${f}.`, trukket: (f, t) => `${f} withdrew the request to ${t}.`,
+      avvist: (r, h, g) => `The engine blocked ${r} (${h}): ${g}`, og: "and",
+      kort: { ess: "ace", konge: "king", dame: "queen", knekt: "jack", tier: "ten", nier: "nine", "åtter": "eight" },
+      betingelser: {
+        grunnbetingelse: "Baseline: only A knows the goal", alle_kjenner_maalet: "Everyone knows the goal",
+        intensjon: "Intention instruction", prosedyre: "Procedure instruction", andre_forsok: "Second attempt, shared debrief",
+        andre_forsok_egen: "Second attempt, own debrief", prosedyre_lappet: "Procedure with patched rule", FASIT: "Answer key (algorithm with full overview)", TEST: "Test with random agents",
+      },
+    },
+  };
+  const VERDIER = ["ess", "konge", "dame", "knekt", "tier", "nier", "åtter"];
+  const FARGE = { ess: "#B8323A", konge: "#2F5D8A", dame: "#7A3E8E", knekt: "#2E7D5B", tier: "#B26B1F", nier: "#4A6B78", "åtter": "#8A6D1F" };
+
+  // ---------------------------------------------------------------- tilstand
+  let sprak = "no";
+  try {
+    const lagret = localStorage.getItem("hierarki-sprak");
+    const nettleser = (navigator.language || "").toLowerCase();
+    sprak = lagret || (/^(nb|nn|no)/.test(nettleser) ? "no" : "en");
+  } catch (e) { sprak = "no"; }
+  const logger = [];
+  let L = null, roller = [], leder = {}, pos = {}, kanter = [];
+  let r = 0, steg = 0, spiller = false, tidtaker = null, folg = "alle";
+  const $ = (id) => document.getElementById(id);
+  const t = () => T[sprak];
+
+  // ---------------------------------------------------------------- lasting
+  function apneFiler(filer) {
+    const liste = Array.from(filer || []).filter((f) => /\.json$/i.test(f.name));
+    if (!liste.length) return;
+    let gjenstar = liste.length;
+    liste.forEach((fil) => {
+      const leser = new FileReader();
+      leser.onload = () => {
+        try {
+          const data = JSON.parse(leser.result);
+          if (!data.runder || !data.start_hender || !data.konfig) throw new Error("format");
+          logger.push({ navn: fil.name, data });
+        } catch (e) { visFeil(t().feil(fil.name)); }
+        if (--gjenstar === 0) oppdaterLoggvalg(logger.length - 1);
+      };
+      leser.readAsText(fil);
+    });
+  }
+  function visFeil(tekst) {
+    const el = $("feilmelding");
+    el.textContent = tekst; el.classList.remove("skjult");
+    clearTimeout(visFeil.t); visFeil.t = setTimeout(() => el.classList.add("skjult"), 8000);
+  }
+  function oppdaterLoggvalg(velg) {
+    const sel = $("velgLogg");
+    sel.innerHTML = "";
+    logger.forEach((l, i) => {
+      const o = document.createElement("option");
+      o.value = i;
+      o.textContent = `${betingelseNavn(l.data.betingelse)}${merke(l.data)}, seed ${l.data.seed} (${l.navn})`;
+      sel.appendChild(o);
+    });
+    sel.classList.toggle("skjult", logger.length === 0);
+    if (logger.length) { sel.value = velg; velgLogg(velg); }
+  }
+  function betingelseNavn(b) {
+    const navn = t().betingelser;
+    let s = b || "";
+    const m = /^(FASIT|TEST)-(.*)$/.exec(s);
+    if (m) return `${navn[m[1]]}`;
+    const engelsk = /_en$/.test(s);
+    if (engelsk) s = s.slice(0, -3);
+    return (navn[s] || s) + (engelsk ? t().engelskKjort : "");
+  }
+  const merke = (data) => (data && data.oversatt ? t().oversattMerke : "");
+
+  // ---------------------------------------------------------------- struktur
+  function velgLogg(i) {
+    stopp();
+    L = logger[i].data;
+    leder = Object.assign({}, L.konfig.struktur.leder_av);
+    roller = Array.from(new Set([...Object.keys(leder), ...Object.values(leder)])).sort();
+    const dybde = (x) => { let d = 0; while (leder[x]) { x = leder[x]; d++; } return d; };
+    const nivaer = {};
+    roller.forEach((x) => { (nivaer[dybde(x)] = nivaer[dybde(x)] || []).push(x); });
+    // rekkefølge på hvert nivå følger foreldrene, så linjene ikke krysser
+    const rekke = {};
+    Object.keys(nivaer).sort().forEach((d) => {
+      nivaer[d].sort((a, b) => ((rekke[leder[a]] ?? 0) - (rekke[leder[b]] ?? 0)) || a.localeCompare(b));
+      nivaer[d].forEach((x, i) => { rekke[x] = i; });
+    });
+    const antallNivaer = Object.keys(nivaer).length;
+    pos = {};
+    Object.entries(nivaer).forEach(([d, xs]) => {
+      xs.forEach((x, i) => {
+        pos[x] = { x: 1000 * (i + 0.5) / xs.length, y: antallNivaer === 1 ? 320 : 95 + (450 * Number(d)) / (antallNivaer - 1) };
+      });
+    });
+    kanter = Object.entries(leder).map(([u, l]) => ({ a: l, b: u, side: false }));
+    (L.konfig.struktur.sidekanaler || []).forEach(([a, b]) => kanter.push({ a, b, side: true }));
+    const f = $("folg");
+    f.innerHTML = `<option value="alle">${t().alle}</option>` + roller.map((x) => `<option value="${x}">${x}</option>`).join("");
+    folg = "alle";
+    r = 0; steg = 0;
+    $("tom").classList.add("skjult");
+    $("visning").classList.remove("skjult");
+    tegn();
+  }
+  function rolleType(x) {
+    if (!leder[x]) return t().toppsjef;
+    return roller.some((y) => leder[y] === x) ? t().mellomleder : t().medarbeider;
+  }
+
+  // ---------------------------------------------------------------- tid og hender
+  const antRunder = () => L.runder.length;
+  function hendelser(rr) { return rr < antRunder() ? (L.runder[rr].hendelser || []) : []; }
+  function synlige(rr) {
+    const h = hendelser(rr);
+    const ut = [];
+    h.forEach((e, i) => { if (folg === "alle" || involverer(e, folg)) ut.push(i); });
+    return ut;
+  }
+  function involverer(e, x) { return e.fra === x || e.til === x || e.rolle === x; }
+  function hender() {
+    if (r >= antRunder()) return kopi(L.slutt_hender);
+    const h = kopi(L.runder[r].hender_start);
+    const vis = synlige(r);
+    const grense = steg === 0 ? 0 : steg >= vis.length ? hendelser(r).length : vis[steg - 1] + 1;
+    hendelser(r).slice(0, grense).forEach((e) => {
+      if (e.type !== "bytte") return;
+      fjern(h[e.fra], e.fra_ga); h[e.fra].push(...e.til_ga);
+      fjern(h[e.til], e.til_ga); h[e.til].push(...e.fra_ga);
+    });
+    return h;
+  }
+  const kopi = (o) => JSON.parse(JSON.stringify(o));
+  function fjern(liste, kort) { kort.forEach((k) => { const i = liste.indexOf(k); if (i >= 0) liste.splice(i, 1); }); }
+  const sorter = (h) => h.slice().sort((a, b) => VERDIER.indexOf(a) - VERDIER.indexOf(b));
+  const fireLike = (h) => h.length === 4 && h.every((k) => k === h[0]);
+  const kortnavn = (k) => t().kort[k] || k;
+  function kortliste(ks) {
+    const n = ks.map(kortnavn);
+    return n.length <= 1 ? n.join("") : n.slice(0, -1).join(", ") + ` ${t().og} ` + n[n.length - 1];
+  }
+
+  // ---------------------------------------------------------------- tegning
+  function tegn() {
+    if (!L) return;
+    const tx = t();
+    const m = L.maalinger || {};
+    $("sammendrag").innerHTML = tx.sammendrag(esc(betingelseNavn(L.betingelse) + merke(L)), L.seed, tx.utfall[m.utfall] || m.utfall,
+      m.runder, m.bytter ?? 0, m.meldinger ?? 0);
+    const maks = L.konfig.maks_runder || antRunder();
+    $("rundeskilt").innerHTML = r >= antRunder()
+      ? `${tx.slutt}<small>${tx.utfall[m.utfall] || ""}</small>`
+      : `${tx.runde} ${r}<small>${tx.av} ${maks}</small>`;
+    tegnKart();
+    tegnLogg();
+    tegnSpor();
+    $("spill").textContent = spiller ? tx.pause : tx.spill;
+  }
+
+  function tegnKart() {
+    const svg = $("kart");
+    const h = hender();
+    const aktive = r < antRunder() ? Object.keys(L.runder[r].handlinger || {}) : roller;
+    const vis = synlige(r);
+    const na = steg > 0 && r < antRunder() ? hendelser(r)[vis[steg - 1]] : null;
+    let s = `<defs><marker id="pil" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M1 1L9 5L1 9z" fill="var(--rod)"/></marker>
+      <marker id="pilGull" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M1 1L9 5L1 9z" fill="var(--gull)"/></marker></defs>`;
+    kanter.forEach((k) => {
+      const a = pos[k.a], b = pos[k.b];
+      s += `<line x1="${a.x}" y1="${a.y}" x2="${b.x}" y2="${b.y}" stroke="var(--filt-linje)" stroke-width="3" ${k.side ? 'stroke-dasharray="10 8"' : ""}/>`;
+    });
+    if (na && na.fra && na.til && pos[na.fra] && pos[na.til]) {
+      const [x1, y1, x2, y2] = kortet(pos[na.fra], pos[na.til]);
+      const farge = na.type === "bytte" ? "var(--gull)" : "var(--rod)";
+      const mk = na.type === "bytte" ? "pilGull" : "pil";
+      s += `<line class="aktiv-linje" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${farge}" stroke-width="9"
+        stroke-linecap="round" marker-end="url(#${mk})" ${na.type === "bytte" ? `marker-start="url(#${mk})"` : ""}/>`;
+    }
+    roller.forEach((x) => {
+      const p = pos[x], hx = sorter(h[x] || []), ferdig = fireLike(hx);
+      const dempet = (folg !== "alle" && folg !== x) || !aktive.includes(x);
+      const fremhevet = na && (na.fra === x || na.til === x || na.rolle === x);
+      const w = 230, hh = 150, x0 = p.x - w / 2, y0 = p.y - hh / 2;
+      s += `<g opacity="${dempet ? 0.55 : 1}">`;
+      s += `<rect x="${x0}" y="${y0}" width="${w}" height="${hh}" rx="16" fill="var(--node)"
+        stroke="${ferdig ? "var(--gull)" : fremhevet ? "#ffffff" : "rgba(255,255,255,0.25)"}" stroke-width="${ferdig || fremhevet ? 5 : 2}"/>`;
+      s += `<text x="${x0 + 16}" y="${y0 + 44}" font-family="Fraunces, Georgia, serif" font-weight="700" font-size="40" fill="#fff">${x}</text>`;
+      s += `<text x="${x0 + 56}" y="${y0 + 30}" font-size="19" fill="rgba(255,255,255,0.85)">${esc(rolleType(x))}</text>`;
+      const status = ferdig ? `★ ${t().fireLike}` : (!aktive.includes(x) ? t().venter : "");
+      if (status) s += `<text x="${x0 + 56}" y="${y0 + 52}" font-size="18" fill="${ferdig ? "var(--gull)" : "rgba(255,255,255,0.7)"}">${esc(status)}</text>`;
+      hx.forEach((k, i) => {
+        const cx = x0 + 10 + i * 54, cy = y0 + 64;
+        s += `<g><title>${esc(kortnavn(k))}</title><rect x="${cx}" y="${cy}" width="50" height="76" rx="6" fill="var(--kort)" stroke="${FARGE[k] || "#888"}" stroke-width="3"/>
+          <rect x="${cx}" y="${cy}" width="50" height="13" rx="6" fill="${FARGE[k] || "#888"}"/>
+          <text x="${cx + 25}" y="${cy + 50}" text-anchor="middle" font-size="${kortnavn(k).length > 4 ? 15 : 18}" font-weight="700" fill="${FARGE[k] || "#333"}">${esc(kortnavn(k))}</text></g>`;
+      });
+      s += `</g>`;
+    });
+    svg.innerHTML = s;
+  }
+  function kortet(a, b) {
+    const dx = b.x - a.x, dy = b.y - a.y, len = Math.hypot(dx, dy) || 1;
+    const ka = Math.min(115 / Math.abs(dx / len || 1e-9), 75 / Math.abs(dy / len || 1e-9)) + 8;
+    return [a.x + dx / len * ka, a.y + dy / len * ka, b.x - dx / len * ka, b.y - dy / len * ka];
+  }
+
+  function tekstFor(e) {
+    const tx = t();
+    switch (e.type) {
+      case "melding": return { hvem: `${e.fra} ${tx.melding} ${e.til}`, tekst: e.tekst,
+        merker: [e.tapt ? tx.tapt : null, e.avkortet ? tx.avkortet : null].filter(Boolean) };
+      case "foresporsel": return { hvem: `${e.fra} → ${e.til}`, tekst: tx.foresporsel(e.fra, e.til, e.gir.length, kortliste(e.gir)), system: true };
+      case "bytte": return { hvem: `${e.fra} ⇄ ${e.til}`, tekst: tx.bytte(e.fra, e.til, kortliste(e.fra_ga), kortliste(e.til_ga)), system: true };
+      case "avslag": return { hvem: `${e.til} → ${e.fra}`, tekst: tx.avslag(e.fra, e.til), system: true };
+      case "trukket": return { hvem: `${e.fra} → ${e.til}`, tekst: tx.trukket(e.fra, e.til), system: true };
+      case "avvist": return { hvem: e.rolle, tekst: tx.avvist(e.rolle, e.handling, e.grunn), system: true };
+      default: return { hvem: "", tekst: JSON.stringify(e), system: true };
+    }
+  }
+
+  function tegnLogg() {
+    const tx = t(), boks = $("logg");
+    let s = "";
+    if (r >= antRunder()) {
+      const m = L.maalinger || {};
+      const n = roller.filter((x) => fireLike(L.slutt_hender[x] || [])).length;
+      s = `<h2>${tx.slutt}</h2><p class="hendelse na system"><span class="tekst">${esc(tx.sluttTekst(tx.utfall[m.utfall] || m.utfall, tx.ferdige(n)))}</span></p>`;
+      boks.innerHTML = s;
+      return;
+    }
+    const rd = L.runder[r];
+    s += `<h2>${tx.runde} ${r}</h2>`;
+    if ($("visTanker").checked) {
+      const tanker = Object.entries(rd.handlinger || {}).filter(([x, h]) => h && h.notater && (folg === "alle" || folg === x));
+      if (tanker.length) {
+        s += `<details class="tanker" open><summary>${tx.tankerTittel}</summary>` +
+          tanker.map(([x, h]) => `<p class="tanke"><b>${x}:</b> ${esc(oversettFasit(h.notater))}</p>`).join("") + `</details>`;
+      }
+    }
+    const vis = synlige(r);
+    if (!vis.length) s += `<p class="stille">${tx.ingenHendelser}</p>`;
+    else if (steg === 0) s += `<p class="stille">${tx.trykkFram}</p>`;
+    vis.slice(0, steg).forEach((i, n) => {
+      const e = hendelser(r)[i], f = tekstFor(e), erNa = n === steg - 1;
+      s += `<div class="hendelse ${f.system ? "system" : ""} ${e.type} ${erNa ? "na" : ""}" ${erNa ? 'id="na"' : ""}>
+        <div class="hvem">${esc(f.hvem)}${(f.merker || []).map((mk) => `<span class="merke">${esc(mk)}</span>`).join("")}</div>
+        <div class="tekst">${esc(f.tekst)}</div></div>`;
+    });
+    boks.innerHTML = s;
+    const na = $("na");
+    if (na) na.scrollIntoView({ block: "nearest", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+  }
+
+  function oversettFasit(n) {
+    if (sprak !== "en") return n;
+    return String(n)
+      .replace(/^Fasit: (\w) samler (\S+)\./, (m, x, v) => `Answer key: ${x} collects ${t().kort[v] || v}.`)
+      .replace("Transittbytte for å få kort i bevegelse.", "Transit swap to get cards moving.");
+  }
+  function tegnSpor() {
+    const verdier = [L.runder[0] ? L.runder[0].uorden_for : 16, ...L.runder.map((x) => x.uorden_etter)];
+    const n = verdier.length, maksV = Math.max(16, ...verdier);
+    const W = 1000, H = 56, px = (i) => 8 + (W - 16) * i / Math.max(1, n - 1), py = (v) => 6 + (H - 12) * (1 - v / maksV);
+    const pkt = verdier.map((v, i) => `${px(i).toFixed(1)},${py(v).toFixed(1)}`).join(" ");
+    const mx = px(Math.min(r, n - 1));
+    $("spor").innerHTML = `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true">
+      <line x1="8" y1="${py(0)}" x2="${W - 8}" y2="${py(0)}" stroke="var(--gull)" stroke-width="2" stroke-dasharray="6 6" vector-effect="non-scaling-stroke"/>
+      <polyline points="${pkt}" fill="none" stroke="var(--filt-linje)" stroke-width="3" vector-effect="non-scaling-stroke"/>
+      <line x1="${mx}" y1="0" x2="${mx}" y2="${H}" stroke="var(--rod)" stroke-width="3" vector-effect="non-scaling-stroke"/></svg>`;
+    const spor = $("spor");
+    spor.setAttribute("aria-valuemax", antRunder());
+    spor.setAttribute("aria-valuenow", r);
+    spor.setAttribute("aria-label", `${t().runde} ${r}`);
+  }
+  const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+  // ---------------------------------------------------------------- navigasjon
+  function fram() {
+    if (!L) return false;
+    if (r >= antRunder()) return false;
+    if (steg < synlige(r).length) steg++;
+    else { r++; steg = 0; }
+    tegn();
+    return true;
+  }
+  function tilbake() {
+    if (!L) return;
+    if (steg > 0) steg--;
+    else if (r > 0) { r--; steg = synlige(r).length; }
+    tegn();
+  }
+  function tilRunde(n) { if (!L) return; r = Math.max(0, Math.min(antRunder(), n)); steg = 0; tegn(); }
+  function ventetid() {
+    const vis = synlige(r);
+    const e = steg > 0 && r < antRunder() ? hendelser(r)[vis[steg - 1]] : null;
+    const lengde = e && e.tekst ? e.tekst.length : 40;
+    const faktor = 3.4 - Number($("tempo").value);
+    return Math.max(350, faktor * (900 + Math.min(lengde, 500) * 22));
+  }
+  function spill() {
+    if (spiller) return stopp();
+    spiller = true; tegn();
+    const tikk = () => {
+      if (!spiller) return;
+      if (!fram()) return stopp();
+      tidtaker = setTimeout(tikk, ventetid());
+    };
+    tidtaker = setTimeout(tikk, 300);
+  }
+  function stopp() { spiller = false; clearTimeout(tidtaker); if (L) tegn(); }
+
+  // ---------------------------------------------------------------- språk og knapper
+  function settSprak(s) {
+    sprak = s;
+    try { localStorage.setItem("hierarki-sprak", s); } catch (e) { /* ingen lagring tilgjengelig */ }
+    const tx = t();
+    document.documentElement.lang = s === "no" ? "no" : "en";
+    document.title = s === "no" ? "HIERARKI – avspilling" : "HIERARCHY – replay";
+    $("tittel").textContent = tx.tittel;
+    $("apne").textContent = tx.apne; $("apne2").textContent = tx.apne;
+    $("sprak").textContent = tx.sprakKnapp; $("storTekst").textContent = tx.storTekst;
+    $("tomTittel").textContent = tx.tomTittel; $("tomTekst").textContent = tx.tomTekst;
+    $("hjelp").textContent = tx.hjelp;
+    document.querySelectorAll("[data-t]").forEach((el) => { el.textContent = tx[el.dataset.t]; });
+    if (logger.length) {
+      Array.from($("velgLogg").options).forEach((o, i) => {
+        o.textContent = `${betingelseNavn(logger[i].data.betingelse)}${merke(logger[i].data)}, seed ${logger[i].data.seed} (${logger[i].navn})`;
+      });
+      $("folg").options[0].textContent = tx.alle;
+      tegn();
+    }
+  }
+  $("apne").onclick = $("apne2").onclick = () => $("filer").click();
+  $("filer").onchange = (e) => { apneFiler(e.target.files); e.target.value = ""; };
+  $("velgLogg").onchange = (e) => velgLogg(Number(e.target.value));
+  $("sprak").onclick = () => settSprak(sprak === "no" ? "en" : "no");
+  $("storTekst").onclick = () => {
+    const pa = $("storTekst").getAttribute("aria-pressed") !== "true";
+    $("storTekst").setAttribute("aria-pressed", pa);
+    document.documentElement.style.setProperty("--skala", pa ? 1.3 : 1);
+  };
+  $("stegFram").onclick = () => { stopp(); fram(); };
+  $("stegTilbake").onclick = () => { stopp(); tilbake(); };
+  $("nesteRunde").onclick = () => { stopp(); tilRunde(r + 1); };
+  $("forrigeRunde").onclick = () => { stopp(); tilRunde(steg > 0 ? r : r - 1); };
+  $("spill").onclick = spill;
+  $("visTanker").onchange = tegn;
+  $("folg").onchange = (e) => { folg = e.target.value; steg = 0; tegn(); };
+  $("spor").onclick = (e) => {
+    const b = e.currentTarget.getBoundingClientRect();
+    stopp(); tilRunde(Math.round((e.clientX - b.left) / b.width * antRunder()));
+  };
+  $("debriefKnapp").onclick = () => {
+    const tx = t(), d = (L && L.debrief) || {};
+    const deler = Object.entries(d).filter(([, v]) => v);
+    $("debriefInnhold").innerHTML = `<h2>${tx.debriefTittel}</h2>` + (deler.length
+      ? deler.map(([x, v]) => `<h3>${x}</h3><div class="debrieftekst">${esc(String(v).replace(/\*\*/g, ""))}</div>`).join("")
+      : `<p>${tx.ingenDebrief}</p>`);
+    $("debrief").showModal();
+  };
+  $("lukk").onclick = () => $("debrief").close();
+  document.addEventListener("keydown", (e) => {
+    const tag = e.target.tagName;
+    if (!L || $("debrief").open) return;
+    if (tag === "SELECT" || tag === "TEXTAREA" || (tag === "INPUT" && e.target.type !== "checkbox")) return;
+    if (e.key === " " && (tag === "BUTTON" || tag === "INPUT")) return;
+    if (e.key === " ") { e.preventDefault(); spill(); }
+    else if (e.key === "ArrowRight") { e.preventDefault(); stopp(); e.shiftKey ? tilRunde(r + 1) : fram(); }
+    else if (e.key === "ArrowLeft") { e.preventDefault(); stopp(); e.shiftKey ? tilRunde(steg > 0 ? r : r - 1) : tilbake(); }
+  });
+  ["dragenter", "dragover"].forEach((ev) => document.addEventListener(ev, (e) => { e.preventDefault(); document.body.classList.add("drar"); }));
+  ["dragleave", "drop"].forEach((ev) => document.addEventListener(ev, (e) => { e.preventDefault(); if (ev === "drop" || e.target === document.documentElement) document.body.classList.remove("drar"); }));
+  document.addEventListener("drop", (e) => apneFiler(e.dataTransfer.files));
+
+  settSprak(sprak === "en" ? "en" : "no");
+})();
+</script>
+</body>
+</html>

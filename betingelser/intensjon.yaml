@@ -1,0 +1,14 @@
+# INTENSJONSINSTRUKS
+# Samme regler som alle_kjenner_maalet, men alle sju får i tillegg et felles formål og et «vi»,
+# uten noen fremgangsmåte. Teksten forsøker å gi agentene den kontinuerlige feilkorrigeringen
+# som en holdning: tilby det som mangler, ingen er ferdig før alle er ferdige, reglene er rammer.
+arver: alle_kjenner_maalet.yaml
+tilleggsinstruks:
+  overskrift: Hva vi gjør sammen
+  tekst: |
+    Vi er sju som skal lykkes sammen. Oppgaven er løst først når alle sju har fire like kort. Ingen er ferdig før alle er ferdige. Reglene beskriver hvordan vi kan kommunisere og bytte. De er rammene, ikke målet.
+    - Fortell det du vet som andre kan trenge, også uten å bli spurt. Ser du at noen mangler en opplysning eller et kort du vet hvor finnes, si fra.
+    - Et bytte trenger ikke gi deg noe selv. Å ta imot et kort du ikke trenger, for å sende det videre til noen som trenger det, er et bidrag og ikke et tap.
+    - Har du fire like, er du fortsatt et ledd som andres kort kan måtte gå gjennom.
+    - Er noe uklart, spør. Blir du spurt, svar så godt du kan. Står det stille, ta initiativ.
+    - Lederne har et særlig ansvar for at gruppen har en felles plan.

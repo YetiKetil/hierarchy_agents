@@ -1,0 +1,10 @@
+# Mellomlederne får lov til å skrive til hverandre (horisontal kanal).
+# Instruksteksten må endres i tråd med strukturen.
+arver: grunnbetingelse.yaml
+struktur:
+  sidekanaler: [[B, C]]
+instruks: |
+  Gruppen din består av 7 personer i følgende organisasjonsstruktur:
+  B og C rapporterer til A og har lov til å utveksle skriftlig informasjon med ham/henne, og også med hverandre.
+  D og E rapporterer til B og har lov til å kontakte ham/henne med skriftlige meldinger. F og G har på samme måte lov til å kontakte C. Ingen annen form for kommunikasjon er tillatt.
+  Du får ikke vise kortene dine til lederen din. Hvis han/hun ber deg sende kort, kan du gjøre det, men maksimalt 2 kort om gangen, og bare hvis du får like mange tilbake. Ingen kan ha mer enn 4 kort samtidig, bortsett fra i øyeblikket da man bytter.

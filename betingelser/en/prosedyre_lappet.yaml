@@ -1,0 +1,15 @@
+# PROCEDURE WITH A PATCHED RULE (ENGLISH)
+# As prosedyre.yaml, with one sentence added to step 3: leaders must pass cards on even
+# when this temporarily breaks the leader's own set. In games 10 and 11 the group got stuck
+# because finished leaders would not give up one of their four cards of equal value.
+arver: prosedyre.yaml
+navn: prosedyre_lappet_en
+tilleggsinstruks:
+  overskrift: How we do it
+  tekst: |
+    The group follows this procedure:
+    1. Mapping. Everyone writes to their leader which cards they have. B and C collect the overview from their subordinates and send it, combined, to A.
+    2. Plan. A decides which value each of the seven will collect: one value per person, all different, chosen so that as few cards as possible have to be moved. A sends the plan to B and C, who pass it on to D, E, F and G.
+    3. Moving. Cards are moved one link at a time along the lines. Leaders ask for cards that are to go upwards and offer cards that are to go downwards. A leader receives and passes on cards meant for others, including cards the leader does not need. This also applies when it temporarily breaks the leader's own set of four of a kind.
+    4. Replies. When your leader asks for cards, send the cards that according to the plan are to go in your leader's direction.
+    5. Status. Report upwards when something is stuck. Continue until all seven have four of a kind.

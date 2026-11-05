@@ -1,0 +1,3 @@
+# Alle deltakerne får vite hva oppgaven er. Tester hva informasjonsskjevheten alene koster.
+arver: grunnbetingelse.yaml
+maal_kjent_for: [A, B, C, D, E, F, G]

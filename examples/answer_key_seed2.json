@@ -1,0 +1,3823 @@
+{
+ "betingelse": "FASIT-alle_kjenner_maalet_en",
+ "seed": 2,
+ "tidspunkt": "2026-11-05T06:13:01",
+ "test": false,
+ "modus": "fasit",
+ "fasit": {
+  "fordeling": {
+   "G": "ess",
+   "B": "konge",
+   "F": "dame",
+   "D": "knekt",
+   "A": "tier",
+   "C": "nier",
+   "E": "åtter"
+  },
+  "startavstand": 40,
+  "transittbytter": 0
+ },
+ "konfig": {
+  "sprak": "en",
+  "modell": "claude-haiku-5-5",
+  "leverandor": null,
+  "samtidige_kall": null,
+  "maks_tokens": 6000,
+  "temperatur": null,
+  "tving_verktoybruk": false,
+  "maks_runder": 60,
+  "agentene_kan_vente": true,
+  "vis_tidsgrense": true,
+  "vekk_alle_hver": 5,
+  "stillstand_etter_tomme_runder": 5,
+  "hukommelse_runder": null,
+  "utdeling": {
+   "metode": "tilfeldig"
+  },
+  "struktur": {
+   "leder_av": {
+    "B": "A",
+    "C": "A",
+    "D": "B",
+    "E": "B",
+    "F": "C",
+    "G": "C"
+   },
+   "sidekanaler": []
+  },
+  "regler": {
+   "maks_kort_per_bytte": 2,
+   "underordnet_kan_be_om_bytte": false,
+   "kortomtale_oppover": "fritt",
+   "maks_tegn_per_melding": null,
+   "maks_meldinger_per_runde": null,
+   "tap_sannsynlighet": 0.0
+  },
+  "instruks": "Your group consists of 7 persons in the following organizational structure:\nB and C report to A and are allowed to exchange written information with him/her but not with each other.\nD and E report to B, and are allowed to contact him/her by written messages. F and G are in the same way allowed to contact C. No other form of communication is allowed.\nYou may not show your cards to your leader. If he/she asks you to send cards, you may do so, but maximally 2 cards at the time, provided you receive the same number in return. Nobody is allowed to possess more than 4 cards simultaneously, except from the moment when you are exchanging.\n",
+  "maal_tekst": "The task is accomplished when all members have 4 cards of equal value.",
+  "maal_kjent_for": [
+   "A",
+   "B",
+   "C",
+   "D",
+   "E",
+   "F",
+   "G"
+  ],
+  "roller": {},
+  "forhistorie": {
+   "kilde": null,
+   "innhold": "plenum"
+  },
+  "debrief": {
+   "aktiv": true,
+   "maks_tokens": 4000,
+   "sporsmal": [
+    "What do you think the task was about?",
+    "How did you experience the communication with those you could write to?",
+    "What held the group back the most?",
+    "What would you have done differently?"
+   ]
+  },
+  "navn": "FASIT-alle_kjenner_maalet_en",
+  "_forhistorie": null
+ },
+ "systemprompter": {
+  "A": "You are taking part in a group exercise with 7 participants. The participants are named by letters, and you are A.\n\nINSTRUCTIONS\nYour group consists of 7 persons in the following organizational structure:\nB and C report to A and are allowed to exchange written information with him/her but not with each other.\nD and E report to B, and are allowed to contact him/her by written messages. F and G are in the same way allowed to contact C. No other form of communication is allowed.\nYou may not show your cards to your leader. If he/she asks you to send cards, you may do so, but maximally 2 cards at the time, provided you receive the same number in return. Nobody is allowed to possess more than 4 cards simultaneously, except from the moment when you are exchanging.\nThe task is accomplished when all members have 4 cards of equal value.\n\nYOUR POSITION\nYou are A. You have no leader above you. Your subordinates are B and C. You can send written messages to: B and C. You can ask for cards from: B and C.\n\nHOW THE EXERCISE WORKS\n- The exercise proceeds in rounds. Each time it is your turn, you see your cards, what has happened so far, and the notes you have written to yourself.\n- You act by calling the tool “action” exactly once. Everything in the tool is optional except the notes.\n- Messages you send reach the recipient in the next round.\n- A card request means that one person asks another to send 1–2 cards, while offering the same number of their own cards. The person asking chooses which cards to offer. The recipient sees the offered cards and can accept (choosing which cards to send back) or decline. Cards offered in an open request are reserved until the request is answered or withdrawn.\n- If you have nothing to do until someone contacts you, you can set “wait” to true. You will then not be called again until something new happens.\n- The exercise lasts at most 60 rounds.\n- You only see your own cards and what has been sent to you.",
+  "B": "You are taking part in a group exercise with 7 participants. The participants are named by letters, and you are B.\n\nINSTRUCTIONS\nYour group consists of 7 persons in the following organizational structure:\nB and C report to A and are allowed to exchange written information with him/her but not with each other.\nD and E report to B, and are allowed to contact him/her by written messages. F and G are in the same way allowed to contact C. No other form of communication is allowed.\nYou may not show your cards to your leader. If he/she asks you to send cards, you may do so, but maximally 2 cards at the time, provided you receive the same number in return. Nobody is allowed to possess more than 4 cards simultaneously, except from the moment when you are exchanging.\nThe task is accomplished when all members have 4 cards of equal value.\n\nYOUR POSITION\nYou are B. Your immediate leader is A. Your subordinates are D and E. You can send written messages to: A, D and E. You can ask for cards from: D and E. You can receive card requests from: A.\n\nHOW THE EXERCISE WORKS\n- The exercise proceeds in rounds. Each time it is your turn, you see your cards, what has happened so far, and the notes you have written to yourself.\n- You act by calling the tool “action” exactly once. Everything in the tool is optional except the notes.\n- Messages you send reach the recipient in the next round.\n- A card request means that one person asks another to send 1–2 cards, while offering the same number of their own cards. The person asking chooses which cards to offer. The recipient sees the offered cards and can accept (choosing which cards to send back) or decline. Cards offered in an open request are reserved until the request is answered or withdrawn.\n- If you have nothing to do until someone contacts you, you can set “wait” to true. You will then not be called again until something new happens.\n- The exercise lasts at most 60 rounds.\n- You only see your own cards and what has been sent to you.",
+  "C": "You are taking part in a group exercise with 7 participants. The participants are named by letters, and you are C.\n\nINSTRUCTIONS\nYour group consists of 7 persons in the following organizational structure:\nB and C report to A and are allowed to exchange written information with him/her but not with each other.\nD and E report to B, and are allowed to contact him/her by written messages. F and G are in the same way allowed to contact C. No other form of communication is allowed.\nYou may not show your cards to your leader. If he/she asks you to send cards, you may do so, but maximally 2 cards at the time, provided you receive the same number in return. Nobody is allowed to possess more than 4 cards simultaneously, except from the moment when you are exchanging.\nThe task is accomplished when all members have 4 cards of equal value.\n\nYOUR POSITION\nYou are C. Your immediate leader is A. Your subordinates are F and G. You can send written messages to: A, F and G. You can ask for cards from: F and G. You can receive card requests from: A.\n\nHOW THE EXERCISE WORKS\n- The exercise proceeds in rounds. Each time it is your turn, you see your cards, what has happened so far, and the notes you have written to yourself.\n- You act by calling the tool “action” exactly once. Everything in the tool is optional except the notes.\n- Messages you send reach the recipient in the next round.\n- A card request means that one person asks another to send 1–2 cards, while offering the same number of their own cards. The person asking chooses which cards to offer. The recipient sees the offered cards and can accept (choosing which cards to send back) or decline. Cards offered in an open request are reserved until the request is answered or withdrawn.\n- If you have nothing to do until someone contacts you, you can set “wait” to true. You will then not be called again until something new happens.\n- The exercise lasts at most 60 rounds.\n- You only see your own cards and what has been sent to you.",
+  "D": "You are taking part in a group exercise with 7 participants. The participants are named by letters, and you are D.\n\nINSTRUCTIONS\nYour group consists of 7 persons in the following organizational structure:\nB and C report to A and are allowed to exchange written information with him/her but not with each other.\nD and E report to B, and are allowed to contact him/her by written messages. F and G are in the same way allowed to contact C. No other form of communication is allowed.\nYou may not show your cards to your leader. If he/she asks you to send cards, you may do so, but maximally 2 cards at the time, provided you receive the same number in return. Nobody is allowed to possess more than 4 cards simultaneously, except from the moment when you are exchanging.\nThe task is accomplished when all members have 4 cards of equal value.\n\nYOUR POSITION\nYou are D. Your immediate leader is B. You have no subordinates. You can send written messages to: B. You can receive card requests from: B.\n\nHOW THE EXERCISE WORKS\n- The exercise proceeds in rounds. Each time it is your turn, you see your cards, what has happened so far, and the notes you have written to yourself.\n- You act by calling the tool “action” exactly once. Everything in the tool is optional except the notes.\n- Messages you send reach the recipient in the next round.\n- A card request means that one person asks another to send 1–2 cards, while offering the same number of their own cards. The person asking chooses which cards to offer. The recipient sees the offered cards and can accept (choosing which cards to send back) or decline. Cards offered in an open request are reserved until the request is answered or withdrawn.\n- If you have nothing to do until someone contacts you, you can set “wait” to true. You will then not be called again until something new happens.\n- The exercise lasts at most 60 rounds.\n- You only see your own cards and what has been sent to you.",
+  "E": "You are taking part in a group exercise with 7 participants. The participants are named by letters, and you are E.\n\nINSTRUCTIONS\nYour group consists of 7 persons in the following organizational structure:\nB and C report to A and are allowed to exchange written information with him/her but not with each other.\nD and E report to B, and are allowed to contact him/her by written messages. F and G are in the same way allowed to contact C. No other form of communication is allowed.\nYou may not show your cards to your leader. If he/she asks you to send cards, you may do so, but maximally 2 cards at the time, provided you receive the same number in return. Nobody is allowed to possess more than 4 cards simultaneously, except from the moment when you are exchanging.\nThe task is accomplished when all members have 4 cards of equal value.\n\nYOUR POSITION\nYou are E. Your immediate leader is B. You have no subordinates. You can send written messages to: B. You can receive card requests from: B.\n\nHOW THE EXERCISE WORKS\n- The exercise proceeds in rounds. Each time it is your turn, you see your cards, what has happened so far, and the notes you have written to yourself.\n- You act by calling the tool “action” exactly once. Everything in the tool is optional except the notes.\n- Messages you send reach the recipient in the next round.\n- A card request means that one person asks another to send 1–2 cards, while offering the same number of their own cards. The person asking chooses which cards to offer. The recipient sees the offered cards and can accept (choosing which cards to send back) or decline. Cards offered in an open request are reserved until the request is answered or withdrawn.\n- If you have nothing to do until someone contacts you, you can set “wait” to true. You will then not be called again until something new happens.\n- The exercise lasts at most 60 rounds.\n- You only see your own cards and what has been sent to you.",
+  "F": "You are taking part in a group exercise with 7 participants. The participants are named by letters, and you are F.\n\nINSTRUCTIONS\nYour group consists of 7 persons in the following organizational structure:\nB and C report to A and are allowed to exchange written information with him/her but not with each other.\nD and E report to B, and are allowed to contact him/her by written messages. F and G are in the same way allowed to contact C. No other form of communication is allowed.\nYou may not show your cards to your leader. If he/she asks you to send cards, you may do so, but maximally 2 cards at the time, provided you receive the same number in return. Nobody is allowed to possess more than 4 cards simultaneously, except from the moment when you are exchanging.\nThe task is accomplished when all members have 4 cards of equal value.\n\nYOUR POSITION\nYou are F. Your immediate leader is C. You have no subordinates. You can send written messages to: C. You can receive card requests from: C.\n\nHOW THE EXERCISE WORKS\n- The exercise proceeds in rounds. Each time it is your turn, you see your cards, what has happened so far, and the notes you have written to yourself.\n- You act by calling the tool “action” exactly once. Everything in the tool is optional except the notes.\n- Messages you send reach the recipient in the next round.\n- A card request means that one person asks another to send 1–2 cards, while offering the same number of their own cards. The person asking chooses which cards to offer. The recipient sees the offered cards and can accept (choosing which cards to send back) or decline. Cards offered in an open request are reserved until the request is answered or withdrawn.\n- If you have nothing to do until someone contacts you, you can set “wait” to true. You will then not be called again until something new happens.\n- The exercise lasts at most 60 rounds.\n- You only see your own cards and what has been sent to you.",
+  "G": "You are taking part in a group exercise with 7 participants. The participants are named by letters, and you are G.\n\nINSTRUCTIONS\nYour group consists of 7 persons in the following organizational structure:\nB and C report to A and are allowed to exchange written information with him/her but not with each other.\nD and E report to B, and are allowed to contact him/her by written messages. F and G are in the same way allowed to contact C. No other form of communication is allowed.\nYou may not show your cards to your leader. If he/she asks you to send cards, you may do so, but maximally 2 cards at the time, provided you receive the same number in return. Nobody is allowed to possess more than 4 cards simultaneously, except from the moment when you are exchanging.\nThe task is accomplished when all members have 4 cards of equal value.\n\nYOUR POSITION\nYou are G. Your immediate leader is C. You have no subordinates. You can send written messages to: C. You can receive card requests from: C.\n\nHOW THE EXERCISE WORKS\n- The exercise proceeds in rounds. Each time it is your turn, you see your cards, what has happened so far, and the notes you have written to yourself.\n- You act by calling the tool “action” exactly once. Everything in the tool is optional except the notes.\n- Messages you send reach the recipient in the next round.\n- A card request means that one person asks another to send 1–2 cards, while offering the same number of their own cards. The person asking chooses which cards to offer. The recipient sees the offered cards and can accept (choosing which cards to send back) or decline. Cards offered in an open request are reserved until the request is answered or withdrawn.\n- If you have nothing to do until someone contacts you, you can set “wait” to true. You will then not be called again until something new happens.\n- The exercise lasts at most 60 rounds.\n- You only see your own cards and what has been sent to you."
+ },
+ "start_hender": {
+  "A": [
+   "ess",
+   "knekt",
+   "tier",
+   "nier"
+  ],
+  "B": [
+   "ess",
+   "konge",
+   "konge",
+   "åtter"
+  ],
+  "C": [
+   "knekt",
+   "tier",
+   "tier",
+   "nier"
+  ],
+  "D": [
+   "dame",
+   "knekt",
+   "knekt",
+   "tier"
+  ],
+  "E": [
+   "konge",
+   "dame",
+   "nier",
+   "åtter"
+  ],
+  "F": [
+   "konge",
+   "dame",
+   "dame",
+   "nier"
+  ],
+  "G": [
+   "ess",
+   "ess",
+   "åtter",
+   "åtter"
+  ]
+ },
+ "slutt_hender": {
+  "A": [
+   "tier",
+   "tier",
+   "tier",
+   "tier"
+  ],
+  "B": [
+   "konge",
+   "konge",
+   "konge",
+   "konge"
+  ],
+  "C": [
+   "nier",
+   "nier",
+   "nier",
+   "nier"
+  ],
+  "D": [
+   "knekt",
+   "knekt",
+   "knekt",
+   "knekt"
+  ],
+  "E": [
+   "åtter",
+   "åtter",
+   "åtter",
+   "åtter"
+  ],
+  "F": [
+   "dame",
+   "dame",
+   "dame",
+   "dame"
+  ],
+  "G": [
+   "ess",
+   "ess",
+   "ess",
+   "ess"
+  ]
+ },
+ "maalinger": {
+  "utfall": "løst",
+  "runder": 16,
+  "meldinger": 0,
+  "tegn_per_melding": 0,
+  "foresporsler": 19,
+  "bytter": 19,
+  "avslag": 0,
+  "kort_flyttet": 40,
+  "avvist": 0,
+  "kortomtale_oppover": 0,
+  "tapte_meldinger": 0,
+  "uorden_start": 16,
+  "uorden_slutt": 0,
+  "komplette_hender": 7,
+  "toppleder_andel": 0,
+  "meldinger_per_kanal": {},
+  "belastning_per_rolle": {}
+ },
+ "runder": [
+  {
+   "runde": 0,
+   "hender_start": {
+    "A": [
+     "ess",
+     "knekt",
+     "tier",
+     "nier"
+    ],
+    "B": [
+     "ess",
+     "konge",
+     "konge",
+     "åtter"
+    ],
+    "C": [
+     "knekt",
+     "tier",
+     "tier",
+     "nier"
+    ],
+    "D": [
+     "dame",
+     "knekt",
+     "knekt",
+     "tier"
+    ],
+    "E": [
+     "konge",
+     "dame",
+     "nier",
+     "åtter"
+    ],
+    "F": [
+     "konge",
+     "dame",
+     "dame",
+     "nier"
+    ],
+    "G": [
+     "ess",
+     "ess",
+     "åtter",
+     "åtter"
+    ]
+   },
+   "handlinger": {
+    "A": {
+     "notater": "Answer key: A collects tens.",
+     "vent": false,
+     "kortforesporsler": [
+      {
+       "til": "B",
+       "gir": [
+        "knekt"
+       ]
+      },
+      {
+       "til": "C",
+       "gir": [
+        "ess",
+        "nier"
+       ]
+      }
+     ]
+    },
+    "B": {
+     "notater": "Answer key: B collects kings.",
+     "vent": false,
+     "kortforesporsler": [
+      {
+       "til": "E",
+       "gir": [
+        "åtter"
+       ]
+      }
+     ]
+    },
+    "C": {
+     "notater": "Answer key: C collects nines.",
+     "vent": false
+    },
+    "D": {
+     "notater": "Answer key: D collects jacks.",
+     "vent": false
+    },
+    "E": {
+     "notater": "Answer key: E collects eights.",
+     "vent": false
+    },
+    "F": {
+     "notater": "Answer key: F collects queens.",
+     "vent": false
+    },
+    "G": {
+     "notater": "Answer key: G collects aces.",
+     "vent": false
+    }
+   },
+   "hendelser": [
+    {
+     "type": "foresporsel",
+     "fra": "A",
+     "til": "B",
+     "gir": [
+      "knekt"
+     ]
+    },
+    {
+     "type": "foresporsel",
+     "fra": "A",
+     "til": "C",
+     "gir": [
+      "ess",
+      "nier"
+     ]
+    },
+    {
+     "type": "foresporsel",
+     "fra": "B",
+     "til": "E",
+     "gir": [
+      "åtter"
+     ]
+    }
+   ],
+   "uorden_for": 16,
+   "uorden_etter": 16,
+   "komplette_hender": 0
+  },
+  {
+   "runde": 1,
+   "hender_start": {
+    "A": [
+     "ess",
+     "knekt",
+     "tier",
+     "nier"
+    ],
+    "B": [
+     "ess",
+     "konge",
+     "konge",
+     "åtter"
+    ],
+    "C": [
+     "knekt",
+     "tier",
+     "tier",
+     "nier"
+    ],
+    "D": [
+     "dame",
+     "knekt",
+     "knekt",
+     "tier"
+    ],
+    "E": [
+     "konge",
+     "dame",
+     "nier",
+     "åtter"
+    ],
+    "F": [
+     "konge",
+     "dame",
+     "dame",
+     "nier"
+    ],
+    "G": [
+     "ess",
+     "ess",
+     "åtter",
+     "åtter"
+    ]
+   },
+   "handlinger": {
+    "A": {
+     "notater": "Answer key: A collects tens.",
+     "vent": false
+    },
+    "B": {
+     "notater": "Answer key: B collects kings.",
+     "vent": false,
+     "svar_pa_foresporsler": [
+      {
+       "fra": "A",
+       "aksepter": true,
+       "sender": [
+        "ess"
+       ]
+      }
+     ]
+    },
+    "C": {
+     "notater": "Answer key: C collects nines.",
+     "vent": false,
+     "svar_pa_foresporsler": [
+      {
+       "fra": "A",
+       "aksepter": true,
+       "sender": [
+        "knekt",
+        "tier"
+       ]
+      }
+     ]
+    },
+    "D": {
+     "notater": "Answer key: D collects jacks.",
+     "vent": false
+    },
+    "E": {
+     "notater": "Answer key: E collects eights.",
+     "vent": false,
+     "svar_pa_foresporsler": [
+      {
+       "fra": "B",
+       "aksepter": true,
+       "sender": [
+        "dame"
+       ]
+      }
+     ]
+    },
+    "F": {
+     "notater": "Answer key: F collects queens.",
+     "vent": false
+    },
+    "G": {
+     "notater": "Answer key: G collects aces.",
+     "vent": false
+    }
+   },
+   "hendelser": [
+    {
+     "type": "bytte",
+     "fra": "A",
+     "til": "B",
+     "fra_ga": [
+      "knekt"
+     ],
+     "til_ga": [
+      "ess"
+     ]
+    },
+    {
+     "type": "bytte",
+     "fra": "A",
+     "til": "C",
+     "fra_ga": [
+      "ess",
+      "nier"
+     ],
+     "til_ga": [
+      "knekt",
+      "tier"
+     ]
+    },
+    {
+     "type": "bytte",
+     "fra": "B",
+     "til": "E",
+     "fra_ga": [
+      "åtter"
+     ],
+     "til_ga": [
+      "dame"
+     ]
+    }
+   ],
+   "uorden_for": 16,
+   "uorden_etter": 14,
+   "komplette_hender": 0
+  },
+  {
+   "runde": 2,
+   "hender_start": {
+    "A": [
+     "ess",
+     "knekt",
+     "tier",
+     "tier"
+    ],
+    "B": [
+     "konge",
+     "konge",
+     "dame",
+     "knekt"
+    ],
+    "C": [
+     "ess",
+     "tier",
+     "nier",
+     "nier"
+    ],
+    "D": [
+     "dame",
+     "knekt",
+     "knekt",
+     "tier"
+    ],
+    "E": [
+     "konge",
+     "nier",
+     "åtter",
+     "åtter"
+    ],
+    "F": [
+     "konge",
+     "dame",
+     "dame",
+     "nier"
+    ],
+    "G": [
+     "ess",
+     "ess",
+     "åtter",
+     "åtter"
+    ]
+   },
+   "handlinger": {
+    "A": {
+     "notater": "Answer key: A collects tens.",
+     "vent": false,
+     "kortforesporsler": [
+      {
+       "til": "B",
+       "gir": [
+        "knekt"
+       ]
+      },
+      {
+       "til": "C",
+       "gir": [
+        "ess"
+       ]
+      }
+     ]
+    },
+    "B": {
+     "notater": "Answer key: B collects kings.",
+     "vent": false,
+     "kortforesporsler": [
+      {
+       "til": "D",
+       "gir": [
+        "knekt"
+       ]
+      }
+     ]
+    },
+    "C": {
+     "notater": "Answer key: C collects nines.",
+     "vent": false,
+     "kortforesporsler": [
+      {
+       "til": "G",
+       "gir": [
+        "ess"
+       ]
+      }
+     ]
+    },
+    "D": {
+     "notater": "Answer key: D collects jacks.",
+     "vent": false
+    },
+    "E": {
+     "notater": "Answer key: E collects eights.",
+     "vent": false
+    },
+    "F": {
+     "notater": "Answer key: F collects queens.",
+     "vent": false
+    },
+    "G": {
+     "notater": "Answer key: G collects aces.",
+     "vent": false
+    }
+   },
+   "hendelser": [
+    {
+     "type": "foresporsel",
+     "fra": "A",
+     "til": "B",
+     "gir": [
+      "knekt"
+     ]
+    },
+    {
+     "type": "foresporsel",
+     "fra": "A",
+     "til": "C",
+     "gir": [
+      "ess"
+     ]
+    },
+    {
+     "type": "foresporsel",
+     "fra": "B",
+     "til": "D",
+     "gir": [
+      "knekt"
+     ]
+    },
+    {
+     "type": "foresporsel",
+     "fra": "C",
+     "til": "G",
+     "gir": [
+      "ess"
+     ]
+    }
+   ],
+   "uorden_for": 14,
+   "uorden_etter": 14,
+   "komplette_hender": 0
+  },
+  {
+   "runde": 3,
+   "hender_start": {
+    "A": [
+     "ess",
+     "knekt",
+     "tier",
+     "tier"
+    ],
+    "B": [
+     "konge",
+     "konge",
+     "dame",
+     "knekt"
+    ],
+    "C": [
+     "ess",
+     "tier",
+     "nier",
+     "nier"
+    ],
+    "D": [
+     "dame",
+     "knekt",
+     "knekt",
+     "tier"
+    ],
+    "E": [
+     "konge",
+     "nier",
+     "åtter",
+     "åtter"
+    ],
+    "F": [
+     "konge",
+     "dame",
+     "dame",
+     "nier"
+    ],
+    "G": [
+     "ess",
+     "ess",
+     "åtter",
+     "åtter"
+    ]
+   },
+   "handlinger": {
+    "A": {
+     "notater": "Answer key: A collects tens.",
+     "vent": false
+    },
+    "B": {
+     "notater": "Answer key: B collects kings.",
+     "vent": false,
+     "svar_pa_foresporsler": [
+      {
+       "fra": "A",
+       "aksepter": true,
+       "sender": [
+        "dame"
+       ]
+      }
+     ]
+    },
+    "C": {
+     "notater": "Answer key: C collects nines.",
+     "vent": false,
+     "svar_pa_foresporsler": [
+      {
+       "fra": "A",
+       "aksepter": true,
+       "sender": [
+        "tier"
+       ]
+      }
+     ]
+    },
+    "D": {
+     "notater": "Answer key: D collects jacks.",
+     "vent": false,
+     "svar_pa_foresporsler": [
+      {
+       "fra": "B",
+       "aksepter": true,
+       "sender": [
+        "dame"
+       ]
+      }
+     ]
+    },
+    "E": {
+     "notater": "Answer key: E collects eights.",
+     "vent": false
+    },
+    "F": {
+     "notater": "Answer key: F collects queens.",
+     "vent": false
+    },
+    "G": {
+     "notater": "Answer key: G collects aces.",
+     "vent": false,
+     "svar_pa_foresporsler": [
+      {
+       "fra": "C",
+       "aksepter": true,
+       "sender": [
+        "åtter"
+       ]
+      }
+     ]
+    }
+   },
+   "hendelser": [
+    {
+     "type": "bytte",
+     "fra": "A",
+     "til": "B",
+     "fra_ga": [
+      "knekt"
+     ],
+     "til_ga": [
+      "dame"
+     ]
+    },
+    {
+     "type": "bytte",
+     "fra": "A",
+     "til": "C",
+     "fra_ga": [
+      "ess"
+     ],
+     "til_ga": [
+      "tier"
+     ]
+    },
+    {
+     "type": "bytte",
+     "fra": "B",
+     "til": "D",
+     "fra_ga": [
+      "knekt"
+     ],
+     "til_ga": [
+      "dame"
+     ]
+    },
+    {
+     "type": "bytte",
+     "fra": "C",
+     "til": "G",
+     "fra_ga": [
+      "ess"
+     ],
+     "til_ga": [
+      "åtter"
+     ]
+    }
+   ],
+   "uorden_for": 14,
+   "uorden_etter": 11,
+   "komplette_hender": 0
+  },
+  {
+   "runde": 4,
+   "hender_start": {
+    "A": [
+     "dame",
+     "tier",
+     "tier",
+     "tier"
+    ],
+    "B": [
+     "konge",
+     "konge",
+     "dame",
+     "knekt"
+    ],
+    "C": [
+     "ess",
+     "nier",
+     "nier",
+     "åtter"
+    ],
+    "D": [
+     "knekt",
+     "knekt",
+     "knekt",
+     "tier"
+    ],
+    "E": [
+     "konge",
+     "nier",
+     "åtter",
+     "åtter"
+    ],
+    "F": [
+     "konge",
+     "dame",
+     "dame",
+     "nier"
+    ],
+    "G": [
+     "ess",
+     "ess",
+     "ess",
+     "åtter"
+    ]
+   },
+   "handlinger": {
+    "A": {
+     "notater": "Answer key: A collects tens.",
+     "vent": false,
+     "kortforesporsler": [
+      {
+       "til": "C",
+       "gir": [
+        "dame"
+       ]
+      }
+     ]
+    },
+    "B": {
+     "notater": "Answer key: B collects kings.",
+     "vent": false,
+     "kortforesporsler": [
+      {
+       "til": "D",
+       "gir": [
+        "knekt"
+       ]
+      }
+     ]
+    },
+    "C": {
+     "notater": "Answer key: C collects nines.",
+     "vent": false,
+     "kortforesporsler": [
+      {
+       "til": "G",
+       "gir": [
+        "ess"
+       ]
+      }
+     ]
+    },
+    "D": {
+     "notater": "Answer key: D collects jacks.",
+     "vent": false
+    },
+    "E": {
+     "notater": "Answer key: E collects eights.",
+     "vent": false
+    },
+    "F": {
+     "notater": "Answer key: F collects queens.",
+     "vent": false
+    },
+    "G": {
+     "notater": "Answer key: G collects aces.",
+     "vent": false
+    }
+   },
+   "hendelser": [
+    {
+     "type": "foresporsel",
+     "fra": "A",
+     "til": "C",
+     "gir": [
+      "dame"
+     ]
+    },
+    {
+     "type": "foresporsel",
+     "fra": "B",
+     "til": "D",
+     "gir": [
+      "knekt"
+     ]
+    },
+    {
+     "type": "foresporsel",
+     "fra": "C",
+     "til": "G",
+     "gir": [
+      "ess"
+     ]
+    }
+   ],
+   "uorden_for": 11,
+   "uorden_etter": 11,
+   "komplette_hender": 0
+  },
+  {
+   "runde": 5,
+   "hender_start": {
+    "A": [
+     "dame",
+     "tier",
+     "tier",
+     "tier"
+    ],
+    "B": [
+     "konge",
+     "konge",
+     "dame",
+     "knekt"
+    ],
+    "C": [
+     "ess",
+     "nier",
+     "nier",
+     "åtter"
+    ],
+    "D": [
+     "knekt",
+     "knekt",
+     "knekt",
+     "tier"
+    ],
+    "E": [
+     "konge",
+     "nier",
+     "åtter",
+     "åtter"
+    ],
+    "F": [
+     "konge",
+     "dame",
+     "dame",
+     "nier"
+    ],
+    "G": [
+     "ess",
+     "ess",
+     "ess",
+     "åtter"
+    ]
+   },
+   "handlinger": {
+    "A": {
+     "notater": "Answer key: A collects tens.",
+     "vent": false
+    },
+    "B": {
+     "notater": "Answer key: B collects kings.",
+     "vent": false
+    },
+    "C": {
+     "notater": "Answer key: C collects nines.",
+     "vent": false,
+     "svar_pa_foresporsler": [
+      {
+       "fra": "A",
+       "aksepter": true,
+       "sender": [
+        "åtter"
+       ]
+      }
+     ]
+    },
+    "D": {
+     "notater": "Answer key: D collects jacks.",
+     "vent": false,
+     "svar_pa_foresporsler": [
+      {
+       "fra": "B",
+       "aksepter": true,
+       "sender": [
+        "tier"
+       ]
+      }
+     ]
+    },
+    "E": {
+     "notater": "Answer key: E collects eights.",
+     "vent": false
+    },
+    "F": {
+     "notater": "Answer key: F collects queens.",
+     "vent": false
+    },
+    "G": {
+     "notater": "Answer key: G collects aces.",
+     "vent": false,
+     "svar_pa_foresporsler": [
+      {
+       "fra": "C",
+       "aksepter": true,
+       "sender": [
+        "åtter"
+       ]
+      }
+     ]
+    }
+   },
+   "hendelser": [
+    {
+     "type": "bytte",
+     "fra": "A",
+     "til": "C",
+     "fra_ga": [
+      "dame"
+     ],
+     "til_ga": [
+      "åtter"
+     ]
+    },
+    {
+     "type": "bytte",
+     "fra": "B",
+     "til": "D",
+     "fra_ga": [
+      "knekt"
+     ],
+     "til_ga": [
+      "tier"
+     ]
+    },
+    {
+     "type": "bytte",
+     "fra": "C",
+     "til": "G",
+     "fra_ga": [
+      "ess"
+     ],
+     "til_ga": [
+      "åtter"
+     ]
+    }
+   ],
+   "uorden_for": 11,
+   "uorden_etter": 9,
+   "komplette_hender": 2
+  },
+  {
+   "runde": 6,
+   "hender_start": {
+    "A": [
+     "tier",
+     "tier",
+     "tier",
+     "åtter"
+    ],
+    "B": [
+     "konge",
+     "konge",
+     "dame",
+     "tier"
+    ],
+    "C": [
+     "dame",
+     "nier",
+     "nier",
+     "åtter"
+    ],
+    "D": [
+     "knekt",
+     "knekt",
+     "knekt",
+     "knekt"
+    ],
+    "E": [
+     "konge",
+     "nier",
+     "åtter",
+     "åtter"
+    ],
+    "F": [
+     "konge",
+     "dame",
+     "dame",
+     "nier"
+    ],
+    "G": [
+     "ess",
+     "ess",
+     "ess",
+     "ess"
+    ]
+   },
+   "handlinger": {
+    "A": {
+     "notater": "Answer key: A collects tens.",
+     "vent": false,
+     "kortforesporsler": [
+      {
+       "til": "B",
+       "gir": [
+        "åtter"
+       ]
+      }
+     ]
+    },
+    "B": {
+     "notater": "Answer key: B collects kings.",
+     "vent": false
+    },
+    "C": {
+     "notater": "Answer key: C collects nines.",
+     "vent": false,
+     "kortforesporsler": [
+      {
+       "til": "F",
+       "gir": [
+        "dame"
+       ]
+      }
+     ]
+    },
+    "D": {
+     "notater": "Answer key: D collects jacks.",
+     "vent": false
+    },
+    "E": {
+     "notater": "Answer key: E collects eights.",
+     "vent": false
+    },
+    "F": {
+     "notater": "Answer key: F collects queens.",
+     "vent": false
+    },
+    "G": {
+     "notater": "Answer key: G collects aces.",
+     "vent": false
+    }
+   },
+   "hendelser": [
+    {
+     "type": "foresporsel",
+     "fra": "A",
+     "til": "B",
+     "gir": [
+      "åtter"
+     ]
+    },
+    {
+     "type": "foresporsel",
+     "fra": "C",
+     "til": "F",
+     "gir": [
+      "dame"
+     ]
+    }
+   ],
+   "uorden_for": 9,
+   "uorden_etter": 9,
+   "komplette_hender": 2
+  },
+  {
+   "runde": 7,
+   "hender_start": {
+    "A": [
+     "tier",
+     "tier",
+     "tier",
+     "åtter"
+    ],
+    "B": [
+     "konge",
+     "konge",
+     "dame",
+     "tier"
+    ],
+    "C": [
+     "dame",
+     "nier",
+     "nier",
+     "åtter"
+    ],
+    "D": [
+     "knekt",
+     "knekt",
+     "knekt",
+     "knekt"
+    ],
+    "E": [
+     "konge",
+     "nier",
+     "åtter",
+     "åtter"
+    ],
+    "F": [
+     "konge",
+     "dame",
+     "dame",
+     "nier"
+    ],
+    "G": [
+     "ess",
+     "ess",
+     "ess",
+     "ess"
+    ]
+   },
+   "handlinger": {
+    "A": {
+     "notater": "Answer key: A collects tens.",
+     "vent": false
+    },
+    "B": {
+     "notater": "Answer key: B collects kings.",
+     "vent": false,
+     "svar_pa_foresporsler": [
+      {
+       "fra": "A",
+       "aksepter": true,
+       "sender": [
+        "dame"
+       ]
+      }
+     ]
+    },
+    "C": {
+     "notater": "Answer key: C collects nines.",
+     "vent": false
+    },
+    "D": {
+     "notater": "Answer key: D collects jacks.",
+     "vent": false
+    },
+    "E": {
+     "notater": "Answer key: E collects eights.",
+     "vent": false
+    },
+    "F": {
+     "notater": "Answer key: F collects queens.",
+     "vent": false,
+     "svar_pa_foresporsler": [
+      {
+       "fra": "C",
+       "aksepter": true,
+       "sender": [
+        "konge"
+       ]
+      }
+     ]
+    },
+    "G": {
+     "notater": "Answer key: G collects aces.",
+     "vent": false
+    }
+   },
+   "hendelser": [
+    {
+     "type": "bytte",
+     "fra": "A",
+     "til": "B",
+     "fra_ga": [
+      "åtter"
+     ],
+     "til_ga": [
+      "dame"
+     ]
+    },
+    {
+     "type": "bytte",
+     "fra": "C",
+     "til": "F",
+     "fra_ga": [
+      "dame"
+     ],
+     "til_ga": [
+      "konge"
+     ]
+    }
+   ],
+   "uorden_for": 9,
+   "uorden_etter": 8,
+   "komplette_hender": 2
+  },
+  {
+   "runde": 8,
+   "hender_start": {
+    "A": [
+     "dame",
+     "tier",
+     "tier",
+     "tier"
+    ],
+    "B": [
+     "konge",
+     "konge",
+     "tier",
+     "åtter"
+    ],
+    "C": [
+     "konge",
+     "nier",
+     "nier",
+     "åtter"
+    ],
+    "D": [
+     "knekt",
+     "knekt",
+     "knekt",
+     "knekt"
+    ],
+    "E": [
+     "konge",
+     "nier",
+     "åtter",
+     "åtter"
+    ],
+    "F": [
+     "dame",
+     "dame",
+     "dame",
+     "nier"
+    ],
+    "G": [
+     "ess",
+     "ess",
+     "ess",
+     "ess"
+    ]
+   },
+   "handlinger": {
+    "A": {
+     "notater": "Answer key: A collects tens.",
+     "vent": false,
+     "kortforesporsler": [
+      {
+       "til": "C",
+       "gir": [
+        "dame"
+       ]
+      }
+     ]
+    },
+    "B": {
+     "notater": "Answer key: B collects kings.",
+     "vent": false,
+     "kortforesporsler": [
+      {
+       "til": "E",
+       "gir": [
+        "åtter"
+       ]
+      }
+     ]
+    },
+    "C": {
+     "notater": "Answer key: C collects nines.",
+     "vent": false
+    },
+    "D": {
+     "notater": "Answer key: D collects jacks.",
+     "vent": false
+    },
+    "E": {
+     "notater": "Answer key: E collects eights.",
+     "vent": false
+    },
+    "F": {
+     "notater": "Answer key: F collects queens.",
+     "vent": false
+    },
+    "G": {
+     "notater": "Answer key: G collects aces.",
+     "vent": false
+    }
+   },
+   "hendelser": [
+    {
+     "type": "foresporsel",
+     "fra": "A",
+     "til": "C",
+     "gir": [
+      "dame"
+     ]
+    },
+    {
+     "type": "foresporsel",
+     "fra": "B",
+     "til": "E",
+     "gir": [
+      "åtter"
+     ]
+    }
+   ],
+   "uorden_for": 8,
+   "uorden_etter": 8,
+   "komplette_hender": 2
+  },
+  {
+   "runde": 9,
+   "hender_start": {
+    "A": [
+     "dame",
+     "tier",
+     "tier",
+     "tier"
+    ],
+    "B": [
+     "konge",
+     "konge",
+     "tier",
+     "åtter"
+    ],
+    "C": [
+     "konge",
+     "nier",
+     "nier",
+     "åtter"
+    ],
+    "D": [
+     "knekt",
+     "knekt",
+     "knekt",
+     "knekt"
+    ],
+    "E": [
+     "konge",
+     "nier",
+     "åtter",
+     "åtter"
+    ],
+    "F": [
+     "dame",
+     "dame",
+     "dame",
+     "nier"
+    ],
+    "G": [
+     "ess",
+     "ess",
+     "ess",
+     "ess"
+    ]
+   },
+   "handlinger": {
+    "A": {
+     "notater": "Answer key: A collects tens.",
+     "vent": false
+    },
+    "B": {
+     "notater": "Answer key: B collects kings.",
+     "vent": false
+    },
+    "C": {
+     "notater": "Answer key: C collects nines.",
+     "vent": false,
+     "svar_pa_foresporsler": [
+      {
+       "fra": "A",
+       "aksepter": true,
+       "sender": [
+        "åtter"
+       ]
+      }
+     ]
+    },
+    "D": {
+     "notater": "Answer key: D collects jacks.",
+     "vent": false
+    },
+    "E": {
+     "notater": "Answer key: E collects eights.",
+     "vent": false,
+     "svar_pa_foresporsler": [
+      {
+       "fra": "B",
+       "aksepter": true,
+       "sender": [
+        "nier"
+       ]
+      }
+     ]
+    },
+    "F": {
+     "notater": "Answer key: F collects queens.",
+     "vent": false
+    },
+    "G": {
+     "notater": "Answer key: G collects aces.",
+     "vent": false
+    }
+   },
+   "hendelser": [
+    {
+     "type": "bytte",
+     "fra": "A",
+     "til": "C",
+     "fra_ga": [
+      "dame"
+     ],
+     "til_ga": [
+      "åtter"
+     ]
+    },
+    {
+     "type": "bytte",
+     "fra": "B",
+     "til": "E",
+     "fra_ga": [
+      "åtter"
+     ],
+     "til_ga": [
+      "nier"
+     ]
+    }
+   ],
+   "uorden_for": 8,
+   "uorden_etter": 7,
+   "komplette_hender": 2
+  },
+  {
+   "runde": 10,
+   "hender_start": {
+    "A": [
+     "tier",
+     "tier",
+     "tier",
+     "åtter"
+    ],
+    "B": [
+     "konge",
+     "konge",
+     "tier",
+     "nier"
+    ],
+    "C": [
+     "konge",
+     "dame",
+     "nier",
+     "nier"
+    ],
+    "D": [
+     "knekt",
+     "knekt",
+     "knekt",
+     "knekt"
+    ],
+    "E": [
+     "konge",
+     "åtter",
+     "åtter",
+     "åtter"
+    ],
+    "F": [
+     "dame",
+     "dame",
+     "dame",
+     "nier"
+    ],
+    "G": [
+     "ess",
+     "ess",
+     "ess",
+     "ess"
+    ]
+   },
+   "handlinger": {
+    "A": {
+     "notater": "Answer key: A collects tens.",
+     "vent": false,
+     "kortforesporsler": [
+      {
+       "til": "B",
+       "gir": [
+        "åtter"
+       ]
+      }
+     ]
+    },
+    "B": {
+     "notater": "Answer key: B collects kings.",
+     "vent": false
+    },
+    "C": {
+     "notater": "Answer key: C collects nines.",
+     "vent": false,
+     "kortforesporsler": [
+      {
+       "til": "F",
+       "gir": [
+        "dame"
+       ]
+      }
+     ]
+    },
+    "D": {
+     "notater": "Answer key: D collects jacks.",
+     "vent": false
+    },
+    "E": {
+     "notater": "Answer key: E collects eights.",
+     "vent": false
+    },
+    "F": {
+     "notater": "Answer key: F collects queens.",
+     "vent": false
+    },
+    "G": {
+     "notater": "Answer key: G collects aces.",
+     "vent": false
+    }
+   },
+   "hendelser": [
+    {
+     "type": "foresporsel",
+     "fra": "A",
+     "til": "B",
+     "gir": [
+      "åtter"
+     ]
+    },
+    {
+     "type": "foresporsel",
+     "fra": "C",
+     "til": "F",
+     "gir": [
+      "dame"
+     ]
+    }
+   ],
+   "uorden_for": 7,
+   "uorden_etter": 7,
+   "komplette_hender": 2
+  },
+  {
+   "runde": 11,
+   "hender_start": {
+    "A": [
+     "tier",
+     "tier",
+     "tier",
+     "åtter"
+    ],
+    "B": [
+     "konge",
+     "konge",
+     "tier",
+     "nier"
+    ],
+    "C": [
+     "konge",
+     "dame",
+     "nier",
+     "nier"
+    ],
+    "D": [
+     "knekt",
+     "knekt",
+     "knekt",
+     "knekt"
+    ],
+    "E": [
+     "konge",
+     "åtter",
+     "åtter",
+     "åtter"
+    ],
+    "F": [
+     "dame",
+     "dame",
+     "dame",
+     "nier"
+    ],
+    "G": [
+     "ess",
+     "ess",
+     "ess",
+     "ess"
+    ]
+   },
+   "handlinger": {
+    "A": {
+     "notater": "Answer key: A collects tens.",
+     "vent": false
+    },
+    "B": {
+     "notater": "Answer key: B collects kings.",
+     "vent": false,
+     "svar_pa_foresporsler": [
+      {
+       "fra": "A",
+       "aksepter": true,
+       "sender": [
+        "nier"
+       ]
+      }
+     ]
+    },
+    "C": {
+     "notater": "Answer key: C collects nines.",
+     "vent": false
+    },
+    "D": {
+     "notater": "Answer key: D collects jacks.",
+     "vent": false
+    },
+    "E": {
+     "notater": "Answer key: E collects eights.",
+     "vent": false
+    },
+    "F": {
+     "notater": "Answer key: F collects queens.",
+     "vent": false,
+     "svar_pa_foresporsler": [
+      {
+       "fra": "C",
+       "aksepter": true,
+       "sender": [
+        "nier"
+       ]
+      }
+     ]
+    },
+    "G": {
+     "notater": "Answer key: G collects aces.",
+     "vent": false
+    }
+   },
+   "hendelser": [
+    {
+     "type": "bytte",
+     "fra": "A",
+     "til": "B",
+     "fra_ga": [
+      "åtter"
+     ],
+     "til_ga": [
+      "nier"
+     ]
+    },
+    {
+     "type": "bytte",
+     "fra": "C",
+     "til": "F",
+     "fra_ga": [
+      "dame"
+     ],
+     "til_ga": [
+      "nier"
+     ]
+    }
+   ],
+   "uorden_for": 7,
+   "uorden_etter": 5,
+   "komplette_hender": 3
+  },
+  {
+   "runde": 12,
+   "hender_start": {
+    "A": [
+     "tier",
+     "tier",
+     "tier",
+     "nier"
+    ],
+    "B": [
+     "konge",
+     "konge",
+     "tier",
+     "åtter"
+    ],
+    "C": [
+     "konge",
+     "nier",
+     "nier",
+     "nier"
+    ],
+    "D": [
+     "knekt",
+     "knekt",
+     "knekt",
+     "knekt"
+    ],
+    "E": [
+     "konge",
+     "åtter",
+     "åtter",
+     "åtter"
+    ],
+    "F": [
+     "dame",
+     "dame",
+     "dame",
+     "dame"
+    ],
+    "G": [
+     "ess",
+     "ess",
+     "ess",
+     "ess"
+    ]
+   },
+   "handlinger": {
+    "A": {
+     "notater": "Answer key: A collects tens.",
+     "vent": false,
+     "kortforesporsler": [
+      {
+       "til": "C",
+       "gir": [
+        "nier"
+       ]
+      }
+     ]
+    },
+    "B": {
+     "notater": "Answer key: B collects kings.",
+     "vent": false,
+     "kortforesporsler": [
+      {
+       "til": "E",
+       "gir": [
+        "åtter"
+       ]
+      }
+     ]
+    },
+    "C": {
+     "notater": "Answer key: C collects nines.",
+     "vent": false
+    },
+    "D": {
+     "notater": "Answer key: D collects jacks.",
+     "vent": false
+    },
+    "E": {
+     "notater": "Answer key: E collects eights.",
+     "vent": false
+    },
+    "F": {
+     "notater": "Answer key: F collects queens.",
+     "vent": false
+    },
+    "G": {
+     "notater": "Answer key: G collects aces.",
+     "vent": false
+    }
+   },
+   "hendelser": [
+    {
+     "type": "foresporsel",
+     "fra": "A",
+     "til": "C",
+     "gir": [
+      "nier"
+     ]
+    },
+    {
+     "type": "foresporsel",
+     "fra": "B",
+     "til": "E",
+     "gir": [
+      "åtter"
+     ]
+    }
+   ],
+   "uorden_for": 5,
+   "uorden_etter": 5,
+   "komplette_hender": 3
+  },
+  {
+   "runde": 13,
+   "hender_start": {
+    "A": [
+     "tier",
+     "tier",
+     "tier",
+     "nier"
+    ],
+    "B": [
+     "konge",
+     "konge",
+     "tier",
+     "åtter"
+    ],
+    "C": [
+     "konge",
+     "nier",
+     "nier",
+     "nier"
+    ],
+    "D": [
+     "knekt",
+     "knekt",
+     "knekt",
+     "knekt"
+    ],
+    "E": [
+     "konge",
+     "åtter",
+     "åtter",
+     "åtter"
+    ],
+    "F": [
+     "dame",
+     "dame",
+     "dame",
+     "dame"
+    ],
+    "G": [
+     "ess",
+     "ess",
+     "ess",
+     "ess"
+    ]
+   },
+   "handlinger": {
+    "A": {
+     "notater": "Answer key: A collects tens.",
+     "vent": false
+    },
+    "B": {
+     "notater": "Answer key: B collects kings.",
+     "vent": false
+    },
+    "C": {
+     "notater": "Answer key: C collects nines.",
+     "vent": false,
+     "svar_pa_foresporsler": [
+      {
+       "fra": "A",
+       "aksepter": true,
+       "sender": [
+        "konge"
+       ]
+      }
+     ]
+    },
+    "D": {
+     "notater": "Answer key: D collects jacks.",
+     "vent": false
+    },
+    "E": {
+     "notater": "Answer key: E collects eights.",
+     "vent": false,
+     "svar_pa_foresporsler": [
+      {
+       "fra": "B",
+       "aksepter": true,
+       "sender": [
+        "konge"
+       ]
+      }
+     ]
+    },
+    "F": {
+     "notater": "Answer key: F collects queens.",
+     "vent": false
+    },
+    "G": {
+     "notater": "Answer key: G collects aces.",
+     "vent": false
+    }
+   },
+   "hendelser": [
+    {
+     "type": "bytte",
+     "fra": "A",
+     "til": "C",
+     "fra_ga": [
+      "nier"
+     ],
+     "til_ga": [
+      "konge"
+     ]
+    },
+    {
+     "type": "bytte",
+     "fra": "B",
+     "til": "E",
+     "fra_ga": [
+      "åtter"
+     ],
+     "til_ga": [
+      "konge"
+     ]
+    }
+   ],
+   "uorden_for": 5,
+   "uorden_etter": 2,
+   "komplette_hender": 5
+  },
+  {
+   "runde": 14,
+   "hender_start": {
+    "A": [
+     "konge",
+     "tier",
+     "tier",
+     "tier"
+    ],
+    "B": [
+     "konge",
+     "konge",
+     "konge",
+     "tier"
+    ],
+    "C": [
+     "nier",
+     "nier",
+     "nier",
+     "nier"
+    ],
+    "D": [
+     "knekt",
+     "knekt",
+     "knekt",
+     "knekt"
+    ],
+    "E": [
+     "åtter",
+     "åtter",
+     "åtter",
+     "åtter"
+    ],
+    "F": [
+     "dame",
+     "dame",
+     "dame",
+     "dame"
+    ],
+    "G": [
+     "ess",
+     "ess",
+     "ess",
+     "ess"
+    ]
+   },
+   "handlinger": {
+    "A": {
+     "notater": "Answer key: A collects tens.",
+     "vent": false,
+     "kortforesporsler": [
+      {
+       "til": "B",
+       "gir": [
+        "konge"
+       ]
+      }
+     ]
+    },
+    "B": {
+     "notater": "Answer key: B collects kings.",
+     "vent": false
+    },
+    "C": {
+     "notater": "Answer key: C collects nines.",
+     "vent": false
+    },
+    "D": {
+     "notater": "Answer key: D collects jacks.",
+     "vent": false
+    },
+    "E": {
+     "notater": "Answer key: E collects eights.",
+     "vent": false
+    },
+    "F": {
+     "notater": "Answer key: F collects queens.",
+     "vent": false
+    },
+    "G": {
+     "notater": "Answer key: G collects aces.",
+     "vent": false
+    }
+   },
+   "hendelser": [
+    {
+     "type": "foresporsel",
+     "fra": "A",
+     "til": "B",
+     "gir": [
+      "konge"
+     ]
+    }
+   ],
+   "uorden_for": 2,
+   "uorden_etter": 2,
+   "komplette_hender": 5
+  },
+  {
+   "runde": 15,
+   "hender_start": {
+    "A": [
+     "konge",
+     "tier",
+     "tier",
+     "tier"
+    ],
+    "B": [
+     "konge",
+     "konge",
+     "konge",
+     "tier"
+    ],
+    "C": [
+     "nier",
+     "nier",
+     "nier",
+     "nier"
+    ],
+    "D": [
+     "knekt",
+     "knekt",
+     "knekt",
+     "knekt"
+    ],
+    "E": [
+     "åtter",
+     "åtter",
+     "åtter",
+     "åtter"
+    ],
+    "F": [
+     "dame",
+     "dame",
+     "dame",
+     "dame"
+    ],
+    "G": [
+     "ess",
+     "ess",
+     "ess",
+     "ess"
+    ]
+   },
+   "handlinger": {
+    "A": {
+     "notater": "Answer key: A collects tens.",
+     "vent": false
+    },
+    "B": {
+     "notater": "Answer key: B collects kings.",
+     "vent": false,
+     "svar_pa_foresporsler": [
+      {
+       "fra": "A",
+       "aksepter": true,
+       "sender": [
+        "tier"
+       ]
+      }
+     ]
+    },
+    "C": {
+     "notater": "Answer key: C collects nines.",
+     "vent": false
+    },
+    "D": {
+     "notater": "Answer key: D collects jacks.",
+     "vent": false
+    },
+    "E": {
+     "notater": "Answer key: E collects eights.",
+     "vent": false
+    },
+    "F": {
+     "notater": "Answer key: F collects queens.",
+     "vent": false
+    },
+    "G": {
+     "notater": "Answer key: G collects aces.",
+     "vent": false
+    }
+   },
+   "hendelser": [
+    {
+     "type": "bytte",
+     "fra": "A",
+     "til": "B",
+     "fra_ga": [
+      "konge"
+     ],
+     "til_ga": [
+      "tier"
+     ]
+    }
+   ],
+   "uorden_for": 2,
+   "uorden_etter": 0,
+   "komplette_hender": 7
+  }
+ ],
+ "perspektiv": {
+  "A": [
+   {
+    "runde": 0,
+    "prompt": "ROUND 0 of 60\nThe exercise starts now.\n\nYour cards now: ace, jack, ten, nine\n\nWhat has happened so far:\n(nothing yet)\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: A collects tens.",
+     "vent": false,
+     "kortforesporsler": [
+      {
+       "til": "B",
+       "gir": [
+        "knekt"
+       ]
+      },
+      {
+       "til": "C",
+       "gir": [
+        "ess",
+        "nier"
+       ]
+      }
+     ]
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 1,
+    "prompt": "ROUND 1 of 60\n\nYour cards now: ace, jack, ten, nine\nOf these, reserved in your open requests: ace, jack, nine\n\nYour open card requests (awaiting a reply):\n- to B: you offer jack (sent in round 0)\n- to C: you offer ace, nine (sent in round 0)\n\nYour notes from last time:\nAnswer key: A collects tens.\n\nWhat has happened so far:\n--- new since you last acted ---\nRound 0:\n  - You asked B for 1 card(s) and offered jack.\n  - You asked C for 2 card(s) and offered ace, nine.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: A collects tens.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 2,
+    "prompt": "ROUND 2 of 60\n\nYour cards now: ace, jack, ten, ten\n\nYour notes from last time:\nAnswer key: A collects tens.\n\nWhat has happened so far:\nRound 0:\n  - You asked B for 1 card(s) and offered jack.\n  - You asked C for 2 card(s) and offered ace, nine.\n--- new since you last acted ---\nRound 1:\n  - B accepted your request: you gave jack and received ace.\n  - C accepted your request: you gave ace, nine and received jack, ten.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: A collects tens.",
+     "vent": false,
+     "kortforesporsler": [
+      {
+       "til": "B",
+       "gir": [
+        "knekt"
+       ]
+      },
+      {
+       "til": "C",
+       "gir": [
+        "ess"
+       ]
+      }
+     ]
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 3,
+    "prompt": "ROUND 3 of 60\n\nYour cards now: ace, jack, ten, ten\nOf these, reserved in your open requests: ace, jack\n\nYour open card requests (awaiting a reply):\n- to B: you offer jack (sent in round 2)\n- to C: you offer ace (sent in round 2)\n\nYour notes from last time:\nAnswer key: A collects tens.\n\nWhat has happened so far:\nRound 0:\n  - You asked B for 1 card(s) and offered jack.\n  - You asked C for 2 card(s) and offered ace, nine.\nRound 1:\n  - B accepted your request: you gave jack and received ace.\n  - C accepted your request: you gave ace, nine and received jack, ten.\n--- new since you last acted ---\nRound 2:\n  - You asked B for 1 card(s) and offered jack.\n  - You asked C for 1 card(s) and offered ace.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: A collects tens.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 4,
+    "prompt": "ROUND 4 of 60\n\nYour cards now: queen, ten, ten, ten\n\nYour notes from last time:\nAnswer key: A collects tens.\n\nWhat has happened so far:\nRound 0:\n  - You asked B for 1 card(s) and offered jack.\n  - You asked C for 2 card(s) and offered ace, nine.\nRound 1:\n  - B accepted your request: you gave jack and received ace.\n  - C accepted your request: you gave ace, nine and received jack, ten.\nRound 2:\n  - You asked B for 1 card(s) and offered jack.\n  - You asked C for 1 card(s) and offered ace.\n--- new since you last acted ---\nRound 3:\n  - B accepted your request: you gave jack and received queen.\n  - C accepted your request: you gave ace and received ten.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: A collects tens.",
+     "vent": false,
+     "kortforesporsler": [
+      {
+       "til": "C",
+       "gir": [
+        "dame"
+       ]
+      }
+     ]
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 5,
+    "prompt": "ROUND 5 of 60\nReminder from the facilitator: 5 of 60 rounds have passed.\n\nYour cards now: queen, ten, ten, ten\nOf these, reserved in your open requests: queen\n\nYour open card requests (awaiting a reply):\n- to C: you offer queen (sent in round 4)\n\nYour notes from last time:\nAnswer key: A collects tens.\n\nWhat has happened so far:\nRound 0:\n  - You asked B for 1 card(s) and offered jack.\n  - You asked C for 2 card(s) and offered ace, nine.\nRound 1:\n  - B accepted your request: you gave jack and received ace.\n  - C accepted your request: you gave ace, nine and received jack, ten.\nRound 2:\n  - You asked B for 1 card(s) and offered jack.\n  - You asked C for 1 card(s) and offered ace.\nRound 3:\n  - B accepted your request: you gave jack and received queen.\n  - C accepted your request: you gave ace and received ten.\n--- new since you last acted ---\nRound 4:\n  - You asked C for 1 card(s) and offered queen.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: A collects tens.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 6,
+    "prompt": "ROUND 6 of 60\n\nYour cards now: ten, ten, ten, eight\n\nYour notes from last time:\nAnswer key: A collects tens.\n\nWhat has happened so far:\nRound 0:\n  - You asked B for 1 card(s) and offered jack.\n  - You asked C for 2 card(s) and offered ace, nine.\nRound 1:\n  - B accepted your request: you gave jack and received ace.\n  - C accepted your request: you gave ace, nine and received jack, ten.\nRound 2:\n  - You asked B for 1 card(s) and offered jack.\n  - You asked C for 1 card(s) and offered ace.\nRound 3:\n  - B accepted your request: you gave jack and received queen.\n  - C accepted your request: you gave ace and received ten.\nRound 4:\n  - You asked C for 1 card(s) and offered queen.\n--- new since you last acted ---\nRound 5:\n  - C accepted your request: you gave queen and received eight.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: A collects tens.",
+     "vent": false,
+     "kortforesporsler": [
+      {
+       "til": "B",
+       "gir": [
+        "åtter"
+       ]
+      }
+     ]
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 7,
+    "prompt": "ROUND 7 of 60\n\nYour cards now: ten, ten, ten, eight\nOf these, reserved in your open requests: eight\n\nYour open card requests (awaiting a reply):\n- to B: you offer eight (sent in round 6)\n\nYour notes from last time:\nAnswer key: A collects tens.\n\nWhat has happened so far:\nRound 0:\n  - You asked B for 1 card(s) and offered jack.\n  - You asked C for 2 card(s) and offered ace, nine.\nRound 1:\n  - B accepted your request: you gave jack and received ace.\n  - C accepted your request: you gave ace, nine and received jack, ten.\nRound 2:\n  - You asked B for 1 card(s) and offered jack.\n  - You asked C for 1 card(s) and offered ace.\nRound 3:\n  - B accepted your request: you gave jack and received queen.\n  - C accepted your request: you gave ace and received ten.\nRound 4:\n  - You asked C for 1 card(s) and offered queen.\nRound 5:\n  - C accepted your request: you gave queen and received eight.\n--- new since you last acted ---\nRound 6:\n  - You asked B for 1 card(s) and offered eight.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: A collects tens.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 8,
+    "prompt": "ROUND 8 of 60\n\nYour cards now: queen, ten, ten, ten\n\nYour notes from last time:\nAnswer key: A collects tens.\n\nWhat has happened so far:\nRound 0:\n  - You asked B for 1 card(s) and offered jack.\n  - You asked C for 2 card(s) and offered ace, nine.\nRound 1:\n  - B accepted your request: you gave jack and received ace.\n  - C accepted your request: you gave ace, nine and received jack, ten.\nRound 2:\n  - You asked B for 1 card(s) and offered jack.\n  - You asked C for 1 card(s) and offered ace.\nRound 3:\n  - B accepted your request: you gave jack and received queen.\n  - C accepted your request: you gave ace and received ten.\nRound 4:\n  - You asked C for 1 card(s) and offered queen.\nRound 5:\n  - C accepted your request: you gave queen and received eight.\nRound 6:\n  - You asked B for 1 card(s) and offered eight.\n--- new since you last acted ---\nRound 7:\n  - B accepted your request: you gave eight and received queen.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: A collects tens.",
+     "vent": false,
+     "kortforesporsler": [
+      {
+       "til": "C",
+       "gir": [
+        "dame"
+       ]
+      }
+     ]
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 9,
+    "prompt": "ROUND 9 of 60\n\nYour cards now: queen, ten, ten, ten\nOf these, reserved in your open requests: queen\n\nYour open card requests (awaiting a reply):\n- to C: you offer queen (sent in round 8)\n\nYour notes from last time:\nAnswer key: A collects tens.\n\nWhat has happened so far:\nRound 0:\n  - You asked B for 1 card(s) and offered jack.\n  - You asked C for 2 card(s) and offered ace, nine.\nRound 1:\n  - B accepted your request: you gave jack and received ace.\n  - C accepted your request: you gave ace, nine and received jack, ten.\nRound 2:\n  - You asked B for 1 card(s) and offered jack.\n  - You asked C for 1 card(s) and offered ace.\nRound 3:\n  - B accepted your request: you gave jack and received queen.\n  - C accepted your request: you gave ace and received ten.\nRound 4:\n  - You asked C for 1 card(s) and offered queen.\nRound 5:\n  - C accepted your request: you gave queen and received eight.\nRound 6:\n  - You asked B for 1 card(s) and offered eight.\nRound 7:\n  - B accepted your request: you gave eight and received queen.\n--- new since you last acted ---\nRound 8:\n  - You asked C for 1 card(s) and offered queen.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: A collects tens.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 10,
+    "prompt": "ROUND 10 of 60\nReminder from the facilitator: 10 of 60 rounds have passed.\n\nYour cards now: ten, ten, ten, eight\n\nYour notes from last time:\nAnswer key: A collects tens.\n\nWhat has happened so far:\nRound 0:\n  - You asked B for 1 card(s) and offered jack.\n  - You asked C for 2 card(s) and offered ace, nine.\nRound 1:\n  - B accepted your request: you gave jack and received ace.\n  - C accepted your request: you gave ace, nine and received jack, ten.\nRound 2:\n  - You asked B for 1 card(s) and offered jack.\n  - You asked C for 1 card(s) and offered ace.\nRound 3:\n  - B accepted your request: you gave jack and received queen.\n  - C accepted your request: you gave ace and received ten.\nRound 4:\n  - You asked C for 1 card(s) and offered queen.\nRound 5:\n  - C accepted your request: you gave queen and received eight.\nRound 6:\n  - You asked B for 1 card(s) and offered eight.\nRound 7:\n  - B accepted your request: you gave eight and received queen.\nRound 8:\n  - You asked C for 1 card(s) and offered queen.\n--- new since you last acted ---\nRound 9:\n  - C accepted your request: you gave queen and received eight.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: A collects tens.",
+     "vent": false,
+     "kortforesporsler": [
+      {
+       "til": "B",
+       "gir": [
+        "åtter"
+       ]
+      }
+     ]
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 11,
+    "prompt": "ROUND 11 of 60\n\nYour cards now: ten, ten, ten, eight\nOf these, reserved in your open requests: eight\n\nYour open card requests (awaiting a reply):\n- to B: you offer eight (sent in round 10)\n\nYour notes from last time:\nAnswer key: A collects tens.\n\nWhat has happened so far:\nRound 0:\n  - You asked B for 1 card(s) and offered jack.\n  - You asked C for 2 card(s) and offered ace, nine.\nRound 1:\n  - B accepted your request: you gave jack and received ace.\n  - C accepted your request: you gave ace, nine and received jack, ten.\nRound 2:\n  - You asked B for 1 card(s) and offered jack.\n  - You asked C for 1 card(s) and offered ace.\nRound 3:\n  - B accepted your request: you gave jack and received queen.\n  - C accepted your request: you gave ace and received ten.\nRound 4:\n  - You asked C for 1 card(s) and offered queen.\nRound 5:\n  - C accepted your request: you gave queen and received eight.\nRound 6:\n  - You asked B for 1 card(s) and offered eight.\nRound 7:\n  - B accepted your request: you gave eight and received queen.\nRound 8:\n  - You asked C for 1 card(s) and offered queen.\nRound 9:\n  - C accepted your request: you gave queen and received eight.\n--- new since you last acted ---\nRound 10:\n  - You asked B for 1 card(s) and offered eight.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: A collects tens.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 12,
+    "prompt": "ROUND 12 of 60\n\nYour cards now: ten, ten, ten, nine\n\nYour notes from last time:\nAnswer key: A collects tens.\n\nWhat has happened so far:\nRound 0:\n  - You asked B for 1 card(s) and offered jack.\n  - You asked C for 2 card(s) and offered ace, nine.\nRound 1:\n  - B accepted your request: you gave jack and received ace.\n  - C accepted your request: you gave ace, nine and received jack, ten.\nRound 2:\n  - You asked B for 1 card(s) and offered jack.\n  - You asked C for 1 card(s) and offered ace.\nRound 3:\n  - B accepted your request: you gave jack and received queen.\n  - C accepted your request: you gave ace and received ten.\nRound 4:\n  - You asked C for 1 card(s) and offered queen.\nRound 5:\n  - C accepted your request: you gave queen and received eight.\nRound 6:\n  - You asked B for 1 card(s) and offered eight.\nRound 7:\n  - B accepted your request: you gave eight and received queen.\nRound 8:\n  - You asked C for 1 card(s) and offered queen.\nRound 9:\n  - C accepted your request: you gave queen and received eight.\nRound 10:\n  - You asked B for 1 card(s) and offered eight.\n--- new since you last acted ---\nRound 11:\n  - B accepted your request: you gave eight and received nine.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: A collects tens.",
+     "vent": false,
+     "kortforesporsler": [
+      {
+       "til": "C",
+       "gir": [
+        "nier"
+       ]
+      }
+     ]
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 13,
+    "prompt": "ROUND 13 of 60\n\nYour cards now: ten, ten, ten, nine\nOf these, reserved in your open requests: nine\n\nYour open card requests (awaiting a reply):\n- to C: you offer nine (sent in round 12)\n\nYour notes from last time:\nAnswer key: A collects tens.\n\nWhat has happened so far:\nRound 0:\n  - You asked B for 1 card(s) and offered jack.\n  - You asked C for 2 card(s) and offered ace, nine.\nRound 1:\n  - B accepted your request: you gave jack and received ace.\n  - C accepted your request: you gave ace, nine and received jack, ten.\nRound 2:\n  - You asked B for 1 card(s) and offered jack.\n  - You asked C for 1 card(s) and offered ace.\nRound 3:\n  - B accepted your request: you gave jack and received queen.\n  - C accepted your request: you gave ace and received ten.\nRound 4:\n  - You asked C for 1 card(s) and offered queen.\nRound 5:\n  - C accepted your request: you gave queen and received eight.\nRound 6:\n  - You asked B for 1 card(s) and offered eight.\nRound 7:\n  - B accepted your request: you gave eight and received queen.\nRound 8:\n  - You asked C for 1 card(s) and offered queen.\nRound 9:\n  - C accepted your request: you gave queen and received eight.\nRound 10:\n  - You asked B for 1 card(s) and offered eight.\nRound 11:\n  - B accepted your request: you gave eight and received nine.\n--- new since you last acted ---\nRound 12:\n  - You asked C for 1 card(s) and offered nine.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: A collects tens.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 14,
+    "prompt": "ROUND 14 of 60\n\nYour cards now: king, ten, ten, ten\n\nYour notes from last time:\nAnswer key: A collects tens.\n\nWhat has happened so far:\nRound 0:\n  - You asked B for 1 card(s) and offered jack.\n  - You asked C for 2 card(s) and offered ace, nine.\nRound 1:\n  - B accepted your request: you gave jack and received ace.\n  - C accepted your request: you gave ace, nine and received jack, ten.\nRound 2:\n  - You asked B for 1 card(s) and offered jack.\n  - You asked C for 1 card(s) and offered ace.\nRound 3:\n  - B accepted your request: you gave jack and received queen.\n  - C accepted your request: you gave ace and received ten.\nRound 4:\n  - You asked C for 1 card(s) and offered queen.\nRound 5:\n  - C accepted your request: you gave queen and received eight.\nRound 6:\n  - You asked B for 1 card(s) and offered eight.\nRound 7:\n  - B accepted your request: you gave eight and received queen.\nRound 8:\n  - You asked C for 1 card(s) and offered queen.\nRound 9:\n  - C accepted your request: you gave queen and received eight.\nRound 10:\n  - You asked B for 1 card(s) and offered eight.\nRound 11:\n  - B accepted your request: you gave eight and received nine.\nRound 12:\n  - You asked C for 1 card(s) and offered nine.\n--- new since you last acted ---\nRound 13:\n  - C accepted your request: you gave nine and received king.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: A collects tens.",
+     "vent": false,
+     "kortforesporsler": [
+      {
+       "til": "B",
+       "gir": [
+        "konge"
+       ]
+      }
+     ]
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 15,
+    "prompt": "ROUND 15 of 60\nReminder from the facilitator: 15 of 60 rounds have passed.\n\nYour cards now: king, ten, ten, ten\nOf these, reserved in your open requests: king\n\nYour open card requests (awaiting a reply):\n- to B: you offer king (sent in round 14)\n\nYour notes from last time:\nAnswer key: A collects tens.\n\nWhat has happened so far:\nRound 0:\n  - You asked B for 1 card(s) and offered jack.\n  - You asked C for 2 card(s) and offered ace, nine.\nRound 1:\n  - B accepted your request: you gave jack and received ace.\n  - C accepted your request: you gave ace, nine and received jack, ten.\nRound 2:\n  - You asked B for 1 card(s) and offered jack.\n  - You asked C for 1 card(s) and offered ace.\nRound 3:\n  - B accepted your request: you gave jack and received queen.\n  - C accepted your request: you gave ace and received ten.\nRound 4:\n  - You asked C for 1 card(s) and offered queen.\nRound 5:\n  - C accepted your request: you gave queen and received eight.\nRound 6:\n  - You asked B for 1 card(s) and offered eight.\nRound 7:\n  - B accepted your request: you gave eight and received queen.\nRound 8:\n  - You asked C for 1 card(s) and offered queen.\nRound 9:\n  - C accepted your request: you gave queen and received eight.\nRound 10:\n  - You asked B for 1 card(s) and offered eight.\nRound 11:\n  - B accepted your request: you gave eight and received nine.\nRound 12:\n  - You asked C for 1 card(s) and offered nine.\nRound 13:\n  - C accepted your request: you gave nine and received king.\n--- new since you last acted ---\nRound 14:\n  - You asked B for 1 card(s) and offered king.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: A collects tens.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   }
+  ],
+  "B": [
+   {
+    "runde": 0,
+    "prompt": "ROUND 0 of 60\nThe exercise starts now.\n\nYour cards now: ace, king, king, eight\n\nWhat has happened so far:\n(nothing yet)\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: B collects kings.",
+     "vent": false,
+     "kortforesporsler": [
+      {
+       "til": "E",
+       "gir": [
+        "åtter"
+       ]
+      }
+     ]
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 1,
+    "prompt": "ROUND 1 of 60\n\nYour cards now: ace, king, king, eight\nOf these, reserved in your open requests: eight\n\nYour open card requests (awaiting a reply):\n- to E: you offer eight (sent in round 0)\n\nCard requests to you awaiting your reply:\n- A asks you to send 1 card(s) and offers you jack (sent in round 0)\n\nYour notes from last time:\nAnswer key: B collects kings.\n\nWhat has happened so far:\n--- new since you last acted ---\nRound 0:\n  - A asks you to send 1 card(s) and offers you jack.\n  - You asked E for 1 card(s) and offered eight.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: B collects kings.",
+     "vent": false,
+     "svar_pa_foresporsler": [
+      {
+       "fra": "A",
+       "aksepter": true,
+       "sender": [
+        "ess"
+       ]
+      }
+     ]
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 2,
+    "prompt": "ROUND 2 of 60\n\nYour cards now: king, king, queen, jack\n\nYour notes from last time:\nAnswer key: B collects kings.\n\nWhat has happened so far:\nRound 0:\n  - A asks you to send 1 card(s) and offers you jack.\n  - You asked E for 1 card(s) and offered eight.\n--- new since you last acted ---\nRound 1:\n  - Swap with A completed: you sent ace and received jack.\n  - E accepted your request: you gave eight and received queen.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: B collects kings.",
+     "vent": false,
+     "kortforesporsler": [
+      {
+       "til": "D",
+       "gir": [
+        "knekt"
+       ]
+      }
+     ]
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 3,
+    "prompt": "ROUND 3 of 60\n\nYour cards now: king, king, queen, jack\nOf these, reserved in your open requests: jack\n\nYour open card requests (awaiting a reply):\n- to D: you offer jack (sent in round 2)\n\nCard requests to you awaiting your reply:\n- A asks you to send 1 card(s) and offers you jack (sent in round 2)\n\nYour notes from last time:\nAnswer key: B collects kings.\n\nWhat has happened so far:\nRound 0:\n  - A asks you to send 1 card(s) and offers you jack.\n  - You asked E for 1 card(s) and offered eight.\nRound 1:\n  - Swap with A completed: you sent ace and received jack.\n  - E accepted your request: you gave eight and received queen.\n--- new since you last acted ---\nRound 2:\n  - A asks you to send 1 card(s) and offers you jack.\n  - You asked D for 1 card(s) and offered jack.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: B collects kings.",
+     "vent": false,
+     "svar_pa_foresporsler": [
+      {
+       "fra": "A",
+       "aksepter": true,
+       "sender": [
+        "dame"
+       ]
+      }
+     ]
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 4,
+    "prompt": "ROUND 4 of 60\n\nYour cards now: king, king, queen, jack\n\nYour notes from last time:\nAnswer key: B collects kings.\n\nWhat has happened so far:\nRound 0:\n  - A asks you to send 1 card(s) and offers you jack.\n  - You asked E for 1 card(s) and offered eight.\nRound 1:\n  - Swap with A completed: you sent ace and received jack.\n  - E accepted your request: you gave eight and received queen.\nRound 2:\n  - A asks you to send 1 card(s) and offers you jack.\n  - You asked D for 1 card(s) and offered jack.\n--- new since you last acted ---\nRound 3:\n  - Swap with A completed: you sent queen and received jack.\n  - D accepted your request: you gave jack and received queen.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: B collects kings.",
+     "vent": false,
+     "kortforesporsler": [
+      {
+       "til": "D",
+       "gir": [
+        "knekt"
+       ]
+      }
+     ]
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 5,
+    "prompt": "ROUND 5 of 60\nReminder from the facilitator: 5 of 60 rounds have passed.\n\nYour cards now: king, king, queen, jack\nOf these, reserved in your open requests: jack\n\nYour open card requests (awaiting a reply):\n- to D: you offer jack (sent in round 4)\n\nYour notes from last time:\nAnswer key: B collects kings.\n\nWhat has happened so far:\nRound 0:\n  - A asks you to send 1 card(s) and offers you jack.\n  - You asked E for 1 card(s) and offered eight.\nRound 1:\n  - Swap with A completed: you sent ace and received jack.\n  - E accepted your request: you gave eight and received queen.\nRound 2:\n  - A asks you to send 1 card(s) and offers you jack.\n  - You asked D for 1 card(s) and offered jack.\nRound 3:\n  - Swap with A completed: you sent queen and received jack.\n  - D accepted your request: you gave jack and received queen.\n--- new since you last acted ---\nRound 4:\n  - You asked D for 1 card(s) and offered jack.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: B collects kings.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 6,
+    "prompt": "ROUND 6 of 60\n\nYour cards now: king, king, queen, ten\n\nYour notes from last time:\nAnswer key: B collects kings.\n\nWhat has happened so far:\nRound 0:\n  - A asks you to send 1 card(s) and offers you jack.\n  - You asked E for 1 card(s) and offered eight.\nRound 1:\n  - Swap with A completed: you sent ace and received jack.\n  - E accepted your request: you gave eight and received queen.\nRound 2:\n  - A asks you to send 1 card(s) and offers you jack.\n  - You asked D for 1 card(s) and offered jack.\nRound 3:\n  - Swap with A completed: you sent queen and received jack.\n  - D accepted your request: you gave jack and received queen.\nRound 4:\n  - You asked D for 1 card(s) and offered jack.\n--- new since you last acted ---\nRound 5:\n  - D accepted your request: you gave jack and received ten.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: B collects kings.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 7,
+    "prompt": "ROUND 7 of 60\n\nYour cards now: king, king, queen, ten\n\nCard requests to you awaiting your reply:\n- A asks you to send 1 card(s) and offers you eight (sent in round 6)\n\nYour notes from last time:\nAnswer key: B collects kings.\n\nWhat has happened so far:\nRound 0:\n  - A asks you to send 1 card(s) and offers you jack.\n  - You asked E for 1 card(s) and offered eight.\nRound 1:\n  - Swap with A completed: you sent ace and received jack.\n  - E accepted your request: you gave eight and received queen.\nRound 2:\n  - A asks you to send 1 card(s) and offers you jack.\n  - You asked D for 1 card(s) and offered jack.\nRound 3:\n  - Swap with A completed: you sent queen and received jack.\n  - D accepted your request: you gave jack and received queen.\nRound 4:\n  - You asked D for 1 card(s) and offered jack.\nRound 5:\n  - D accepted your request: you gave jack and received ten.\n--- new since you last acted ---\nRound 6:\n  - A asks you to send 1 card(s) and offers you eight.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: B collects kings.",
+     "vent": false,
+     "svar_pa_foresporsler": [
+      {
+       "fra": "A",
+       "aksepter": true,
+       "sender": [
+        "dame"
+       ]
+      }
+     ]
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 8,
+    "prompt": "ROUND 8 of 60\n\nYour cards now: king, king, ten, eight\n\nYour notes from last time:\nAnswer key: B collects kings.\n\nWhat has happened so far:\nRound 0:\n  - A asks you to send 1 card(s) and offers you jack.\n  - You asked E for 1 card(s) and offered eight.\nRound 1:\n  - Swap with A completed: you sent ace and received jack.\n  - E accepted your request: you gave eight and received queen.\nRound 2:\n  - A asks you to send 1 card(s) and offers you jack.\n  - You asked D for 1 card(s) and offered jack.\nRound 3:\n  - Swap with A completed: you sent queen and received jack.\n  - D accepted your request: you gave jack and received queen.\nRound 4:\n  - You asked D for 1 card(s) and offered jack.\nRound 5:\n  - D accepted your request: you gave jack and received ten.\nRound 6:\n  - A asks you to send 1 card(s) and offers you eight.\n--- new since you last acted ---\nRound 7:\n  - Swap with A completed: you sent queen and received eight.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: B collects kings.",
+     "vent": false,
+     "kortforesporsler": [
+      {
+       "til": "E",
+       "gir": [
+        "åtter"
+       ]
+      }
+     ]
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 9,
+    "prompt": "ROUND 9 of 60\n\nYour cards now: king, king, ten, eight\nOf these, reserved in your open requests: eight\n\nYour open card requests (awaiting a reply):\n- to E: you offer eight (sent in round 8)\n\nYour notes from last time:\nAnswer key: B collects kings.\n\nWhat has happened so far:\nRound 0:\n  - A asks you to send 1 card(s) and offers you jack.\n  - You asked E for 1 card(s) and offered eight.\nRound 1:\n  - Swap with A completed: you sent ace and received jack.\n  - E accepted your request: you gave eight and received queen.\nRound 2:\n  - A asks you to send 1 card(s) and offers you jack.\n  - You asked D for 1 card(s) and offered jack.\nRound 3:\n  - Swap with A completed: you sent queen and received jack.\n  - D accepted your request: you gave jack and received queen.\nRound 4:\n  - You asked D for 1 card(s) and offered jack.\nRound 5:\n  - D accepted your request: you gave jack and received ten.\nRound 6:\n  - A asks you to send 1 card(s) and offers you eight.\nRound 7:\n  - Swap with A completed: you sent queen and received eight.\n--- new since you last acted ---\nRound 8:\n  - You asked E for 1 card(s) and offered eight.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: B collects kings.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 10,
+    "prompt": "ROUND 10 of 60\nReminder from the facilitator: 10 of 60 rounds have passed.\n\nYour cards now: king, king, ten, nine\n\nYour notes from last time:\nAnswer key: B collects kings.\n\nWhat has happened so far:\nRound 0:\n  - A asks you to send 1 card(s) and offers you jack.\n  - You asked E for 1 card(s) and offered eight.\nRound 1:\n  - Swap with A completed: you sent ace and received jack.\n  - E accepted your request: you gave eight and received queen.\nRound 2:\n  - A asks you to send 1 card(s) and offers you jack.\n  - You asked D for 1 card(s) and offered jack.\nRound 3:\n  - Swap with A completed: you sent queen and received jack.\n  - D accepted your request: you gave jack and received queen.\nRound 4:\n  - You asked D for 1 card(s) and offered jack.\nRound 5:\n  - D accepted your request: you gave jack and received ten.\nRound 6:\n  - A asks you to send 1 card(s) and offers you eight.\nRound 7:\n  - Swap with A completed: you sent queen and received eight.\nRound 8:\n  - You asked E for 1 card(s) and offered eight.\n--- new since you last acted ---\nRound 9:\n  - E accepted your request: you gave eight and received nine.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: B collects kings.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 11,
+    "prompt": "ROUND 11 of 60\n\nYour cards now: king, king, ten, nine\n\nCard requests to you awaiting your reply:\n- A asks you to send 1 card(s) and offers you eight (sent in round 10)\n\nYour notes from last time:\nAnswer key: B collects kings.\n\nWhat has happened so far:\nRound 0:\n  - A asks you to send 1 card(s) and offers you jack.\n  - You asked E for 1 card(s) and offered eight.\nRound 1:\n  - Swap with A completed: you sent ace and received jack.\n  - E accepted your request: you gave eight and received queen.\nRound 2:\n  - A asks you to send 1 card(s) and offers you jack.\n  - You asked D for 1 card(s) and offered jack.\nRound 3:\n  - Swap with A completed: you sent queen and received jack.\n  - D accepted your request: you gave jack and received queen.\nRound 4:\n  - You asked D for 1 card(s) and offered jack.\nRound 5:\n  - D accepted your request: you gave jack and received ten.\nRound 6:\n  - A asks you to send 1 card(s) and offers you eight.\nRound 7:\n  - Swap with A completed: you sent queen and received eight.\nRound 8:\n  - You asked E for 1 card(s) and offered eight.\nRound 9:\n  - E accepted your request: you gave eight and received nine.\n--- new since you last acted ---\nRound 10:\n  - A asks you to send 1 card(s) and offers you eight.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: B collects kings.",
+     "vent": false,
+     "svar_pa_foresporsler": [
+      {
+       "fra": "A",
+       "aksepter": true,
+       "sender": [
+        "nier"
+       ]
+      }
+     ]
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 12,
+    "prompt": "ROUND 12 of 60\n\nYour cards now: king, king, ten, eight\n\nYour notes from last time:\nAnswer key: B collects kings.\n\nWhat has happened so far:\nRound 0:\n  - A asks you to send 1 card(s) and offers you jack.\n  - You asked E for 1 card(s) and offered eight.\nRound 1:\n  - Swap with A completed: you sent ace and received jack.\n  - E accepted your request: you gave eight and received queen.\nRound 2:\n  - A asks you to send 1 card(s) and offers you jack.\n  - You asked D for 1 card(s) and offered jack.\nRound 3:\n  - Swap with A completed: you sent queen and received jack.\n  - D accepted your request: you gave jack and received queen.\nRound 4:\n  - You asked D for 1 card(s) and offered jack.\nRound 5:\n  - D accepted your request: you gave jack and received ten.\nRound 6:\n  - A asks you to send 1 card(s) and offers you eight.\nRound 7:\n  - Swap with A completed: you sent queen and received eight.\nRound 8:\n  - You asked E for 1 card(s) and offered eight.\nRound 9:\n  - E accepted your request: you gave eight and received nine.\nRound 10:\n  - A asks you to send 1 card(s) and offers you eight.\n--- new since you last acted ---\nRound 11:\n  - Swap with A completed: you sent nine and received eight.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: B collects kings.",
+     "vent": false,
+     "kortforesporsler": [
+      {
+       "til": "E",
+       "gir": [
+        "åtter"
+       ]
+      }
+     ]
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 13,
+    "prompt": "ROUND 13 of 60\n\nYour cards now: king, king, ten, eight\nOf these, reserved in your open requests: eight\n\nYour open card requests (awaiting a reply):\n- to E: you offer eight (sent in round 12)\n\nYour notes from last time:\nAnswer key: B collects kings.\n\nWhat has happened so far:\nRound 0:\n  - A asks you to send 1 card(s) and offers you jack.\n  - You asked E for 1 card(s) and offered eight.\nRound 1:\n  - Swap with A completed: you sent ace and received jack.\n  - E accepted your request: you gave eight and received queen.\nRound 2:\n  - A asks you to send 1 card(s) and offers you jack.\n  - You asked D for 1 card(s) and offered jack.\nRound 3:\n  - Swap with A completed: you sent queen and received jack.\n  - D accepted your request: you gave jack and received queen.\nRound 4:\n  - You asked D for 1 card(s) and offered jack.\nRound 5:\n  - D accepted your request: you gave jack and received ten.\nRound 6:\n  - A asks you to send 1 card(s) and offers you eight.\nRound 7:\n  - Swap with A completed: you sent queen and received eight.\nRound 8:\n  - You asked E for 1 card(s) and offered eight.\nRound 9:\n  - E accepted your request: you gave eight and received nine.\nRound 10:\n  - A asks you to send 1 card(s) and offers you eight.\nRound 11:\n  - Swap with A completed: you sent nine and received eight.\n--- new since you last acted ---\nRound 12:\n  - You asked E for 1 card(s) and offered eight.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: B collects kings.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 14,
+    "prompt": "ROUND 14 of 60\n\nYour cards now: king, king, king, ten\n\nYour notes from last time:\nAnswer key: B collects kings.\n\nWhat has happened so far:\nRound 0:\n  - A asks you to send 1 card(s) and offers you jack.\n  - You asked E for 1 card(s) and offered eight.\nRound 1:\n  - Swap with A completed: you sent ace and received jack.\n  - E accepted your request: you gave eight and received queen.\nRound 2:\n  - A asks you to send 1 card(s) and offers you jack.\n  - You asked D for 1 card(s) and offered jack.\nRound 3:\n  - Swap with A completed: you sent queen and received jack.\n  - D accepted your request: you gave jack and received queen.\nRound 4:\n  - You asked D for 1 card(s) and offered jack.\nRound 5:\n  - D accepted your request: you gave jack and received ten.\nRound 6:\n  - A asks you to send 1 card(s) and offers you eight.\nRound 7:\n  - Swap with A completed: you sent queen and received eight.\nRound 8:\n  - You asked E for 1 card(s) and offered eight.\nRound 9:\n  - E accepted your request: you gave eight and received nine.\nRound 10:\n  - A asks you to send 1 card(s) and offers you eight.\nRound 11:\n  - Swap with A completed: you sent nine and received eight.\nRound 12:\n  - You asked E for 1 card(s) and offered eight.\n--- new since you last acted ---\nRound 13:\n  - E accepted your request: you gave eight and received king.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: B collects kings.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 15,
+    "prompt": "ROUND 15 of 60\nReminder from the facilitator: 15 of 60 rounds have passed.\n\nYour cards now: king, king, king, ten\n\nCard requests to you awaiting your reply:\n- A asks you to send 1 card(s) and offers you king (sent in round 14)\n\nYour notes from last time:\nAnswer key: B collects kings.\n\nWhat has happened so far:\nRound 0:\n  - A asks you to send 1 card(s) and offers you jack.\n  - You asked E for 1 card(s) and offered eight.\nRound 1:\n  - Swap with A completed: you sent ace and received jack.\n  - E accepted your request: you gave eight and received queen.\nRound 2:\n  - A asks you to send 1 card(s) and offers you jack.\n  - You asked D for 1 card(s) and offered jack.\nRound 3:\n  - Swap with A completed: you sent queen and received jack.\n  - D accepted your request: you gave jack and received queen.\nRound 4:\n  - You asked D for 1 card(s) and offered jack.\nRound 5:\n  - D accepted your request: you gave jack and received ten.\nRound 6:\n  - A asks you to send 1 card(s) and offers you eight.\nRound 7:\n  - Swap with A completed: you sent queen and received eight.\nRound 8:\n  - You asked E for 1 card(s) and offered eight.\nRound 9:\n  - E accepted your request: you gave eight and received nine.\nRound 10:\n  - A asks you to send 1 card(s) and offers you eight.\nRound 11:\n  - Swap with A completed: you sent nine and received eight.\nRound 12:\n  - You asked E for 1 card(s) and offered eight.\nRound 13:\n  - E accepted your request: you gave eight and received king.\n--- new since you last acted ---\nRound 14:\n  - A asks you to send 1 card(s) and offers you king.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: B collects kings.",
+     "vent": false,
+     "svar_pa_foresporsler": [
+      {
+       "fra": "A",
+       "aksepter": true,
+       "sender": [
+        "tier"
+       ]
+      }
+     ]
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   }
+  ],
+  "C": [
+   {
+    "runde": 0,
+    "prompt": "ROUND 0 of 60\nThe exercise starts now.\n\nYour cards now: jack, ten, ten, nine\n\nWhat has happened so far:\n(nothing yet)\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: C collects nines.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 1,
+    "prompt": "ROUND 1 of 60\n\nYour cards now: jack, ten, ten, nine\n\nCard requests to you awaiting your reply:\n- A asks you to send 2 card(s) and offers you ace, nine (sent in round 0)\n\nYour notes from last time:\nAnswer key: C collects nines.\n\nWhat has happened so far:\n--- new since you last acted ---\nRound 0:\n  - A asks you to send 2 card(s) and offers you ace, nine.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: C collects nines.",
+     "vent": false,
+     "svar_pa_foresporsler": [
+      {
+       "fra": "A",
+       "aksepter": true,
+       "sender": [
+        "knekt",
+        "tier"
+       ]
+      }
+     ]
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 2,
+    "prompt": "ROUND 2 of 60\n\nYour cards now: ace, ten, nine, nine\n\nYour notes from last time:\nAnswer key: C collects nines.\n\nWhat has happened so far:\nRound 0:\n  - A asks you to send 2 card(s) and offers you ace, nine.\n--- new since you last acted ---\nRound 1:\n  - Swap with A completed: you sent jack, ten and received ace, nine.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: C collects nines.",
+     "vent": false,
+     "kortforesporsler": [
+      {
+       "til": "G",
+       "gir": [
+        "ess"
+       ]
+      }
+     ]
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 3,
+    "prompt": "ROUND 3 of 60\n\nYour cards now: ace, ten, nine, nine\nOf these, reserved in your open requests: ace\n\nYour open card requests (awaiting a reply):\n- to G: you offer ace (sent in round 2)\n\nCard requests to you awaiting your reply:\n- A asks you to send 1 card(s) and offers you ace (sent in round 2)\n\nYour notes from last time:\nAnswer key: C collects nines.\n\nWhat has happened so far:\nRound 0:\n  - A asks you to send 2 card(s) and offers you ace, nine.\nRound 1:\n  - Swap with A completed: you sent jack, ten and received ace, nine.\n--- new since you last acted ---\nRound 2:\n  - A asks you to send 1 card(s) and offers you ace.\n  - You asked G for 1 card(s) and offered ace.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: C collects nines.",
+     "vent": false,
+     "svar_pa_foresporsler": [
+      {
+       "fra": "A",
+       "aksepter": true,
+       "sender": [
+        "tier"
+       ]
+      }
+     ]
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 4,
+    "prompt": "ROUND 4 of 60\n\nYour cards now: ace, nine, nine, eight\n\nYour notes from last time:\nAnswer key: C collects nines.\n\nWhat has happened so far:\nRound 0:\n  - A asks you to send 2 card(s) and offers you ace, nine.\nRound 1:\n  - Swap with A completed: you sent jack, ten and received ace, nine.\nRound 2:\n  - A asks you to send 1 card(s) and offers you ace.\n  - You asked G for 1 card(s) and offered ace.\n--- new since you last acted ---\nRound 3:\n  - Swap with A completed: you sent ten and received ace.\n  - G accepted your request: you gave ace and received eight.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: C collects nines.",
+     "vent": false,
+     "kortforesporsler": [
+      {
+       "til": "G",
+       "gir": [
+        "ess"
+       ]
+      }
+     ]
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 5,
+    "prompt": "ROUND 5 of 60\nReminder from the facilitator: 5 of 60 rounds have passed.\n\nYour cards now: ace, nine, nine, eight\nOf these, reserved in your open requests: ace\n\nYour open card requests (awaiting a reply):\n- to G: you offer ace (sent in round 4)\n\nCard requests to you awaiting your reply:\n- A asks you to send 1 card(s) and offers you queen (sent in round 4)\n\nYour notes from last time:\nAnswer key: C collects nines.\n\nWhat has happened so far:\nRound 0:\n  - A asks you to send 2 card(s) and offers you ace, nine.\nRound 1:\n  - Swap with A completed: you sent jack, ten and received ace, nine.\nRound 2:\n  - A asks you to send 1 card(s) and offers you ace.\n  - You asked G for 1 card(s) and offered ace.\nRound 3:\n  - Swap with A completed: you sent ten and received ace.\n  - G accepted your request: you gave ace and received eight.\n--- new since you last acted ---\nRound 4:\n  - A asks you to send 1 card(s) and offers you queen.\n  - You asked G for 1 card(s) and offered ace.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: C collects nines.",
+     "vent": false,
+     "svar_pa_foresporsler": [
+      {
+       "fra": "A",
+       "aksepter": true,
+       "sender": [
+        "åtter"
+       ]
+      }
+     ]
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 6,
+    "prompt": "ROUND 6 of 60\n\nYour cards now: queen, nine, nine, eight\n\nYour notes from last time:\nAnswer key: C collects nines.\n\nWhat has happened so far:\nRound 0:\n  - A asks you to send 2 card(s) and offers you ace, nine.\nRound 1:\n  - Swap with A completed: you sent jack, ten and received ace, nine.\nRound 2:\n  - A asks you to send 1 card(s) and offers you ace.\n  - You asked G for 1 card(s) and offered ace.\nRound 3:\n  - Swap with A completed: you sent ten and received ace.\n  - G accepted your request: you gave ace and received eight.\nRound 4:\n  - A asks you to send 1 card(s) and offers you queen.\n  - You asked G for 1 card(s) and offered ace.\n--- new since you last acted ---\nRound 5:\n  - Swap with A completed: you sent eight and received queen.\n  - G accepted your request: you gave ace and received eight.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: C collects nines.",
+     "vent": false,
+     "kortforesporsler": [
+      {
+       "til": "F",
+       "gir": [
+        "dame"
+       ]
+      }
+     ]
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 7,
+    "prompt": "ROUND 7 of 60\n\nYour cards now: queen, nine, nine, eight\nOf these, reserved in your open requests: queen\n\nYour open card requests (awaiting a reply):\n- to F: you offer queen (sent in round 6)\n\nYour notes from last time:\nAnswer key: C collects nines.\n\nWhat has happened so far:\nRound 0:\n  - A asks you to send 2 card(s) and offers you ace, nine.\nRound 1:\n  - Swap with A completed: you sent jack, ten and received ace, nine.\nRound 2:\n  - A asks you to send 1 card(s) and offers you ace.\n  - You asked G for 1 card(s) and offered ace.\nRound 3:\n  - Swap with A completed: you sent ten and received ace.\n  - G accepted your request: you gave ace and received eight.\nRound 4:\n  - A asks you to send 1 card(s) and offers you queen.\n  - You asked G for 1 card(s) and offered ace.\nRound 5:\n  - Swap with A completed: you sent eight and received queen.\n  - G accepted your request: you gave ace and received eight.\n--- new since you last acted ---\nRound 6:\n  - You asked F for 1 card(s) and offered queen.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: C collects nines.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 8,
+    "prompt": "ROUND 8 of 60\n\nYour cards now: king, nine, nine, eight\n\nYour notes from last time:\nAnswer key: C collects nines.\n\nWhat has happened so far:\nRound 0:\n  - A asks you to send 2 card(s) and offers you ace, nine.\nRound 1:\n  - Swap with A completed: you sent jack, ten and received ace, nine.\nRound 2:\n  - A asks you to send 1 card(s) and offers you ace.\n  - You asked G for 1 card(s) and offered ace.\nRound 3:\n  - Swap with A completed: you sent ten and received ace.\n  - G accepted your request: you gave ace and received eight.\nRound 4:\n  - A asks you to send 1 card(s) and offers you queen.\n  - You asked G for 1 card(s) and offered ace.\nRound 5:\n  - Swap with A completed: you sent eight and received queen.\n  - G accepted your request: you gave ace and received eight.\nRound 6:\n  - You asked F for 1 card(s) and offered queen.\n--- new since you last acted ---\nRound 7:\n  - F accepted your request: you gave queen and received king.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: C collects nines.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 9,
+    "prompt": "ROUND 9 of 60\n\nYour cards now: king, nine, nine, eight\n\nCard requests to you awaiting your reply:\n- A asks you to send 1 card(s) and offers you queen (sent in round 8)\n\nYour notes from last time:\nAnswer key: C collects nines.\n\nWhat has happened so far:\nRound 0:\n  - A asks you to send 2 card(s) and offers you ace, nine.\nRound 1:\n  - Swap with A completed: you sent jack, ten and received ace, nine.\nRound 2:\n  - A asks you to send 1 card(s) and offers you ace.\n  - You asked G for 1 card(s) and offered ace.\nRound 3:\n  - Swap with A completed: you sent ten and received ace.\n  - G accepted your request: you gave ace and received eight.\nRound 4:\n  - A asks you to send 1 card(s) and offers you queen.\n  - You asked G for 1 card(s) and offered ace.\nRound 5:\n  - Swap with A completed: you sent eight and received queen.\n  - G accepted your request: you gave ace and received eight.\nRound 6:\n  - You asked F for 1 card(s) and offered queen.\nRound 7:\n  - F accepted your request: you gave queen and received king.\n--- new since you last acted ---\nRound 8:\n  - A asks you to send 1 card(s) and offers you queen.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: C collects nines.",
+     "vent": false,
+     "svar_pa_foresporsler": [
+      {
+       "fra": "A",
+       "aksepter": true,
+       "sender": [
+        "åtter"
+       ]
+      }
+     ]
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 10,
+    "prompt": "ROUND 10 of 60\nReminder from the facilitator: 10 of 60 rounds have passed.\n\nYour cards now: king, queen, nine, nine\n\nYour notes from last time:\nAnswer key: C collects nines.\n\nWhat has happened so far:\nRound 0:\n  - A asks you to send 2 card(s) and offers you ace, nine.\nRound 1:\n  - Swap with A completed: you sent jack, ten and received ace, nine.\nRound 2:\n  - A asks you to send 1 card(s) and offers you ace.\n  - You asked G for 1 card(s) and offered ace.\nRound 3:\n  - Swap with A completed: you sent ten and received ace.\n  - G accepted your request: you gave ace and received eight.\nRound 4:\n  - A asks you to send 1 card(s) and offers you queen.\n  - You asked G for 1 card(s) and offered ace.\nRound 5:\n  - Swap with A completed: you sent eight and received queen.\n  - G accepted your request: you gave ace and received eight.\nRound 6:\n  - You asked F for 1 card(s) and offered queen.\nRound 7:\n  - F accepted your request: you gave queen and received king.\nRound 8:\n  - A asks you to send 1 card(s) and offers you queen.\n--- new since you last acted ---\nRound 9:\n  - Swap with A completed: you sent eight and received queen.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: C collects nines.",
+     "vent": false,
+     "kortforesporsler": [
+      {
+       "til": "F",
+       "gir": [
+        "dame"
+       ]
+      }
+     ]
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 11,
+    "prompt": "ROUND 11 of 60\n\nYour cards now: king, queen, nine, nine\nOf these, reserved in your open requests: queen\n\nYour open card requests (awaiting a reply):\n- to F: you offer queen (sent in round 10)\n\nYour notes from last time:\nAnswer key: C collects nines.\n\nWhat has happened so far:\nRound 0:\n  - A asks you to send 2 card(s) and offers you ace, nine.\nRound 1:\n  - Swap with A completed: you sent jack, ten and received ace, nine.\nRound 2:\n  - A asks you to send 1 card(s) and offers you ace.\n  - You asked G for 1 card(s) and offered ace.\nRound 3:\n  - Swap with A completed: you sent ten and received ace.\n  - G accepted your request: you gave ace and received eight.\nRound 4:\n  - A asks you to send 1 card(s) and offers you queen.\n  - You asked G for 1 card(s) and offered ace.\nRound 5:\n  - Swap with A completed: you sent eight and received queen.\n  - G accepted your request: you gave ace and received eight.\nRound 6:\n  - You asked F for 1 card(s) and offered queen.\nRound 7:\n  - F accepted your request: you gave queen and received king.\nRound 8:\n  - A asks you to send 1 card(s) and offers you queen.\nRound 9:\n  - Swap with A completed: you sent eight and received queen.\n--- new since you last acted ---\nRound 10:\n  - You asked F for 1 card(s) and offered queen.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: C collects nines.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 12,
+    "prompt": "ROUND 12 of 60\n\nYour cards now: king, nine, nine, nine\n\nYour notes from last time:\nAnswer key: C collects nines.\n\nWhat has happened so far:\nRound 0:\n  - A asks you to send 2 card(s) and offers you ace, nine.\nRound 1:\n  - Swap with A completed: you sent jack, ten and received ace, nine.\nRound 2:\n  - A asks you to send 1 card(s) and offers you ace.\n  - You asked G for 1 card(s) and offered ace.\nRound 3:\n  - Swap with A completed: you sent ten and received ace.\n  - G accepted your request: you gave ace and received eight.\nRound 4:\n  - A asks you to send 1 card(s) and offers you queen.\n  - You asked G for 1 card(s) and offered ace.\nRound 5:\n  - Swap with A completed: you sent eight and received queen.\n  - G accepted your request: you gave ace and received eight.\nRound 6:\n  - You asked F for 1 card(s) and offered queen.\nRound 7:\n  - F accepted your request: you gave queen and received king.\nRound 8:\n  - A asks you to send 1 card(s) and offers you queen.\nRound 9:\n  - Swap with A completed: you sent eight and received queen.\nRound 10:\n  - You asked F for 1 card(s) and offered queen.\n--- new since you last acted ---\nRound 11:\n  - F accepted your request: you gave queen and received nine.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: C collects nines.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 13,
+    "prompt": "ROUND 13 of 60\n\nYour cards now: king, nine, nine, nine\n\nCard requests to you awaiting your reply:\n- A asks you to send 1 card(s) and offers you nine (sent in round 12)\n\nYour notes from last time:\nAnswer key: C collects nines.\n\nWhat has happened so far:\nRound 0:\n  - A asks you to send 2 card(s) and offers you ace, nine.\nRound 1:\n  - Swap with A completed: you sent jack, ten and received ace, nine.\nRound 2:\n  - A asks you to send 1 card(s) and offers you ace.\n  - You asked G for 1 card(s) and offered ace.\nRound 3:\n  - Swap with A completed: you sent ten and received ace.\n  - G accepted your request: you gave ace and received eight.\nRound 4:\n  - A asks you to send 1 card(s) and offers you queen.\n  - You asked G for 1 card(s) and offered ace.\nRound 5:\n  - Swap with A completed: you sent eight and received queen.\n  - G accepted your request: you gave ace and received eight.\nRound 6:\n  - You asked F for 1 card(s) and offered queen.\nRound 7:\n  - F accepted your request: you gave queen and received king.\nRound 8:\n  - A asks you to send 1 card(s) and offers you queen.\nRound 9:\n  - Swap with A completed: you sent eight and received queen.\nRound 10:\n  - You asked F for 1 card(s) and offered queen.\nRound 11:\n  - F accepted your request: you gave queen and received nine.\n--- new since you last acted ---\nRound 12:\n  - A asks you to send 1 card(s) and offers you nine.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: C collects nines.",
+     "vent": false,
+     "svar_pa_foresporsler": [
+      {
+       "fra": "A",
+       "aksepter": true,
+       "sender": [
+        "konge"
+       ]
+      }
+     ]
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 14,
+    "prompt": "ROUND 14 of 60\n\nYour cards now: nine, nine, nine, nine\n\nYour notes from last time:\nAnswer key: C collects nines.\n\nWhat has happened so far:\nRound 0:\n  - A asks you to send 2 card(s) and offers you ace, nine.\nRound 1:\n  - Swap with A completed: you sent jack, ten and received ace, nine.\nRound 2:\n  - A asks you to send 1 card(s) and offers you ace.\n  - You asked G for 1 card(s) and offered ace.\nRound 3:\n  - Swap with A completed: you sent ten and received ace.\n  - G accepted your request: you gave ace and received eight.\nRound 4:\n  - A asks you to send 1 card(s) and offers you queen.\n  - You asked G for 1 card(s) and offered ace.\nRound 5:\n  - Swap with A completed: you sent eight and received queen.\n  - G accepted your request: you gave ace and received eight.\nRound 6:\n  - You asked F for 1 card(s) and offered queen.\nRound 7:\n  - F accepted your request: you gave queen and received king.\nRound 8:\n  - A asks you to send 1 card(s) and offers you queen.\nRound 9:\n  - Swap with A completed: you sent eight and received queen.\nRound 10:\n  - You asked F for 1 card(s) and offered queen.\nRound 11:\n  - F accepted your request: you gave queen and received nine.\nRound 12:\n  - A asks you to send 1 card(s) and offers you nine.\n--- new since you last acted ---\nRound 13:\n  - Swap with A completed: you sent king and received nine.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: C collects nines.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 15,
+    "prompt": "ROUND 15 of 60\nReminder from the facilitator: 15 of 60 rounds have passed.\n\nYour cards now: nine, nine, nine, nine\n\nYour notes from last time:\nAnswer key: C collects nines.\n\nWhat has happened so far:\nRound 0:\n  - A asks you to send 2 card(s) and offers you ace, nine.\nRound 1:\n  - Swap with A completed: you sent jack, ten and received ace, nine.\nRound 2:\n  - A asks you to send 1 card(s) and offers you ace.\n  - You asked G for 1 card(s) and offered ace.\nRound 3:\n  - Swap with A completed: you sent ten and received ace.\n  - G accepted your request: you gave ace and received eight.\nRound 4:\n  - A asks you to send 1 card(s) and offers you queen.\n  - You asked G for 1 card(s) and offered ace.\nRound 5:\n  - Swap with A completed: you sent eight and received queen.\n  - G accepted your request: you gave ace and received eight.\nRound 6:\n  - You asked F for 1 card(s) and offered queen.\nRound 7:\n  - F accepted your request: you gave queen and received king.\nRound 8:\n  - A asks you to send 1 card(s) and offers you queen.\nRound 9:\n  - Swap with A completed: you sent eight and received queen.\nRound 10:\n  - You asked F for 1 card(s) and offered queen.\nRound 11:\n  - F accepted your request: you gave queen and received nine.\nRound 12:\n  - A asks you to send 1 card(s) and offers you nine.\nRound 13:\n  - Swap with A completed: you sent king and received nine.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: C collects nines.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   }
+  ],
+  "D": [
+   {
+    "runde": 0,
+    "prompt": "ROUND 0 of 60\nThe exercise starts now.\n\nYour cards now: queen, jack, jack, ten\n\nWhat has happened so far:\n(nothing yet)\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: D collects jacks.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 1,
+    "prompt": "ROUND 1 of 60\n\nYour cards now: queen, jack, jack, ten\n\nYour notes from last time:\nAnswer key: D collects jacks.\n\nWhat has happened so far:\n(nothing yet)\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: D collects jacks.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 2,
+    "prompt": "ROUND 2 of 60\n\nYour cards now: queen, jack, jack, ten\n\nYour notes from last time:\nAnswer key: D collects jacks.\n\nWhat has happened so far:\n(nothing yet)\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: D collects jacks.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 3,
+    "prompt": "ROUND 3 of 60\n\nYour cards now: queen, jack, jack, ten\n\nCard requests to you awaiting your reply:\n- B asks you to send 1 card(s) and offers you jack (sent in round 2)\n\nYour notes from last time:\nAnswer key: D collects jacks.\n\nWhat has happened so far:\n--- new since you last acted ---\nRound 2:\n  - B asks you to send 1 card(s) and offers you jack.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: D collects jacks.",
+     "vent": false,
+     "svar_pa_foresporsler": [
+      {
+       "fra": "B",
+       "aksepter": true,
+       "sender": [
+        "dame"
+       ]
+      }
+     ]
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 4,
+    "prompt": "ROUND 4 of 60\n\nYour cards now: jack, jack, jack, ten\n\nYour notes from last time:\nAnswer key: D collects jacks.\n\nWhat has happened so far:\nRound 2:\n  - B asks you to send 1 card(s) and offers you jack.\n--- new since you last acted ---\nRound 3:\n  - Swap with B completed: you sent queen and received jack.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: D collects jacks.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 5,
+    "prompt": "ROUND 5 of 60\nReminder from the facilitator: 5 of 60 rounds have passed.\n\nYour cards now: jack, jack, jack, ten\n\nCard requests to you awaiting your reply:\n- B asks you to send 1 card(s) and offers you jack (sent in round 4)\n\nYour notes from last time:\nAnswer key: D collects jacks.\n\nWhat has happened so far:\nRound 2:\n  - B asks you to send 1 card(s) and offers you jack.\nRound 3:\n  - Swap with B completed: you sent queen and received jack.\n--- new since you last acted ---\nRound 4:\n  - B asks you to send 1 card(s) and offers you jack.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: D collects jacks.",
+     "vent": false,
+     "svar_pa_foresporsler": [
+      {
+       "fra": "B",
+       "aksepter": true,
+       "sender": [
+        "tier"
+       ]
+      }
+     ]
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 6,
+    "prompt": "ROUND 6 of 60\n\nYour cards now: jack, jack, jack, jack\n\nYour notes from last time:\nAnswer key: D collects jacks.\n\nWhat has happened so far:\nRound 2:\n  - B asks you to send 1 card(s) and offers you jack.\nRound 3:\n  - Swap with B completed: you sent queen and received jack.\nRound 4:\n  - B asks you to send 1 card(s) and offers you jack.\n--- new since you last acted ---\nRound 5:\n  - Swap with B completed: you sent ten and received jack.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: D collects jacks.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 7,
+    "prompt": "ROUND 7 of 60\n\nYour cards now: jack, jack, jack, jack\n\nYour notes from last time:\nAnswer key: D collects jacks.\n\nWhat has happened so far:\nRound 2:\n  - B asks you to send 1 card(s) and offers you jack.\nRound 3:\n  - Swap with B completed: you sent queen and received jack.\nRound 4:\n  - B asks you to send 1 card(s) and offers you jack.\nRound 5:\n  - Swap with B completed: you sent ten and received jack.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: D collects jacks.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 8,
+    "prompt": "ROUND 8 of 60\n\nYour cards now: jack, jack, jack, jack\n\nYour notes from last time:\nAnswer key: D collects jacks.\n\nWhat has happened so far:\nRound 2:\n  - B asks you to send 1 card(s) and offers you jack.\nRound 3:\n  - Swap with B completed: you sent queen and received jack.\nRound 4:\n  - B asks you to send 1 card(s) and offers you jack.\nRound 5:\n  - Swap with B completed: you sent ten and received jack.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: D collects jacks.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 9,
+    "prompt": "ROUND 9 of 60\n\nYour cards now: jack, jack, jack, jack\n\nYour notes from last time:\nAnswer key: D collects jacks.\n\nWhat has happened so far:\nRound 2:\n  - B asks you to send 1 card(s) and offers you jack.\nRound 3:\n  - Swap with B completed: you sent queen and received jack.\nRound 4:\n  - B asks you to send 1 card(s) and offers you jack.\nRound 5:\n  - Swap with B completed: you sent ten and received jack.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: D collects jacks.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 10,
+    "prompt": "ROUND 10 of 60\nReminder from the facilitator: 10 of 60 rounds have passed.\n\nYour cards now: jack, jack, jack, jack\n\nYour notes from last time:\nAnswer key: D collects jacks.\n\nWhat has happened so far:\nRound 2:\n  - B asks you to send 1 card(s) and offers you jack.\nRound 3:\n  - Swap with B completed: you sent queen and received jack.\nRound 4:\n  - B asks you to send 1 card(s) and offers you jack.\nRound 5:\n  - Swap with B completed: you sent ten and received jack.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: D collects jacks.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 11,
+    "prompt": "ROUND 11 of 60\n\nYour cards now: jack, jack, jack, jack\n\nYour notes from last time:\nAnswer key: D collects jacks.\n\nWhat has happened so far:\nRound 2:\n  - B asks you to send 1 card(s) and offers you jack.\nRound 3:\n  - Swap with B completed: you sent queen and received jack.\nRound 4:\n  - B asks you to send 1 card(s) and offers you jack.\nRound 5:\n  - Swap with B completed: you sent ten and received jack.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: D collects jacks.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 12,
+    "prompt": "ROUND 12 of 60\n\nYour cards now: jack, jack, jack, jack\n\nYour notes from last time:\nAnswer key: D collects jacks.\n\nWhat has happened so far:\nRound 2:\n  - B asks you to send 1 card(s) and offers you jack.\nRound 3:\n  - Swap with B completed: you sent queen and received jack.\nRound 4:\n  - B asks you to send 1 card(s) and offers you jack.\nRound 5:\n  - Swap with B completed: you sent ten and received jack.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: D collects jacks.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 13,
+    "prompt": "ROUND 13 of 60\n\nYour cards now: jack, jack, jack, jack\n\nYour notes from last time:\nAnswer key: D collects jacks.\n\nWhat has happened so far:\nRound 2:\n  - B asks you to send 1 card(s) and offers you jack.\nRound 3:\n  - Swap with B completed: you sent queen and received jack.\nRound 4:\n  - B asks you to send 1 card(s) and offers you jack.\nRound 5:\n  - Swap with B completed: you sent ten and received jack.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: D collects jacks.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 14,
+    "prompt": "ROUND 14 of 60\n\nYour cards now: jack, jack, jack, jack\n\nYour notes from last time:\nAnswer key: D collects jacks.\n\nWhat has happened so far:\nRound 2:\n  - B asks you to send 1 card(s) and offers you jack.\nRound 3:\n  - Swap with B completed: you sent queen and received jack.\nRound 4:\n  - B asks you to send 1 card(s) and offers you jack.\nRound 5:\n  - Swap with B completed: you sent ten and received jack.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: D collects jacks.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 15,
+    "prompt": "ROUND 15 of 60\nReminder from the facilitator: 15 of 60 rounds have passed.\n\nYour cards now: jack, jack, jack, jack\n\nYour notes from last time:\nAnswer key: D collects jacks.\n\nWhat has happened so far:\nRound 2:\n  - B asks you to send 1 card(s) and offers you jack.\nRound 3:\n  - Swap with B completed: you sent queen and received jack.\nRound 4:\n  - B asks you to send 1 card(s) and offers you jack.\nRound 5:\n  - Swap with B completed: you sent ten and received jack.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: D collects jacks.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   }
+  ],
+  "E": [
+   {
+    "runde": 0,
+    "prompt": "ROUND 0 of 60\nThe exercise starts now.\n\nYour cards now: king, queen, nine, eight\n\nWhat has happened so far:\n(nothing yet)\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: E collects eights.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 1,
+    "prompt": "ROUND 1 of 60\n\nYour cards now: king, queen, nine, eight\n\nCard requests to you awaiting your reply:\n- B asks you to send 1 card(s) and offers you eight (sent in round 0)\n\nYour notes from last time:\nAnswer key: E collects eights.\n\nWhat has happened so far:\n--- new since you last acted ---\nRound 0:\n  - B asks you to send 1 card(s) and offers you eight.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: E collects eights.",
+     "vent": false,
+     "svar_pa_foresporsler": [
+      {
+       "fra": "B",
+       "aksepter": true,
+       "sender": [
+        "dame"
+       ]
+      }
+     ]
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 2,
+    "prompt": "ROUND 2 of 60\n\nYour cards now: king, nine, eight, eight\n\nYour notes from last time:\nAnswer key: E collects eights.\n\nWhat has happened so far:\nRound 0:\n  - B asks you to send 1 card(s) and offers you eight.\n--- new since you last acted ---\nRound 1:\n  - Swap with B completed: you sent queen and received eight.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: E collects eights.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 3,
+    "prompt": "ROUND 3 of 60\n\nYour cards now: king, nine, eight, eight\n\nYour notes from last time:\nAnswer key: E collects eights.\n\nWhat has happened so far:\nRound 0:\n  - B asks you to send 1 card(s) and offers you eight.\nRound 1:\n  - Swap with B completed: you sent queen and received eight.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: E collects eights.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 4,
+    "prompt": "ROUND 4 of 60\n\nYour cards now: king, nine, eight, eight\n\nYour notes from last time:\nAnswer key: E collects eights.\n\nWhat has happened so far:\nRound 0:\n  - B asks you to send 1 card(s) and offers you eight.\nRound 1:\n  - Swap with B completed: you sent queen and received eight.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: E collects eights.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 5,
+    "prompt": "ROUND 5 of 60\nReminder from the facilitator: 5 of 60 rounds have passed.\n\nYour cards now: king, nine, eight, eight\n\nYour notes from last time:\nAnswer key: E collects eights.\n\nWhat has happened so far:\nRound 0:\n  - B asks you to send 1 card(s) and offers you eight.\nRound 1:\n  - Swap with B completed: you sent queen and received eight.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: E collects eights.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 6,
+    "prompt": "ROUND 6 of 60\n\nYour cards now: king, nine, eight, eight\n\nYour notes from last time:\nAnswer key: E collects eights.\n\nWhat has happened so far:\nRound 0:\n  - B asks you to send 1 card(s) and offers you eight.\nRound 1:\n  - Swap with B completed: you sent queen and received eight.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: E collects eights.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 7,
+    "prompt": "ROUND 7 of 60\n\nYour cards now: king, nine, eight, eight\n\nYour notes from last time:\nAnswer key: E collects eights.\n\nWhat has happened so far:\nRound 0:\n  - B asks you to send 1 card(s) and offers you eight.\nRound 1:\n  - Swap with B completed: you sent queen and received eight.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: E collects eights.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 8,
+    "prompt": "ROUND 8 of 60\n\nYour cards now: king, nine, eight, eight\n\nYour notes from last time:\nAnswer key: E collects eights.\n\nWhat has happened so far:\nRound 0:\n  - B asks you to send 1 card(s) and offers you eight.\nRound 1:\n  - Swap with B completed: you sent queen and received eight.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: E collects eights.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 9,
+    "prompt": "ROUND 9 of 60\n\nYour cards now: king, nine, eight, eight\n\nCard requests to you awaiting your reply:\n- B asks you to send 1 card(s) and offers you eight (sent in round 8)\n\nYour notes from last time:\nAnswer key: E collects eights.\n\nWhat has happened so far:\nRound 0:\n  - B asks you to send 1 card(s) and offers you eight.\nRound 1:\n  - Swap with B completed: you sent queen and received eight.\n--- new since you last acted ---\nRound 8:\n  - B asks you to send 1 card(s) and offers you eight.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: E collects eights.",
+     "vent": false,
+     "svar_pa_foresporsler": [
+      {
+       "fra": "B",
+       "aksepter": true,
+       "sender": [
+        "nier"
+       ]
+      }
+     ]
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 10,
+    "prompt": "ROUND 10 of 60\nReminder from the facilitator: 10 of 60 rounds have passed.\n\nYour cards now: king, eight, eight, eight\n\nYour notes from last time:\nAnswer key: E collects eights.\n\nWhat has happened so far:\nRound 0:\n  - B asks you to send 1 card(s) and offers you eight.\nRound 1:\n  - Swap with B completed: you sent queen and received eight.\nRound 8:\n  - B asks you to send 1 card(s) and offers you eight.\n--- new since you last acted ---\nRound 9:\n  - Swap with B completed: you sent nine and received eight.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: E collects eights.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 11,
+    "prompt": "ROUND 11 of 60\n\nYour cards now: king, eight, eight, eight\n\nYour notes from last time:\nAnswer key: E collects eights.\n\nWhat has happened so far:\nRound 0:\n  - B asks you to send 1 card(s) and offers you eight.\nRound 1:\n  - Swap with B completed: you sent queen and received eight.\nRound 8:\n  - B asks you to send 1 card(s) and offers you eight.\nRound 9:\n  - Swap with B completed: you sent nine and received eight.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: E collects eights.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 12,
+    "prompt": "ROUND 12 of 60\n\nYour cards now: king, eight, eight, eight\n\nYour notes from last time:\nAnswer key: E collects eights.\n\nWhat has happened so far:\nRound 0:\n  - B asks you to send 1 card(s) and offers you eight.\nRound 1:\n  - Swap with B completed: you sent queen and received eight.\nRound 8:\n  - B asks you to send 1 card(s) and offers you eight.\nRound 9:\n  - Swap with B completed: you sent nine and received eight.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: E collects eights.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 13,
+    "prompt": "ROUND 13 of 60\n\nYour cards now: king, eight, eight, eight\n\nCard requests to you awaiting your reply:\n- B asks you to send 1 card(s) and offers you eight (sent in round 12)\n\nYour notes from last time:\nAnswer key: E collects eights.\n\nWhat has happened so far:\nRound 0:\n  - B asks you to send 1 card(s) and offers you eight.\nRound 1:\n  - Swap with B completed: you sent queen and received eight.\nRound 8:\n  - B asks you to send 1 card(s) and offers you eight.\nRound 9:\n  - Swap with B completed: you sent nine and received eight.\n--- new since you last acted ---\nRound 12:\n  - B asks you to send 1 card(s) and offers you eight.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: E collects eights.",
+     "vent": false,
+     "svar_pa_foresporsler": [
+      {
+       "fra": "B",
+       "aksepter": true,
+       "sender": [
+        "konge"
+       ]
+      }
+     ]
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 14,
+    "prompt": "ROUND 14 of 60\n\nYour cards now: eight, eight, eight, eight\n\nYour notes from last time:\nAnswer key: E collects eights.\n\nWhat has happened so far:\nRound 0:\n  - B asks you to send 1 card(s) and offers you eight.\nRound 1:\n  - Swap with B completed: you sent queen and received eight.\nRound 8:\n  - B asks you to send 1 card(s) and offers you eight.\nRound 9:\n  - Swap with B completed: you sent nine and received eight.\nRound 12:\n  - B asks you to send 1 card(s) and offers you eight.\n--- new since you last acted ---\nRound 13:\n  - Swap with B completed: you sent king and received eight.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: E collects eights.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 15,
+    "prompt": "ROUND 15 of 60\nReminder from the facilitator: 15 of 60 rounds have passed.\n\nYour cards now: eight, eight, eight, eight\n\nYour notes from last time:\nAnswer key: E collects eights.\n\nWhat has happened so far:\nRound 0:\n  - B asks you to send 1 card(s) and offers you eight.\nRound 1:\n  - Swap with B completed: you sent queen and received eight.\nRound 8:\n  - B asks you to send 1 card(s) and offers you eight.\nRound 9:\n  - Swap with B completed: you sent nine and received eight.\nRound 12:\n  - B asks you to send 1 card(s) and offers you eight.\nRound 13:\n  - Swap with B completed: you sent king and received eight.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: E collects eights.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   }
+  ],
+  "F": [
+   {
+    "runde": 0,
+    "prompt": "ROUND 0 of 60\nThe exercise starts now.\n\nYour cards now: king, queen, queen, nine\n\nWhat has happened so far:\n(nothing yet)\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: F collects queens.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 1,
+    "prompt": "ROUND 1 of 60\n\nYour cards now: king, queen, queen, nine\n\nYour notes from last time:\nAnswer key: F collects queens.\n\nWhat has happened so far:\n(nothing yet)\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: F collects queens.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 2,
+    "prompt": "ROUND 2 of 60\n\nYour cards now: king, queen, queen, nine\n\nYour notes from last time:\nAnswer key: F collects queens.\n\nWhat has happened so far:\n(nothing yet)\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: F collects queens.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 3,
+    "prompt": "ROUND 3 of 60\n\nYour cards now: king, queen, queen, nine\n\nYour notes from last time:\nAnswer key: F collects queens.\n\nWhat has happened so far:\n(nothing yet)\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: F collects queens.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 4,
+    "prompt": "ROUND 4 of 60\n\nYour cards now: king, queen, queen, nine\n\nYour notes from last time:\nAnswer key: F collects queens.\n\nWhat has happened so far:\n(nothing yet)\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: F collects queens.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 5,
+    "prompt": "ROUND 5 of 60\nReminder from the facilitator: 5 of 60 rounds have passed.\n\nYour cards now: king, queen, queen, nine\n\nYour notes from last time:\nAnswer key: F collects queens.\n\nWhat has happened so far:\n(nothing yet)\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: F collects queens.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 6,
+    "prompt": "ROUND 6 of 60\n\nYour cards now: king, queen, queen, nine\n\nYour notes from last time:\nAnswer key: F collects queens.\n\nWhat has happened so far:\n(nothing yet)\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: F collects queens.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 7,
+    "prompt": "ROUND 7 of 60\n\nYour cards now: king, queen, queen, nine\n\nCard requests to you awaiting your reply:\n- C asks you to send 1 card(s) and offers you queen (sent in round 6)\n\nYour notes from last time:\nAnswer key: F collects queens.\n\nWhat has happened so far:\n--- new since you last acted ---\nRound 6:\n  - C asks you to send 1 card(s) and offers you queen.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: F collects queens.",
+     "vent": false,
+     "svar_pa_foresporsler": [
+      {
+       "fra": "C",
+       "aksepter": true,
+       "sender": [
+        "konge"
+       ]
+      }
+     ]
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 8,
+    "prompt": "ROUND 8 of 60\n\nYour cards now: queen, queen, queen, nine\n\nYour notes from last time:\nAnswer key: F collects queens.\n\nWhat has happened so far:\nRound 6:\n  - C asks you to send 1 card(s) and offers you queen.\n--- new since you last acted ---\nRound 7:\n  - Swap with C completed: you sent king and received queen.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: F collects queens.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 9,
+    "prompt": "ROUND 9 of 60\n\nYour cards now: queen, queen, queen, nine\n\nYour notes from last time:\nAnswer key: F collects queens.\n\nWhat has happened so far:\nRound 6:\n  - C asks you to send 1 card(s) and offers you queen.\nRound 7:\n  - Swap with C completed: you sent king and received queen.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: F collects queens.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 10,
+    "prompt": "ROUND 10 of 60\nReminder from the facilitator: 10 of 60 rounds have passed.\n\nYour cards now: queen, queen, queen, nine\n\nYour notes from last time:\nAnswer key: F collects queens.\n\nWhat has happened so far:\nRound 6:\n  - C asks you to send 1 card(s) and offers you queen.\nRound 7:\n  - Swap with C completed: you sent king and received queen.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: F collects queens.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 11,
+    "prompt": "ROUND 11 of 60\n\nYour cards now: queen, queen, queen, nine\n\nCard requests to you awaiting your reply:\n- C asks you to send 1 card(s) and offers you queen (sent in round 10)\n\nYour notes from last time:\nAnswer key: F collects queens.\n\nWhat has happened so far:\nRound 6:\n  - C asks you to send 1 card(s) and offers you queen.\nRound 7:\n  - Swap with C completed: you sent king and received queen.\n--- new since you last acted ---\nRound 10:\n  - C asks you to send 1 card(s) and offers you queen.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: F collects queens.",
+     "vent": false,
+     "svar_pa_foresporsler": [
+      {
+       "fra": "C",
+       "aksepter": true,
+       "sender": [
+        "nier"
+       ]
+      }
+     ]
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 12,
+    "prompt": "ROUND 12 of 60\n\nYour cards now: queen, queen, queen, queen\n\nYour notes from last time:\nAnswer key: F collects queens.\n\nWhat has happened so far:\nRound 6:\n  - C asks you to send 1 card(s) and offers you queen.\nRound 7:\n  - Swap with C completed: you sent king and received queen.\nRound 10:\n  - C asks you to send 1 card(s) and offers you queen.\n--- new since you last acted ---\nRound 11:\n  - Swap with C completed: you sent nine and received queen.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: F collects queens.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 13,
+    "prompt": "ROUND 13 of 60\n\nYour cards now: queen, queen, queen, queen\n\nYour notes from last time:\nAnswer key: F collects queens.\n\nWhat has happened so far:\nRound 6:\n  - C asks you to send 1 card(s) and offers you queen.\nRound 7:\n  - Swap with C completed: you sent king and received queen.\nRound 10:\n  - C asks you to send 1 card(s) and offers you queen.\nRound 11:\n  - Swap with C completed: you sent nine and received queen.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: F collects queens.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 14,
+    "prompt": "ROUND 14 of 60\n\nYour cards now: queen, queen, queen, queen\n\nYour notes from last time:\nAnswer key: F collects queens.\n\nWhat has happened so far:\nRound 6:\n  - C asks you to send 1 card(s) and offers you queen.\nRound 7:\n  - Swap with C completed: you sent king and received queen.\nRound 10:\n  - C asks you to send 1 card(s) and offers you queen.\nRound 11:\n  - Swap with C completed: you sent nine and received queen.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: F collects queens.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 15,
+    "prompt": "ROUND 15 of 60\nReminder from the facilitator: 15 of 60 rounds have passed.\n\nYour cards now: queen, queen, queen, queen\n\nYour notes from last time:\nAnswer key: F collects queens.\n\nWhat has happened so far:\nRound 6:\n  - C asks you to send 1 card(s) and offers you queen.\nRound 7:\n  - Swap with C completed: you sent king and received queen.\nRound 10:\n  - C asks you to send 1 card(s) and offers you queen.\nRound 11:\n  - Swap with C completed: you sent nine and received queen.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: F collects queens.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   }
+  ],
+  "G": [
+   {
+    "runde": 0,
+    "prompt": "ROUND 0 of 60\nThe exercise starts now.\n\nYour cards now: ace, ace, eight, eight\n\nWhat has happened so far:\n(nothing yet)\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: G collects aces.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 1,
+    "prompt": "ROUND 1 of 60\n\nYour cards now: ace, ace, eight, eight\n\nYour notes from last time:\nAnswer key: G collects aces.\n\nWhat has happened so far:\n(nothing yet)\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: G collects aces.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 2,
+    "prompt": "ROUND 2 of 60\n\nYour cards now: ace, ace, eight, eight\n\nYour notes from last time:\nAnswer key: G collects aces.\n\nWhat has happened so far:\n(nothing yet)\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: G collects aces.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 3,
+    "prompt": "ROUND 3 of 60\n\nYour cards now: ace, ace, eight, eight\n\nCard requests to you awaiting your reply:\n- C asks you to send 1 card(s) and offers you ace (sent in round 2)\n\nYour notes from last time:\nAnswer key: G collects aces.\n\nWhat has happened so far:\n--- new since you last acted ---\nRound 2:\n  - C asks you to send 1 card(s) and offers you ace.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: G collects aces.",
+     "vent": false,
+     "svar_pa_foresporsler": [
+      {
+       "fra": "C",
+       "aksepter": true,
+       "sender": [
+        "åtter"
+       ]
+      }
+     ]
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 4,
+    "prompt": "ROUND 4 of 60\n\nYour cards now: ace, ace, ace, eight\n\nYour notes from last time:\nAnswer key: G collects aces.\n\nWhat has happened so far:\nRound 2:\n  - C asks you to send 1 card(s) and offers you ace.\n--- new since you last acted ---\nRound 3:\n  - Swap with C completed: you sent eight and received ace.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: G collects aces.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 5,
+    "prompt": "ROUND 5 of 60\nReminder from the facilitator: 5 of 60 rounds have passed.\n\nYour cards now: ace, ace, ace, eight\n\nCard requests to you awaiting your reply:\n- C asks you to send 1 card(s) and offers you ace (sent in round 4)\n\nYour notes from last time:\nAnswer key: G collects aces.\n\nWhat has happened so far:\nRound 2:\n  - C asks you to send 1 card(s) and offers you ace.\nRound 3:\n  - Swap with C completed: you sent eight and received ace.\n--- new since you last acted ---\nRound 4:\n  - C asks you to send 1 card(s) and offers you ace.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: G collects aces.",
+     "vent": false,
+     "svar_pa_foresporsler": [
+      {
+       "fra": "C",
+       "aksepter": true,
+       "sender": [
+        "åtter"
+       ]
+      }
+     ]
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 6,
+    "prompt": "ROUND 6 of 60\n\nYour cards now: ace, ace, ace, ace\n\nYour notes from last time:\nAnswer key: G collects aces.\n\nWhat has happened so far:\nRound 2:\n  - C asks you to send 1 card(s) and offers you ace.\nRound 3:\n  - Swap with C completed: you sent eight and received ace.\nRound 4:\n  - C asks you to send 1 card(s) and offers you ace.\n--- new since you last acted ---\nRound 5:\n  - Swap with C completed: you sent eight and received ace.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: G collects aces.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 7,
+    "prompt": "ROUND 7 of 60\n\nYour cards now: ace, ace, ace, ace\n\nYour notes from last time:\nAnswer key: G collects aces.\n\nWhat has happened so far:\nRound 2:\n  - C asks you to send 1 card(s) and offers you ace.\nRound 3:\n  - Swap with C completed: you sent eight and received ace.\nRound 4:\n  - C asks you to send 1 card(s) and offers you ace.\nRound 5:\n  - Swap with C completed: you sent eight and received ace.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: G collects aces.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 8,
+    "prompt": "ROUND 8 of 60\n\nYour cards now: ace, ace, ace, ace\n\nYour notes from last time:\nAnswer key: G collects aces.\n\nWhat has happened so far:\nRound 2:\n  - C asks you to send 1 card(s) and offers you ace.\nRound 3:\n  - Swap with C completed: you sent eight and received ace.\nRound 4:\n  - C asks you to send 1 card(s) and offers you ace.\nRound 5:\n  - Swap with C completed: you sent eight and received ace.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: G collects aces.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 9,
+    "prompt": "ROUND 9 of 60\n\nYour cards now: ace, ace, ace, ace\n\nYour notes from last time:\nAnswer key: G collects aces.\n\nWhat has happened so far:\nRound 2:\n  - C asks you to send 1 card(s) and offers you ace.\nRound 3:\n  - Swap with C completed: you sent eight and received ace.\nRound 4:\n  - C asks you to send 1 card(s) and offers you ace.\nRound 5:\n  - Swap with C completed: you sent eight and received ace.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: G collects aces.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 10,
+    "prompt": "ROUND 10 of 60\nReminder from the facilitator: 10 of 60 rounds have passed.\n\nYour cards now: ace, ace, ace, ace\n\nYour notes from last time:\nAnswer key: G collects aces.\n\nWhat has happened so far:\nRound 2:\n  - C asks you to send 1 card(s) and offers you ace.\nRound 3:\n  - Swap with C completed: you sent eight and received ace.\nRound 4:\n  - C asks you to send 1 card(s) and offers you ace.\nRound 5:\n  - Swap with C completed: you sent eight and received ace.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: G collects aces.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 11,
+    "prompt": "ROUND 11 of 60\n\nYour cards now: ace, ace, ace, ace\n\nYour notes from last time:\nAnswer key: G collects aces.\n\nWhat has happened so far:\nRound 2:\n  - C asks you to send 1 card(s) and offers you ace.\nRound 3:\n  - Swap with C completed: you sent eight and received ace.\nRound 4:\n  - C asks you to send 1 card(s) and offers you ace.\nRound 5:\n  - Swap with C completed: you sent eight and received ace.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: G collects aces.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 12,
+    "prompt": "ROUND 12 of 60\n\nYour cards now: ace, ace, ace, ace\n\nYour notes from last time:\nAnswer key: G collects aces.\n\nWhat has happened so far:\nRound 2:\n  - C asks you to send 1 card(s) and offers you ace.\nRound 3:\n  - Swap with C completed: you sent eight and received ace.\nRound 4:\n  - C asks you to send 1 card(s) and offers you ace.\nRound 5:\n  - Swap with C completed: you sent eight and received ace.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: G collects aces.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 13,
+    "prompt": "ROUND 13 of 60\n\nYour cards now: ace, ace, ace, ace\n\nYour notes from last time:\nAnswer key: G collects aces.\n\nWhat has happened so far:\nRound 2:\n  - C asks you to send 1 card(s) and offers you ace.\nRound 3:\n  - Swap with C completed: you sent eight and received ace.\nRound 4:\n  - C asks you to send 1 card(s) and offers you ace.\nRound 5:\n  - Swap with C completed: you sent eight and received ace.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: G collects aces.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 14,
+    "prompt": "ROUND 14 of 60\n\nYour cards now: ace, ace, ace, ace\n\nYour notes from last time:\nAnswer key: G collects aces.\n\nWhat has happened so far:\nRound 2:\n  - C asks you to send 1 card(s) and offers you ace.\nRound 3:\n  - Swap with C completed: you sent eight and received ace.\nRound 4:\n  - C asks you to send 1 card(s) and offers you ace.\nRound 5:\n  - Swap with C completed: you sent eight and received ace.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: G collects aces.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   },
+   {
+    "runde": 15,
+    "prompt": "ROUND 15 of 60\nReminder from the facilitator: 15 of 60 rounds have passed.\n\nYour cards now: ace, ace, ace, ace\n\nYour notes from last time:\nAnswer key: G collects aces.\n\nWhat has happened so far:\nRound 2:\n  - C asks you to send 1 card(s) and offers you ace.\nRound 3:\n  - Swap with C completed: you sent eight and received ace.\nRound 4:\n  - C asks you to send 1 card(s) and offers you ace.\nRound 5:\n  - Swap with C completed: you sent eight and received ace.\n\nDecide what you want to do now, and call the tool “action”.",
+    "handling": {
+     "notater": "Answer key: G collects aces.",
+     "vent": false
+    },
+    "tekst": "",
+    "feil": null,
+    "stopp": null
+   }
+  ]
+ },
+ "debrief": {},
+ "tokens": {
+  "A": {
+   "inn": 0,
+   "ut": 0,
+   "kall": 0,
+   "feil": 0,
+   "avkuttet": 0
+  },
+  "B": {
+   "inn": 0,
+   "ut": 0,
+   "kall": 0,
+   "feil": 0,
+   "avkuttet": 0
+  },
+  "C": {
+   "inn": 0,
+   "ut": 0,
+   "kall": 0,
+   "feil": 0,
+   "avkuttet": 0
+  },
+  "D": {
+   "inn": 0,
+   "ut": 0,
+   "kall": 0,
+   "feil": 0,
+   "avkuttet": 0
+  },
+  "E": {
+   "inn": 0,
+   "ut": 0,
+   "kall": 0,
+   "feil": 0,
+   "avkuttet": 0
+  },
+  "F": {
+   "inn": 0,
+   "ut": 0,
+   "kall": 0,
+   "feil": 0,
+   "avkuttet": 0
+  },
+  "G": {
+   "inn": 0,
+   "ut": 0,
+   "kall": 0,
+   "feil": 0,
+   "avkuttet": 0
+  }
+ },
+ "tokens_sum": {},
+ "sekunder": 0.1
+}

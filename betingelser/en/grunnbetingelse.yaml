@@ -1,0 +1,23 @@
+# BASELINE (ENGLISH)
+# The exercise as described in the original instructions (HIERARCHY.doc / HIERARCHYA.doc).
+# All other English conditions inherit from this file. Settings not listed here come from
+# the Norwegian baseline (../grunnbetingelse.yaml) and are explained there.
+arver: ../grunnbetingelse.yaml
+navn: grunnbetingelse_en
+sprak: en
+
+instruks: |
+  Your group consists of 7 persons in the following organizational structure:
+  B and C report to A and are allowed to exchange written information with him/her but not with each other.
+  D and E report to B, and are allowed to contact him/her by written messages. F and G are in the same way allowed to contact C. No other form of communication is allowed.
+  You may not show your cards to your leader. If he/she asks you to send cards, you may do so, but maximally 2 cards at the time, provided you receive the same number in return. Nobody is allowed to possess more than 4 cards simultaneously, except from the moment when you are exchanging.
+
+maal_tekst: The task is accomplished when all members have 4 cards of equal value.
+maal_kjent_for: [A]
+
+debrief:
+  sporsmal:
+    - What do you think the task was about?
+    - How did you experience the communication with those you could write to?
+    - What held the group back the most?
+    - What would you have done differently?

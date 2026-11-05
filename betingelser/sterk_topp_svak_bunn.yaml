@@ -1,0 +1,7 @@
+# Kompetansefordeling: den sterkeste modellen på toppen, den minste i resten av organisasjonen.
+# Lag gjerne den omvendte varianten (sterke medarbeidere, svak toppleder) for sammenligning.
+arver: grunnbetingelse.yaml
+modell: claude-haiku-5-5
+roller:
+  A:
+    modell: claude-opus-5-5
