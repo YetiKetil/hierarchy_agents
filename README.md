@@ -86,6 +86,10 @@ A full game takes roughly 100–250 API calls and 0.5–3 million input tokens. 
 - **On a free tier,** add `--concurrent 1` so the agents do not all call the API at once. Games then take longer, but stay within the limits.
 - **Model names change.** Check the providers’ model lists: [Gemini](https://ai.google.dev/gemini-api/docs/models) and [Claude](https://docs.claude.com).
 
+## A second game: Win as much as you can
+
+The folder `win_as_much` contains a version of the prisoner's dilemma for five groups, in which each group is three AI agents who confer before every choice, and representatives negotiate before the high-stake rounds. See `win_as_much/README.md`. To run it in Colab, use **[the second notebook](https://colab.research.google.com/github/YetiKetil/hierarchy_agents/blob/main/notebooks/WIN_AS_MUCH_colab.ipynb)**.
+
 ## Going further
 
 `ADVANCED.md` explains how the program works, how to write your own conditions, how to add another model provider, and gives ideas for experiments.
