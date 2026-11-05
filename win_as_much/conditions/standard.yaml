@@ -1,0 +1,49 @@
+# WIN AS MUCH AS YOU CAN – the standard set-up, as used with human groups.
+# Five groups of three agents. The sheet shows 31 rounds, but the administrator stops after round 10
+# without warning. Other conditions inherit from this file and only list what is different.
+name: standard
+
+model: claude-haiku-5-5        # e.g. gemini-3.5-flash-lite, gemini-3.8-flash, claude-sonnet-5-5
+provider: null                 # anthropic | google; null = guessed from the model name
+max_tokens: 4000
+temperature: null
+concurrent: 5                  # max simultaneous API calls; use 1-2 on a free tier
+
+members: [A, B, C]             # three members per group: 1A, 1B, 1C, 2A, ...
+stop_after: 10                 # the administrator stops the game after this round
+show_schedule: true            # the agents see the full 31-round schedule (the deception)
+tell_end: false                # true = the agents are told the game ends after round `stop_after`
+reveal_choices: true           # the results announce every group's choice, not only the totals
+discussion_turns: 3            # max turns in each group discussion (each member speaks once per turn)
+meeting_turns: 3               # statements per representative in each meeting
+memory_rounds: null            # null = agents see their whole history; e.g. 3 = only the last 3 rounds
+log_prompts: false             # true = save every prompt in the log (large files)
+
+# Per-group settings. A group can use another model, get extra text, or be a rule-based bot:
+# group_settings:
+#   "2": {model: gemini-3.8-flash}
+#   "4": {type: bot, strategy: tit_for_tat}     # always_Y | always_X | tit_for_tat | grim | random
+#   "5": {extra: "Your group has decided to be cautious."}
+group_settings: {}
+
+rules_text: |
+  WIN AS MUCH AS YOU CAN
+
+  In several consequtive rounds, you and your group are supposed to choose either an "X" or a "Y". The task of the group is to win as much as it can. The result of each round depends on the choice of the other groups.
+
+  5 "X": All groups loose 1000
+  4 "X" and 1 "Y": "X" wins 2000, "Y" looses 8000
+  3 "X" and 2 "Y": "X" wins 4000, "Y" looses 6000
+  2 "X" and 3 "Y": "X" wins 6000, "Y" looses 4000
+  1 "X" and 4 "Y": "X" wins 8000, "Y" looses 2000
+  5 "Y": All groups win 1000
+
+  Before each round, you write down what your vote is for this specific round. Thereafter you confer with the rest of your group, such that you reach a common conclusion. The decision is to be written on a folded piece of paper with the name of the group visible and is to be delivered to the staff. In advance of some rounds, each group has an opportunity to send a representative to negotiate with the representatives of the other groups. Apart from this, there is no opportunity to communicate between the groups during the exercise. In some of the rounds, the result of the votes is to be multiplied by 3, 5 or 10. The administrator will stop the exercise at some point, but the exact moment will not be known to the groups until it happens.
+
+debrief:
+  active: true
+  questions:
+    - What did "win as much as you can" mean to you, and who was the "you"?
+    - How did your group make its decisions, and did you agree with them?
+    - What happened at the representatives' meetings, and did your group do what was agreed there?
+    - What would you do differently?

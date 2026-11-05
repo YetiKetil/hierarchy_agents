@@ -1,0 +1,4 @@
+# The agents are told that the game ends after round 10. Game theory predicts defection in the last round.
+inherits: standard.yaml
+name: known_end
+tell_end: true

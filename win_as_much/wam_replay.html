@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Win as much as you can – replay</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Fraunces:opsz,wght@9..144,500;9..144,700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F3F5F3; --flate: #FFFFFF; --tekst: #18231F; --dempet: #5C6A64; --linje: #D3DCD7;
+  --filt: #1F4D3A; --x: #B8323A; --y: #2E7D5B; --gull: #C9A13B; --x-lys: #F6E3E4; --y-lys: #E1F0E8; --gull-lys: #F7EED6;
+  --skala: 1; color-scheme: light; box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0F1714; --flate: #17221D; --tekst: #E6ECE8; --dempet: #9FB0A8; --linje: #2C3B34;
+    --filt: #2A6A50; --x: #E0646B; --y: #5DBB8E; --gull: #D9B451; --x-lys: #3A2124; --y-lys: #1C3428; --gull-lys: #3A3220;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0F1714; --flate: #17221D; --tekst: #E6ECE8; --dempet: #9FB0A8; --linje: #2C3B34;
+  --filt: #2A6A50; --x: #E0646B; --y: #5DBB8E; --gull: #D9B451; --x-lys: #3A2124; --y-lys: #1C3428; --gull-lys: #3A3220;
+  color-scheme: dark;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { height: 100%; font-size: calc(16px * var(--skala)); }
+body { margin: 0; min-height: 100%; background: var(--bg); color: var(--tekst);
+  font-family: "Atkinson Hyperlegible", "Segoe UI", Helvetica, Arial, sans-serif; line-height: 1.45; }
+button, select, input { font: inherit; color: inherit; }
+button { background: var(--flate); border: 1px solid var(--linje); border-radius: 8px; padding: .45rem .8rem; cursor: pointer; }
+button:hover { border-color: var(--dempet); }
+button[aria-pressed="true"] { background: var(--filt); color: #fff; border-color: var(--filt); }
+button:focus-visible, select:focus-visible, td.klikk:focus-visible { outline: 3px solid var(--gull); outline-offset: 2px; }
+button.hoved { background: var(--filt); color: #fff; border-color: var(--filt); min-width: 7rem; }
+select { background: var(--flate); border: 1px solid var(--linje); border-radius: 8px; padding: .4rem .6rem; min-width: 0; max-width: 100%; }
+.skjult { display: none !important; }
+header { display: flex; flex-wrap: wrap; gap: .6rem 1rem; align-items: center; padding: .9rem 1.2rem; background: var(--flate); border-bottom: 1px solid var(--linje); }
+header h1 { font-family: Fraunces, Georgia, serif; font-size: 1.35rem; margin: 0; }
+header .fyll { flex: 1; }
+header .valg { display: flex; flex-wrap: wrap; gap: .5rem; min-width: 0; max-width: 100%; }
+#velg { width: 30rem; }
+@media (max-width: 700px) { header .valg, #velg { width: 100%; } }
+main { max-width: 1500px; margin: 0 auto; padding: 1rem 1.2rem 2rem; }
+.tom { margin: 3rem auto; max-width: 38rem; text-align: center; padding: 2.5rem 1.5rem; border: 2px dashed var(--dempet); border-radius: 16px; background: var(--flate); }
+.tom h2 { font-family: Fraunces, Georgia, serif; margin: 0 0 .5rem; }
+.tom p { color: var(--dempet); }
+body.drar .tom, body.drar #visning { outline: 3px dashed var(--gull); outline-offset: 6px; }
+.sammendrag { margin: 0 0 1rem; font-size: 1.05rem; }
+.sammendrag strong { font-family: Fraunces, Georgia, serif; font-size: 1.25rem; }
+.topp { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 1rem; }
+@media (max-width: 1000px) { .topp { grid-template-columns: 1fr; } }
+.kort { background: var(--flate); border: 1px solid var(--linje); border-radius: 14px; padding: .8rem; }
+.kort h2 { font-family: Fraunces, Georgia, serif; font-size: 1.1rem; margin: .1rem .2rem .6rem; }
+.tabell { overflow-x: auto; }
+table { border-collapse: separate; border-spacing: 3px; font-size: .95rem; }
+th { font-weight: 700; color: var(--dempet); font-size: .8rem; padding: 2px 4px; text-align: center; white-space: nowrap; }
+td { text-align: center; padding: 0; }
+td.gruppe { font-family: Fraunces, Georgia, serif; font-weight: 700; padding-right: .4rem; text-align: right; white-space: nowrap; }
+td.valg { width: 2.1rem; height: 2.1rem; border-radius: 6px; font-weight: 700; }
+td.X { background: var(--x); color: #fff; }
+td.Y { background: var(--y); color: #fff; }
+td.ukjent { background: var(--linje); color: var(--dempet); }
+td.na { outline: 3px solid var(--gull); outline-offset: -1px; }
+td.sum { font-weight: 700; padding-left: .6rem; text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+td.klikk, th.klikk { cursor: pointer; }
+.mult { display: block; color: var(--gull); font-size: .72rem; }
+.graf svg { width: 100%; height: auto; display: block; }
+.forklaring { display: flex; flex-wrap: wrap; gap: .3rem .9rem; font-size: .85rem; color: var(--dempet); margin-top: .3rem; }
+.forklaring span::before { content: ""; display: inline-block; width: .9rem; height: .25rem; margin-right: .3rem; vertical-align: middle; background: var(--c); }
+.stegrad { display: flex; flex-wrap: wrap; gap: .4rem; align-items: center; margin: 1rem 0 .6rem; }
+.stegrad .tittel { font-family: Fraunces, Georgia, serif; font-size: 1.3rem; font-weight: 700; margin-right: .6rem; }
+.steg { padding: .25rem .65rem; border-radius: 99px; border: 1px solid var(--linje); font-size: .9rem; color: var(--dempet); background: var(--flate); cursor: pointer; }
+.steg.na { background: var(--filt); color: #fff; border-color: var(--filt); }
+.steg.ferdig { color: var(--tekst); }
+.innhold { min-height: 12rem; }
+.melding { padding: .55rem .75rem; border-radius: 10px; margin-bottom: .45rem; background: var(--bg); border-left: 4px solid var(--linje); }
+.melding .hvem { font-weight: 700; font-size: .92rem; }
+.melding .hvem .merke { font-weight: 400; margin-left: .35rem; font-size: .8rem; padding: .05rem .45rem; border-radius: 99px; border: 1px solid var(--linje); }
+.melding .tekst { font-size: 1.1rem; margin-top: .15rem; overflow-wrap: anywhere; }
+.melding .tanke { font-size: .92rem; color: var(--dempet); margin-top: .3rem; font-style: italic; }
+.melding.X { border-left-color: var(--x); }
+.melding.na { background: var(--gull-lys); border-left-color: var(--gull); }
+.melding.Y { border-left-color: var(--y); }
+.grupper { display: grid; grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr)); gap: .8rem; }
+.gruppekort { border: 1px solid var(--linje); border-radius: 12px; padding: .6rem; background: var(--flate); }
+.gruppekort h3 { margin: 0 0 .5rem; font-family: Fraunces, Georgia, serif; font-size: 1.05rem; display: flex; justify-content: space-between; gap: .5rem; }
+.beslutning { font-weight: 700; padding: .3rem .6rem; border-radius: 8px; display: inline-block; }
+.beslutning.X { background: var(--x-lys); color: var(--x); }
+.beslutning.Y { background: var(--y-lys); color: var(--y); }
+.private { display: flex; gap: .35rem; flex-wrap: wrap; margin-bottom: .5rem; }
+.chip { font-size: .85rem; padding: .1rem .5rem; border-radius: 99px; border: 1px solid var(--linje); }
+.chip.X { color: var(--x); border-color: var(--x); }
+.chip.Y { color: var(--y); border-color: var(--y); }
+.resultat { font-size: 1.15rem; }
+.resultat .linje { padding: .45rem .7rem; border-radius: 10px; margin-bottom: .4rem; background: var(--bg); display: flex; flex-wrap: wrap; gap: .3rem 1rem; align-items: baseline; }
+.brudd { color: var(--x); font-weight: 700; }
+.holdt { color: var(--y); font-weight: 700; }
+.kontroller { display: flex; flex-wrap: wrap; gap: .5rem .8rem; align-items: center; margin-top: 1rem; padding: .8rem; background: var(--flate); border: 1px solid var(--linje); border-radius: 14px; }
+.kontroller label { display: flex; align-items: center; gap: .4rem; color: var(--dempet); }
+.hjelp { color: var(--dempet); font-size: .85rem; margin-top: .5rem; }
+.stille { color: var(--dempet); font-style: italic; }
+dialog { border: none; border-radius: 16px; padding: 0; max-width: min(56rem, 94vw); width: 100%; background: var(--flate); color: var(--tekst); }
+dialog::backdrop { background: rgba(10, 20, 15, .55); }
+dialog .inn { padding: 1.2rem 1.4rem; max-height: 80vh; overflow-y: auto; }
+dialog h2, dialog h3 { font-family: Fraunces, Georgia, serif; }
+dialog .svar { white-space: pre-wrap; }
+dialog footer { padding: .8rem 1.4rem; border-top: 1px solid var(--linje); text-align: right; }
+.feil { background: var(--x-lys); border-left: 4px solid var(--x); padding: .6rem .9rem; border-radius: 8px; margin: 0 0 1rem; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Win as much as you can – replay</h1>
+  <div class="fyll"></div>
+  <div class="valg">
+    <select id="velg" class="skjult" aria-label="Game"></select>
+    <button id="apne" type="button">Open logs</button>
+    <input id="filer" type="file" accept=".json,application/json" multiple class="skjult">
+    <button id="stor" type="button" aria-pressed="false">Large text</button>
+  </div>
+</header>
+<main>
+  <p id="feil" class="feil skjult" role="alert"></p>
+  <section id="tom" class="tom">
+    <h2>No game is open yet</h2>
+    <p>Choose one or more game logs (files ending in .json) from the “logs” folder, or drop them here.</p>
+    <button id="apne2" type="button" class="hoved">Open logs</button>
+  </section>
+
+  <section id="visning" class="skjult">
+    <p class="sammendrag" id="sammendrag"></p>
+    <div class="topp">
+      <div class="kort"><h2>Choices and totals</h2><div class="tabell" id="tabell"></div></div>
+      <div class="kort graf"><h2>Running totals</h2><div id="graf"></div><div class="forklaring" id="forklaring"></div></div>
+    </div>
+
+    <div class="stegrad" id="stegrad"></div>
+    <div class="kort innhold" id="innhold" aria-live="polite"></div>
+
+    <div class="kontroller">
+      <button id="forrigeRunde" type="button">⏮ Previous round</button>
+      <button id="tilbake" type="button">◀ Back</button>
+      <button id="spill" type="button" class="hoved">Play</button>
+      <button id="fram" type="button">Forward ▶</button>
+      <button id="nesteRunde" type="button">Next round ⏭</button>
+      <label>Speed <input id="tempo" type="range" min="0.4" max="3" step="0.1" value="1.4"></label>
+      <label><input id="tanker" type="checkbox"> Show thoughts</label>
+      <label><input id="private" type="checkbox" checked> Show private votes</label>
+      <label>Group <select id="fokus"><option value="alle">All groups</option></select></label>
+      <button id="debriefKnapp" type="button">Debrief</button>
+    </div>
+    <p class="hjelp">Space plays and pauses; the arrow keys step forward and back, with Shift a whole round. Click a round in the table to jump to it. The result of a round is only shown at its last step.</p>
+  </section>
+</main>
+<dialog id="debrief"><div class="inn" id="debriefInn"></div><footer><button id="lukk" type="button">Close</button></footer></dialog>
+
+<script>
+(function () {
+  "use strict";
+  const G = ["1", "2", "3", "4", "5"];
+  const FARGER = ["#2F5D8A", "#B26B1F", "#7A3E8E", "#4A6B78", "#8A6D1F"];
+  const STEGNAVN = { private: "Private votes", prep: "Preparing", meeting: "Representatives’ meeting", reports: "Reports back", discussion: "Group discussions", result: "Result" };
+  const logger = [];
+  let L = null, r = 0, s = 0, spiller = false, tid = null;
+  const $ = (id) => document.getElementById(id);
+  const esc = (x) => String(x ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const fmt = (n) => (n > 0 ? "+" : n < 0 ? "−" : "") + Math.abs(n).toLocaleString("en-GB").replace(/,/g, "\u2009");
+
+  // ------------------------------------------------------------ loading
+  function apne(filer) {
+    const liste = Array.from(filer || []).filter((f) => /\.json$/i.test(f.name));
+    let igjen = liste.length;
+    liste.forEach((fil) => {
+      const les = new FileReader();
+      les.onload = () => {
+        try {
+          const d = JSON.parse(les.result);
+          if (d.game !== "win_as_much_as_you_can" || !Array.isArray(d.rounds)) throw new Error();
+          logger.push({ navn: fil.name, d });
+        } catch (e) { visFeil(`Could not read ${fil.name}. Choose a log from a “Win as much as you can” game.`); }
+        if (--igjen === 0 && logger.length) oppdaterValg(logger.length - 1);
+      };
+      les.readAsText(fil);
+    });
+  }
+  function visFeil(t) { const el = $("feil"); el.textContent = t; el.classList.remove("skjult"); setTimeout(() => el.classList.add("skjult"), 8000); }
+  function oppdaterValg(i) {
+    const v = $("velg");
+    v.innerHTML = logger.map((l, j) => `<option value="${j}">${esc(l.d.condition)}, seed ${l.d.seed} (${esc(l.navn)})</option>`).join("");
+    v.classList.remove("skjult"); v.value = i; velg(i);
+  }
+  function velg(i) {
+    stopp(); L = logger[i].d; r = 0; s = 0;
+    $("tom").classList.add("skjult"); $("visning").classList.remove("skjult");
+    $("fokus").innerHTML = `<option value="alle">All groups</option>` + G.map((g) => `<option value="${g}">Group ${g}</option>`).join("");
+    tegn();
+  }
+
+  // ------------------------------------------------------------ steps
+  const maksTur = (rec) => Math.max(0, ...Object.values(rec.discussion || {}).flat().map((m) => m.turn));
+  function steg(rr) {
+    // a phase can have several sub-steps: one per statement in the meeting, one per turn in the discussions
+    const rec = L.rounds[rr];
+    const ut = [];
+    if (Object.keys(rec.private || {}).length) ut.push({ st: "private" });
+    if (rec.meeting && (rec.meeting_log || []).length) {
+      ut.push({ st: "prep" });
+      rec.meeting_log.forEach((_, i) => ut.push({ st: "meeting", k: i + 1, av: rec.meeting_log.length }));
+      ut.push({ st: "reports" });
+    }
+    const t = maksTur(rec);
+    for (let k = 1; k <= t; k++) ut.push({ st: "discussion", k, av: t });
+    ut.push({ st: "result" });
+    return ut;
+  }
+  const naSteg = () => steg(r)[s];
+  const navaerende = () => naSteg().st;
+  const vist = (rr) => rr < r || (rr === r && navaerende() === "result");
+
+  // ------------------------------------------------------------ drawing
+  function tegn() {
+    if (!L) return;
+    const m = L.measures;
+    const slutt = r === L.rounds.length - 1 && navaerende() === "result";
+    const lofter = m.promises_made ? ` Representatives’ promises kept: ${m.promises_kept} of ${m.promises_made}.` : "";
+    $("sammendrag").innerHTML = `<strong>${esc(L.condition)}</strong>, seed ${L.seed}<br>` + (slutt
+      ? `The administrator stopped the game after ${m.rounds} rounds. Together the groups ended at ${fmt(m.collective)}; choosing Y every round would have given ${fmt(m.ideal)}.${lofter}`
+      : `The overall result is shown after the last round.`);
+    tegnTabell(); tegnGraf(); tegnSteg(); tegnInnhold();
+    $("spill").textContent = spiller ? "Pause" : "Play";
+  }
+
+  function tegnTabell() {
+    const runder = L.rounds;
+    let h = `<table><thead><tr><th></th>` + runder.map((rec, i) =>
+      `<th class="klikk" data-r="${i}">${rec.round}${rec.multiplier > 1 ? `<span class="mult">×${rec.multiplier}${rec.meeting ? " 🤝" : ""}</span>` : ""}</th>`).join("") +
+      `<th>Total</th></tr></thead><tbody>`;
+    G.forEach((g) => {
+      let tot = 0;
+      h += `<tr><td class="gruppe">Group ${g}</td>`;
+      runder.forEach((rec, i) => {
+        const ok = vist(i);
+        if (ok) tot = rec.result.totals[g];
+        const c = rec.result.choices[g];
+        h += `<td class="valg klikk ${ok ? c : "ukjent"} ${i === r ? "na" : ""}" data-r="${i}" tabindex="0" title="Round ${rec.round}">${ok ? c : "?"}</td>`;
+      });
+      h += `<td class="sum">${fmt(tot)}</td></tr>`;
+    });
+    h += `</tbody></table>`;
+    $("tabell").innerHTML = h;
+    $("tabell").querySelectorAll("[data-r]").forEach((el) => el.addEventListener("click", () => { stopp(); r = +el.dataset.r; s = 0; tegn(); }));
+  }
+
+  function tegnGraf() {
+    const runder = L.rounds, n = runder.length;
+    const ideal = [0]; runder.forEach((rec) => ideal.push(ideal[ideal.length - 1] + 1000 * rec.multiplier));
+    const serier = G.map((g) => [0, ...runder.map((rec) => rec.result.totals[g])]);
+    const synlig = r + (navaerende() === "result" ? 1 : 0);
+    const alle = [...ideal, ...serier.flat()];
+    const lo = Math.min(0, ...alle), hi = Math.max(0, ...alle);
+    const W = 600, H = 300, pl = 58, pr = 10, pt = 10, pb = 28;
+    const x = (i) => pl + (W - pl - pr) * i / Math.max(1, n);
+    const y = (v) => pt + (H - pt - pb) * (1 - (v - lo) / ((hi - lo) || 1));
+    let svg = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Running totals per group">`;
+    [lo, 0, hi].forEach((v) => {
+      svg += `<line x1="${pl}" x2="${W - pr}" y1="${y(v)}" y2="${y(v)}" stroke="var(--linje)" stroke-width="${v === 0 ? 1.5 : 1}"/>` +
+             `<text x="${pl - 6}" y="${y(v) + 4}" font-size="12" text-anchor="end" fill="var(--dempet)">${fmt(v)}</text>`;
+    });
+    for (let i = 0; i <= n; i++) svg += `<text x="${x(i)}" y="${H - 8}" font-size="11" text-anchor="middle" fill="var(--dempet)">${i}</text>`;
+    const linje = (vals, farge, strek, bredde) => `<polyline points="${vals.slice(0, synlig + 1).map((v, i) => `${x(i)},${y(v)}`).join(" ")}" fill="none" stroke="${farge}" stroke-width="${bredde}" ${strek ? `stroke-dasharray="${strek}"` : ""} stroke-linejoin="round"/>`;
+    svg += linje(ideal, "var(--gull)", "6 5", 2.5);
+    serier.forEach((v, i) => { svg += linje(v, FARGER[i], "", 3); });
+    svg += `</svg>`;
+    $("graf").innerHTML = svg;
+    $("forklaring").innerHTML = G.map((g, i) => `<span style="--c:${FARGER[i]}">Group ${g}</span>`).join("") + `<span style="--c:var(--gull)">Each group if all chose Y</span>`;
+  }
+
+  function tegnSteg() {
+    const rec = L.rounds[r], liste = steg(r), na = naSteg();
+    const faser = [];
+    liste.forEach((x, i) => { if (!faser.length || faser[faser.length - 1].st !== x.st) faser.push({ st: x.st, forste: i }); });
+    $("stegrad").innerHTML = `<span class="tittel">Round ${rec.round}${rec.multiplier > 1 ? ` · ×${rec.multiplier}` : ""}</span>` +
+      faser.map((f) => {
+        const aktiv = f.st === na.st, ferdig = f.forste < s && !aktiv;
+        const teller = aktiv && na.av ? ` ${na.k}/${na.av}` : "";
+        return `<span class="steg ${aktiv ? "na" : ferdig ? "ferdig" : ""}" data-s="${f.forste}">${STEGNAVN[f.st]}${teller}</span>`;
+      }).join("");
+    $("stegrad").querySelectorAll("[data-s]").forEach((el) => el.addEventListener("click", () => { stopp(); s = +el.dataset.s; tegn(); }));
+  }
+
+  const tanke = (n) => $("tanker").checked && n ? `<div class="tanke">Thinks: ${esc(n)}</div>` : "";
+  const fokusG = () => $("fokus").value === "alle" ? G : [$("fokus").value];
+  function melding(hvem, tekst, merker, notes, valg) {
+    return `<div class="melding ${valg || ""}"><div class="hvem">${esc(hvem)}${merker.map((m) => `<span class="merke">${esc(m)}</span>`).join("")}</div>` +
+      `<div class="tekst">${esc(tekst)}</div>${tanke(notes)}</div>`;
+  }
+  const bot = (g) => { const d = L.rounds[r].decisions[g]; return d && d.bot; };
+
+  function tegnInnhold() {
+    const rec = L.rounds[r], st = navaerende(), boks = $("innhold");
+    let h = "";
+    if (st === "private") {
+      h = `<div class="grupper">` + fokusG().filter((g) => !bot(g)).map((g) => {
+        const pv = Object.entries(rec.private).filter(([a]) => a.startsWith(g));
+        return `<div class="gruppekort"><h3>Group ${g}</h3>` + ($("private").checked
+          ? `<div class="private">${pv.map(([a, v]) => `<span class="chip ${v.vote || ""}">${a}: ${v.vote || "–"}</span>`).join("")}</div>`
+          : `<p class="stille">Private votes are hidden.</p>`) +
+          ($("tanker").checked ? pv.map(([a, v]) => v.notes ? `<div class="tanke melding"><b>${a}</b> thinks: ${esc(v.notes)}</div>` : "").join("") : "") + `</div>`;
+      }).join("") + `</div>`;
+    } else if (st === "prep") {
+      h = `<div class="grupper">` + fokusG().filter((g) => rec.prep[g]).map((g) => `<div class="gruppekort"><h3>Group ${g}<span>sends ${esc(rec.representatives[g])}</span></h3>` +
+        rec.prep[g].map((p) => melding(p.agent, p.message, [`nominates ${p.nominee}`], p.notes)).join("") + `</div>`).join("") + `</div>`;
+    } else if (st === "meeting") {
+      const reps = Object.entries(rec.representatives).map(([g, a]) => `${a} (Group ${g})`).join(", ");
+      const k = naSteg().k;
+      h = `<p class="stille">Only the representatives are present: ${esc(reps)}.</p>` +
+        rec.meeting_log.slice(0, k).map((e, i) => melding(`${e.agent} · Group ${e.group}`, e.statement,
+          [`statement ${e.turn}`, ...(e.commitment ? [`commits to: ${e.commitment}`] : [])], e.notes, i === k - 1 ? "na" : "")).join("");
+    } else if (st === "reports") {
+      h = `<p class="stille">The rest of each group only knows what its representative tells them.</p><div class="grupper">` +
+        fokusG().filter((g) => rec.reports[g]).map((g) => `<div class="gruppekort"><h3>Group ${g}</h3>` +
+          melding(`${rec.reports[g].agent} reports`, rec.reports[g].report, [], rec.reports[g].notes) + `</div>`).join("") + `</div>`;
+    } else if (st === "discussion") {
+      h = `<div class="grupper">` + fokusG().map((g) => {
+        if (bot(g)) return `<div class="gruppekort"><h3>Group ${g}</h3><p class="stille">A rule-based group: no discussion.</p></div>`;
+        const d = rec.decisions[g], k = naSteg().k, ferdig = k >= d.turns;
+        return `<div class="gruppekort"><h3>Group ${g}${ferdig ? `<span class="beslutning ${d.choice}">hands in ${d.choice}</span>` : ""}</h3>` +
+          (rec.discussion[g] || []).filter((m) => m.turn <= k).map((m) => melding(m.agent, m.message, [`proposes ${m.proposal}`], m.notes, m.proposal)).join("") +
+          (ferdig ? `<p class="stille">${d.unanimous ? "All agreed" : "Decided by majority"} after ${d.turns} turn${d.turns === 1 ? "" : "s"}.</p>` : "") + `</div>`;
+      }).join("") + `</div>`;
+    } else {
+      const res = rec.result;
+      h = `<div class="resultat">` + G.map((g) => {
+        const c = res.choices[g], com = (rec.commitments || {})[g];
+        const lofte = com === "X" || com === "Y" ? (com === c ? `<span class="holdt">kept the promise (${com})</span>` : `<span class="brudd">promised ${com}, chose ${c}</span>`) : "";
+        return `<div class="linje"><b>Group ${g}</b><span class="beslutning ${c}">${c}</span><span>${fmt(res.points[g])}</span><span>total ${fmt(res.totals[g])}</span>${lofte}</div>`;
+      }).join("") + `<p class="stille">${res.n_x} X and ${5 - res.n_x} Y${rec.multiplier > 1 ? `, everything ×${rec.multiplier}` : ""}.</p></div>`;
+    }
+    boks.innerHTML = h || `<p class="stille">Nothing to show in this step.</p>`;
+    const sist = boks.querySelector(".melding.na");
+    if (sist) sist.scrollIntoView({ block: "nearest", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+  }
+
+  // ------------------------------------------------------------ navigation
+  function fram() {
+    if (!L) return false;
+    if (s < steg(r).length - 1) s++;
+    else if (r < L.rounds.length - 1) { r++; s = 0; }
+    else return false;
+    tegn(); return true;
+  }
+  function tilbake() { if (!L) return; if (s > 0) s--; else if (r > 0) { r--; s = steg(r).length - 1; } tegn(); }
+  function tilRunde(n) { if (!L) return; r = Math.max(0, Math.min(L.rounds.length - 1, n)); s = 0; tegn(); }
+  function spill() {
+    if (spiller) return stopp();
+    spiller = true; tegn();
+    const tikk = () => { if (!spiller) return; if (!fram()) return stopp(); tid = setTimeout(tikk, (3.4 - +$("tempo").value) * 2600); };
+    tid = setTimeout(tikk, 500);
+  }
+  function stopp() { spiller = false; clearTimeout(tid); if (L) $("spill").textContent = "Play"; }
+
+  $("apne").onclick = $("apne2").onclick = () => $("filer").click();
+  $("filer").onchange = (e) => { apne(e.target.files); e.target.value = ""; };
+  $("velg").onchange = (e) => velg(+e.target.value);
+  $("fram").onclick = () => { stopp(); fram(); };
+  $("tilbake").onclick = () => { stopp(); tilbake(); };
+  $("nesteRunde").onclick = () => { stopp(); tilRunde(r + 1); };
+  $("forrigeRunde").onclick = () => { stopp(); tilRunde(s > 0 ? r : r - 1); };
+  $("spill").onclick = spill;
+  ["tanker", "private", "fokus"].forEach((id) => $(id).addEventListener("change", tegn));
+  $("stor").onclick = () => { const p = $("stor").getAttribute("aria-pressed") !== "true"; $("stor").setAttribute("aria-pressed", p); document.documentElement.style.setProperty("--skala", p ? 1.3 : 1); };
+  $("debriefKnapp").onclick = () => {
+    const d = (L && L.debrief) || {}, deler = Object.entries(d).filter(([, v]) => v);
+    $("debriefInn").innerHTML = `<h2>Debrief after the game</h2>` + (deler.length
+      ? deler.map(([a, v]) => `<h3>${a}</h3><div class="svar">${esc(String(v).replace(/\*\*/g, ""))}</div>`).join("") : `<p>This game has no debrief.</p>`);
+    $("debrief").showModal();
+  };
+  $("lukk").onclick = () => $("debrief").close();
+  document.addEventListener("keydown", (e) => {
+    const tag = e.target.tagName;
+    if (!L || $("debrief").open || tag === "SELECT" || (tag === "INPUT" && e.target.type !== "checkbox")) return;
+    if (e.key === " " && (tag === "BUTTON" || tag === "INPUT")) return;
+    if (e.key === " ") { e.preventDefault(); spill(); }
+    else if (e.key === "ArrowRight") { e.preventDefault(); stopp(); e.shiftKey ? tilRunde(r + 1) : fram(); }
+    else if (e.key === "ArrowLeft") { e.preventDefault(); stopp(); e.shiftKey ? tilRunde(s > 0 ? r : r - 1) : tilbake(); }
+  });
+  ["dragenter", "dragover"].forEach((ev) => document.addEventListener(ev, (e) => { e.preventDefault(); document.body.classList.add("drar"); }));
+  ["dragleave", "drop"].forEach((ev) => document.addEventListener(ev, (e) => { e.preventDefault(); if (ev === "drop" || e.target === document.documentElement) document.body.classList.remove("drar"); }));
+  document.addEventListener("drop", (e) => apne(e.dataTransfer.files));
+})();
+</script>
+</body>
+</html>

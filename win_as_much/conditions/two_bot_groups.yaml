@@ -1,0 +1,7 @@
+# Three agent groups play against two rule-based groups: one copies what most groups did last round,
+# one always chooses X. A stand-in for the planned version with two human groups.
+inherits: standard.yaml
+name: two_bot_groups
+group_settings:
+  "4": {type: bot, strategy: tit_for_tat}
+  "5": {type: bot, strategy: always_X}
