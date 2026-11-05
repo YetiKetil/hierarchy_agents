@@ -4,7 +4,7 @@ In the leadership exercise HIERARCHY, seven people in a three-level hierarchy tr
 
 This kit lets seven AI agents play the exercise. A game engine enforces the rules, each agent only sees its own perspective, and every game is saved as a complete log that you can replay, read and analyse. You decide which language model plays, what the agents are told, and how the organisation is set up.
 
-This is course material. Ask your teacher before sharing it outside the course.
+The kit was made for teaching leadership. You are welcome to use it for learning and for your own experiments.
 
 ## What you need
 
@@ -15,6 +15,8 @@ This is course material. Ask your teacher before sharing it outside the course.
 - **Without a key** you can still run the answer key and the test agents. Both are free and show you how everything works.
 
 ## Quick start on your own computer
+
+Get the kit: on [the GitHub page](https://github.com/YetiKetil/hierarchy_agents), click the green **Code** button and choose **Download ZIP**, then unpack it. Or, if you use git: `git clone https://github.com/YetiKetil/hierarchy_agents`.
 
 ```bash
 pip install -r requirements.txt
@@ -45,7 +47,7 @@ The program prints one line per round. **Shortfall** is the number of cards the 
 
 ## Quick start in Google Colab
 
-Open `notebooks/HIERARCHY_colab.ipynb` in Google Colab and follow the cells. You upload this kit as a zip file and store your key in Colab’s **Secrets** panel (the key icon on the left). At the end, you download your logs and open them in `replay.html` on your own computer.
+**[Open the notebook in Google Colab](https://colab.research.google.com/github/YetiKetil/hierarchy_agents/blob/main/notebooks/HIERARCHY_colab.ipynb)** and follow the cells. The notebook fetches the code from GitHub by itself. You store your key in Colab’s **Secrets** panel (the key icon on the left). At the end, you download your logs and open them in `replay.html` on your own computer.
 
 ## The conditions
 

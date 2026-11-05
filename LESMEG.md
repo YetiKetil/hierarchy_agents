@@ -4,17 +4,21 @@ I lederutviklingsøvelsen HIERARKI skal sju personer i et hierarki med tre nivå
 
 Med denne pakken spiller sju KI-agenter øvelsen. En spillmotor håndhever reglene, hver agent ser bare sitt eget perspektiv, og hvert spill lagres som en fullstendig logg som kan spilles av, leses og analyseres. Du velger selv hvilken språkmodell som spiller, hva agentene får vite, og hvordan organisasjonen er satt opp.
 
-Dette er kursmateriell. Spør læreren før du deler det utenfor kurset.
+Pakken er laget for undervisning i ledelse. Du kan gjerne bruke den til læring og egne eksperimenter.
 
 ## Dette trenger du
 
-- **Python 3.10 eller nyere** på egen maskin, eller Google Colab i nettleseren, uten installasjon.
+- **Python 3.10 eller nyere** på egen maskin, eller Google Colab i nettleseren (se lenken nedenfor), uten installasjon.
 - **En API-nøkkel** til Gemini (Google AI Studio) eller Claude (Anthropic Console).
   - Et chatabonnement er ikke det samme som API-tilgang. API-bruk settes opp og faktureres for seg hos hver leverandør.
   - Noen leverandører har et gratisnivå med strenge begrensninger.
 - **Uten nøkkel** kan du likevel kjøre fasiten og testagentene. Begge er gratis og viser hvordan alt virker.
 
 ## Kom i gang
+
+Hent pakken: på [GitHub-siden](https://github.com/YetiKetil/hierarchy_agents) klikker du på den grønne **Code**-knappen og velger **Download ZIP**. Pakk ut filen. Bruker du git, kan du i stedet skrive `git clone https://github.com/YetiKetil/hierarchy_agents`.
+
+Vil du heller bruke nettleseren, kan du **[åpne notatboken i Google Colab](https://colab.research.google.com/github/YetiKetil/hierarchy_agents/blob/main/notebooks/HIERARCHY_colab.ipynb)**. Den henter koden selv. Lagre API-nøkkelen under **Secrets** (nøkkelikonet til venstre).
 
 ```bash
 pip install -r requirements.txt
