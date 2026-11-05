@@ -1,0 +1,5 @@
+.env
+logger/
+logger_en/
+__pycache__/
+*.pyc
