@@ -1,0 +1,10 @@
+# ONE GROUP THAT READS THE TASK AS BEATING THE OTHERS
+# Many human groups read "win as much as you can" as finishing ahead of the other groups,
+# like Group 1 in the Chinese MBA class, which defected in both negotiated rounds.
+# Does the meeting discover it, and how do the other groups respond?
+inherits: standard.yaml
+name: competitive_group
+group_settings:
+  "1":
+    extra: |
+      Your group reads the task this way: "win as much as you can" means finishing with more points than the other groups. What matters to your group is its position compared with the others. You decide for yourselves what you tell the other groups.

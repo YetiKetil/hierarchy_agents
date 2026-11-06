@@ -1,0 +1,10 @@
+# ONE GROUP WILLING TO MOVE FIRST
+# In the Haiku game, every representative wanted all-Y but made it conditional on the others moving first,
+# so nobody moved. Here Group 3 has its own principle: when everyone is waiting, someone has to take the
+# first step. Is a single act of goodwill enough to pull the other groups along?
+inherits: standard.yaml
+name: first_mover
+group_settings:
+  "3":
+    extra: |
+      Before the exercise started, your group agreed on a principle of its own: if every group is waiting for someone else to move first, someone has to take the first step. Your group is willing to be that group. That means choosing Y, and saying openly in the representatives' meetings that your group will choose Y without conditions, even if it costs your group points in that round. What you do if other groups take advantage of it is up to you to decide.

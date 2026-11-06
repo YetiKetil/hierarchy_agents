@@ -1,0 +1,26 @@
+# DISGUISED: THE SAME GAME WITHOUT ITS NAME
+# Gemini recognised "Win as much as you can" by name and played the textbook answer.
+# Here the title and the familiar wording are gone, while the payoffs, the rounds, the multipliers
+# and the representatives' meetings are exactly the same. Does cooperation survive when the
+# agents can no longer recognise the exercise?
+inherits: standard.yaml
+name: disguised
+rules_text: |
+  GROUP EXERCISE
+
+  The exercise runs over a number of rounds. In each round, your group hands in one of two options, X or Y. Your group's task is to earn as many points as it can. How many points your group earns in a round depends both on its own option and on the options of the other four groups:
+
+  - If all five groups hand in X, each group loses 1000 points.
+  - If four groups hand in X and one hands in Y, each X group gains 2000 points and the Y group loses 8000 points.
+  - If three groups hand in X and two hand in Y, each X group gains 4000 points and each Y group loses 6000 points.
+  - If two groups hand in X and three hand in Y, each X group gains 6000 points and each Y group loses 4000 points.
+  - If one group hands in X and four hand in Y, the X group gains 8000 points and each Y group loses 2000 points.
+  - If all five groups hand in Y, each group gains 1000 points.
+
+  In each round, every member first notes down which option they prefer. The group then talks it over until it agrees, and hands in its option to the staff. Before some rounds, each group may send one member to meet the members sent by the other groups. Apart from that, the groups cannot communicate with each other. In some rounds, all points are multiplied by 3, 5 or 10. The staff will end the exercise at some point, but the groups will not know when until it happens.
+debrief:
+  questions:
+    - What did your group's task mean to you, and whose points were you trying to earn?
+    - How did your group make its decisions, and did you agree with them?
+    - What happened at the meetings between the groups, and did your group do what was agreed there?
+    - What would you do differently?
