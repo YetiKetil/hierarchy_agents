@@ -61,6 +61,7 @@ The files in `betingelser/en/` describe what the agents are told. *Betingelser* 
 | `prosedyre.yaml` | Everyone knows the goal, plus a fixed procedure: mapping, a plan, step-by-step moving |
 | `prosedyre_lappet.yaml` | The procedure plus one sentence: leaders pass cards on even when it temporarily breaks their own set |
 | `prosedyre_fasit.yaml` | The procedure spelled out the way the answer key solves the task: the employees finish first, the leaders last, and cards move on every line every round |
+| `prosedyre_fasit_regler.yaml` | The same, with two principles rewritten as concrete rules: a leader must not complete their own set while a subordinate is still missing cards, and after two still rounds the leader must make a request |
 
 Each game uses a numbered card deal, chosen with `--seed`. The same seed gives the same cards in every condition, so you can compare conditions, or models, fairly.
 
