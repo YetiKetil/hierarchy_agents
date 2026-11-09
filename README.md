@@ -1,67 +1,98 @@
-# WIN AS MUCH AS YOU CAN – with AI agents
+# HIERARCHY with AI agents – student kit
 
-A version of the prisoner's dilemma for five groups. In each round, every group chooses X or Y, and the result depends on what the other groups choose. Some rounds are multiplied by 3, 5 or 10, and before those rounds each group sends a representative to meet the other groups' representatives.
+In the leadership exercise HIERARCHY, seven people in a three-level hierarchy try to end up with four cards of equal value each. They may only write to their immediate leader or subordinates, and only the top manager is told what the task is.
 
-Here, every group is three AI agents, as in the classroom:
+This kit lets seven AI agents play the exercise. A game engine enforces the rules, each agent only sees its own perspective, and every game is saved as a complete log that you can replay, read and analyse. You decide which language model plays, what the agents are told, and how the organisation is set up.
 
-1. **Private votes.** Each member writes down a private vote.
-2. **Representatives' meeting.** In the rounds with a meeting, the group prepares and chooses a representative. The representatives meet with only each other present, and each representative reports back to the group.
-3. **Group decision.** The group discusses until all three propose the same choice, or decides by majority after three turns.
-4. **Results.** The administrator announces every group's choice and the new totals.
+The kit was made for teaching leadership. You are welcome to use it for learning and for your own experiments.
 
-Each agent only sees what a participant in the room would see. The sheet shows 31 rounds, but the administrator stops after round 10 without warning.
+## What you need
 
-## Running a game
+- **Python 3.10 or newer** on your own computer. Alternatively, use Google Colab in your browser with nothing to install (see below).
+- **An API key** for Gemini (Google AI Studio) or Claude (Anthropic Console).
+  - A chat subscription, such as the Gemini app or Claude.ai, is not the same as API access. API use is set up and billed separately by each provider.
+  - Some providers offer a free tier with strict rate limits.
+- **Without a key** you can still run the answer key and the test agents. Both are free and show you how everything works.
 
-From the `win_as_much` folder:
+## Quick start on your own computer
+
+Get the kit: on [the GitHub page](https://github.com/YetiKetil/hierarchy_agents), click the green **Code** button and choose **Download ZIP**, then unpack it. Or, if you use git: `git clone https://github.com/YetiKetil/hierarchy_agents`.
 
 ```bash
-python wam_run.py conditions/standard.yaml --test                       # free: random participants, no API
-python wam_run.py conditions/standard.yaml --model claude-haiku-5-5
-python wam_run.py conditions/standard.yaml --model gemini-3.5-flash-lite --verbose
+pip install -r requirements.txt
+
+# 1. Free: watch the answer key solve the task
+python run.py betingelser/en/alle_kjenner_maalet.yaml --answer-key
 ```
 
-`--verbose` prints the meetings and the reports as they happen. A game takes 10–20 minutes and about 600 API calls. The API key is read from the same `.env` file as in the HIERARCHY kit, one folder up. On a free tier, add `--concurrent 1`.
+Open `replay.html` in your browser by double-clicking it. Drag in the new file from the `logger` folder and press Play.
 
-## Conditions
+Next, add your key:
 
-| File | What changes |
+1. Copy `.env.example` to a new file called `.env`.
+2. Fill in `GEMINI_API_KEY=...` or `ANTHROPIC_API_KEY=...`.
+3. Never share your `.env` file.
+
+Then run a short trial game:
+
+```bash
+# 2. A short trial game (10 rounds) with Gemini
+python run.py betingelser/en/prosedyre_lappet.yaml --model gemini-3.5-flash-lite --max-rounds 10
+
+# 3. A full game (up to 60 rounds) – with Claude this time
+python run.py betingelser/en/prosedyre_lappet.yaml --model claude-haiku-5-5
+```
+
+The program prints one line per round. **Shortfall** is the number of cards the group is missing before everyone has four of a kind; 0 means the task is solved. A full game takes 5–15 minutes.
+
+## Quick start in Google Colab
+
+**[Open the notebook in Google Colab](https://colab.research.google.com/github/YetiKetil/hierarchy_agents/blob/main/notebooks/HIERARCHY_colab.ipynb)** and follow the cells. The notebook fetches the code from GitHub by itself. You store your key in Colab’s **Secrets** panel (the key icon on the left). At the end, you download your logs and open them in `replay.html` on your own computer.
+
+## The conditions
+
+The files in `betingelser/en/` describe what the agents are told. *Betingelser* is Norwegian for *conditions*.
+
+| File | What the agents get |
 |---|---|
-| `standard.yaml` | The exercise as run with people. |
-| `known_end.yaml` | The agents are told that the game ends after round 10. Game theory predicts defection in the last round. |
-| `two_bot_groups.yaml` | Groups 4 and 5 are rule-based. One copies what most groups did last round; the other always chooses X. This stands in for a version with two human groups. |
-| `first_mover.yaml` | Group 3 has its own principle: when every group is waiting for someone else to move first, it will choose Y and say so openly, without conditions. Is one act of goodwill enough to pull the others along? |
-| `competitive_group.yaml` | Group 1 reads the task as finishing ahead of the other groups, as many human groups do. Does the meeting discover it, and how do the others respond? |
-| `disguised.yaml` | The same game without its name: a neutral title and wording, with identical payoffs, rounds and meetings. Does cooperation survive when the agents cannot recognise the exercise? |
+| `grunnbetingelse.yaml` | The original exercise: only A knows the goal |
+| `alle_kjenner_maalet.yaml` | Everyone knows the goal |
+| `intensjon.yaml` | Everyone knows the goal, plus a shared purpose and a “we”, but no method |
+| `prosedyre.yaml` | Everyone knows the goal, plus a fixed procedure: mapping, a plan, step-by-step moving |
+| `prosedyre_lappet.yaml` | The procedure plus one sentence: leaders pass cards on even when it temporarily breaks their own set |
+| `prosedyre_fasit.yaml` | The procedure spelled out the way the answer key solves the task: the employees finish first, the leaders last, and cards move on every line every round |
 
-All the settings are explained in `standard.yaml`. A condition can inherit from another (`inherits: standard.yaml`) and only list what is different.
-
-These are some of the things you can change:
-- the model, for each group separately,
-- extra text for one group, such as a culture or a strategy,
-- the number of discussion turns and meeting statements,
-- whether every group's choice is announced, or only the totals,
-- how much history the agents remember.
+Each game uses a numbered card deal, chosen with `--seed`. The same seed gives the same cards in every condition, so you can compare conditions, or models, fairly.
 
 ## Looking at the results
 
-- **`wam_replay.html`** shows a game for an audience. It has the table of choices, the running totals against what all-Y would have given, and every stage of each round. In the meeting, *Forward* shows one statement at a time; in the group discussions, it shows one turn at a time. The result of each round, and the overall result, only appear when you reach them. Tick *Show thoughts* to see the agents' private notes, and choose a group to follow it in large text.
-- **`python wam_show.py <log> --thoughts`** prints the whole game as text.
-- **`logs/results.csv`** collects the key numbers for every game:
-  - each group's total and the collective total,
-  - the share of Y choices,
-  - how often groups agreed unanimously,
-  - how often private votes matched the group's choice,
-  - **promises kept**: how often a group chose what its representative committed to in the meeting.
+- **`replay.html`** shows a game round by round: the organisation chart with everyone’s cards, the messages, and (if you tick “Show thoughts”) each agent’s private notes. It also shows the debrief, in which each agent answers questions after the game. Switch the interface between English and Norwegian at the top.
+- **`python show_game.py <log file> --thoughts`** prints a game as text. Use `--perspective D` to see exactly what agent D saw and did in every round.
+- **`python summarize.py --en`** prints a table comparing all your games per condition.
 
-## How it is built
+Your logs are saved in `logger/`, with one folder per condition, and `logger/resultater.csv` collects the key numbers for every game.
 
-| File | Contents |
-|---|---|
-| `wam_engine.py` | The rules, the scoring, the schedule, and what each participant is allowed to see. |
-| `wam_agents.py` | The prompts and tools the agents get, plus the rule-based groups. |
-| `wam_run.py` | Runs the rounds step by step and saves the log. |
+## Examples
 
-The language models are called through `llm.py` in the folder above, the same as in HIERARCHY, so Claude and Gemini both work, and new providers can be added there.
+The `examples/` folder contains:
 
-The scoring has been checked against a real classroom game: it reproduces the final totals of a real MBA class exactly.
+- **`demo_patched_procedure_seed1.json`**: a full game with the patched procedure, played by Claude Haiku. Look at round 2 (A’s plan), round 24 (a finished leader lends a card for the first time) and the debrief.
+- **`answer_key_seed1.json`** and **`answer_key_seed2.json`**: the answer key solving card deals 1 and 2.
+
+## Cost and rate limits
+
+A full game takes roughly 100–250 API calls and 0.5–3 million input tokens. What that costs depends on the provider and model, so check their current prices before running series of games.
+
+- **Start small.** Use `--answer-key`, then `--max-rounds 10`.
+- **On a free tier,** add `--concurrent 1` so the agents do not all call the API at once. Games then take longer, but stay within the limits.
+- **Model names change.** Check the providers’ model lists: [Gemini](https://ai.google.dev/gemini-api/docs/models) and [Claude](https://docs.claude.com).
+
+## A second game: Win as much as you can
+
+The folder `win_as_much` contains a version of the prisoner's dilemma for five groups, in which each group is three AI agents who confer before every choice, and representatives negotiate before the high-stake rounds. See `win_as_much/README.md`. To run it in Colab, use **[the second notebook](https://colab.research.google.com/github/YetiKetil/hierarchy_agents/blob/main/notebooks/WIN_AS_MUCH_colab.ipynb)**.
+
+## Going further
+
+`ADVANCED.md` explains how the program works, how to write your own conditions, how to add another model provider, and gives ideas for experiments.
+
+Much of the code is written in Norwegian. `ADVANCED.md` has a glossary.
