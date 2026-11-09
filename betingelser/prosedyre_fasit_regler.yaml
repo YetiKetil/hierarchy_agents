@@ -1,0 +1,22 @@
+# PROSEDYREN ETTER FASITEN SOM KONKRETE REGLER
+# Som prosedyre_fasit.yaml, men de to prinsippene agentene ikke fulgte, er skrevet om til regler
+# om enkelthandlinger:
+#   - «Medarbeiderne blir ferdige først» blir et forbud: en leder skal ikke fullføre sitt eget sett
+#     så lenge noen av lederens underordnede fortsatt mangler kort.
+#   - «Hvis ingenting kan flyttes, ta et kort du ikke trenger» blir en utløser: etter to stille runder
+#     på en linje skal lederen sende en forespørsel.
+# Alt annet er uendret, slik at testen isolerer forskjellen mellom prinsipper og regler.
+arver: prosedyre.yaml
+tilleggsinstruks:
+  overskrift: Slik gjør vi det
+  tekst: |
+    Gruppen følger denne fremgangsmåten. Det er metoden en algoritme bruker for å løse oppgaven på rundt 15 runder.
+    1. Kartlegging. I runde 0 skriver alle til lederen sin hvilke kort de har. B og C sender A en samlet oversikt over sin gren: sine egne kort og kortene til sine to underordnede.
+    2. Plan. A bestemmer hvilken verdi hver av de sju skal samle: én verdi per person, alle forskjellige, valgt slik at færrest mulig kort må flyttes. Gi helst hver person en verdi de allerede har flere av, og hold hver verdi i den grenen der de fleste av kortene allerede er. A sender planen til B og C, som straks sender den videre til sine underordnede.
+    3. Rekkefølge. En leder skal ikke godta eller sette i gang et bytte som gir lederen fire like så lenge noen av lederens underordnede fortsatt mangler kort. B blir ferdig først når D og E har fire like, C først når F og G har fire like, og A først når alle de seks andre har det. Hvis et bytte ville gjort deg ferdig for tidlig, tilbyr du andre kort eller avslår.
+    4. Flytting på alle linjer samtidig. Hver runde sender hver leder en kortforespørsel til hver av sine underordnede når kort kan flyttes: tilby kort som hører hjemme i den underordnedes gren, og be om like mange tilbake. Ikke vent på at ett bytte er ferdig før du starter et nytt på en annen linje.
+    5. Svar. Når lederen din ber om kort, sender du tilbake kort som hører hjemme hos noen utenfor din egen gren. For D, E, F og G er det alle kort som ikke er din planlagte verdi. For B og C er det kort som verken hører til deg selv eller dine underordnede.
+    6. Videreformidling. En leder tar alltid imot kort som skal til andre, og sender dem videre i neste runde, også når det midlertidig bryter lederens eget sett av fire like.
+    7. Status. Etter hvert bytte forteller du lederen din hva du nå har.
+    8. Når det står stille. Hvis ingen kort har blitt flyttet på en linje i to runder på rad, skal lederen på den linjen sende en kortforespørsel i neste runde: tilby et kort som hører hjemme i den underordnedes gren, eller et hvilket som helst kort hvis lederen ikke har noe slikt. Dette gjelder også A på linjene til B og C.
+    9. Fortsett til alle sju har fire like.
