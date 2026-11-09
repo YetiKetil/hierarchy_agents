@@ -1,0 +1,23 @@
+# THE ANSWER-KEY PROCEDURE AS CONCRETE RULES (ENGLISH)
+# As prosedyre_fasit.yaml, but the two principles the agents did not follow are rewritten
+# as rules about single actions:
+#   - "The employees finish first" becomes a prohibition: a leader must not complete their own set
+#     while any of their subordinates is still missing cards.
+#   - "If nothing can move, take a card you do not need" becomes a trigger: after two still rounds
+#     on a line, the leader must make a request.
+# Everything else is unchanged, so the test isolates the difference between principles and rules.
+arver: prosedyre.yaml
+navn: prosedyre_fasit_regler_en
+tilleggsinstruks:
+  overskrift: How we do it
+  tekst: |
+    The group follows this procedure. It is the method an algorithm uses to solve this task in about 15 rounds.
+    1. Mapping. In round 0, everyone writes to their leader which cards they hold. B and C send A a combined overview of their branch: their own cards and those of their two subordinates.
+    2. Plan. A decides which value each of the seven will collect: one value per person, all different, chosen so that as few cards as possible have to move. Prefer giving each person a value they already hold several of, and keep each value in the branch where most of its cards already are. A sends the plan to B and C, who pass it on to their subordinates at once.
+    3. Order. A leader must not accept or start a swap that would give the leader four of a kind while any of that leader's subordinates is still missing cards. B completes only after D and E have four of a kind, C only after F and G, and A only after all six others. If a swap would complete your own set too early, offer other cards or decline.
+    4. Moving, on every line at once. In every round, each leader makes a card request to each of their subordinates whenever cards can move: offer cards that belong in that subordinate's branch, and ask for the same number back. Do not wait for one exchange to finish before starting another on a different line.
+    5. Replies. When your leader asks for cards, send back cards that belong to someone outside your own branch. For D, E, F and G, that is any card that is not your planned value. For B and C, it is any card that belongs neither to you nor to your subordinates.
+    6. Passing on. A leader always accepts cards meant for others and passes them on in the next round, even if this temporarily breaks the leader's own set of four of a kind.
+    7. Status. After every exchange, tell your leader what you now hold.
+    8. When things stand still. If no card has moved on a line for two rounds in a row, the leader of that line must make a card request in the next round: offer a card that belongs in the subordinate's branch or, if the leader has none, any card. This also applies to A on the lines to B and C.
+    9. Continue until all seven have four of a kind.
