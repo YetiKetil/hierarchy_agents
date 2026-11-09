@@ -1,19 +1,18 @@
-# PROCEDURE FROM THE ANSWER KEY (ENGLISH)
-# The procedure spelled out the way the answer key (byraakrat.py) solves the task:
-# one plan, every line in use every round, the employees D, E, F and G finished first,
-# and the leaders completing their own sets last, passing cards on until then.
-# The answer key solves card deals 1 and 2 in 14 and 16 rounds. How close do the agents get?
+# PROSEDYRE ETTER FASITEN
+# Prosedyren skrevet ut slik fasiten (byraakrat.py) løser oppgaven: én plan, alle linjer i bruk
+# hver runde, medarbeiderne D, E, F og G ferdige først, og lederne fullfører sine egne sett sist
+# og sender kort videre fram til da. Fasiten løser kortutdeling 1 og 2 på 14 og 16 runder.
+# Hvor nær kommer agentene?
 arver: prosedyre.yaml
-navn: prosedyre_fasit_en
 tilleggsinstruks:
-  overskrift: How we do it
+  overskrift: Slik gjør vi det
   tekst: |
-    The group follows this procedure. It is the method an algorithm uses to solve this task in about 15 rounds.
-    1. Mapping. In round 0, everyone writes to their leader which cards they hold. B and C send A a combined overview of their branch: their own cards and those of their two subordinates.
-    2. Plan. A decides which value each of the seven will collect: one value per person, all different, chosen so that as few cards as possible have to move. Prefer giving each person a value they already hold several of, and keep each value in the branch where most of its cards already are. A sends the plan to B and C, who pass it on to their subordinates at once.
-    3. The employees finish first. D, E, F and G are completed first. The leaders B and C, and finally A, complete their own sets last. Until all of a leader's subordinates have four of a kind, the leader's own hand is a passing place for other people's cards, not a collection.
-    4. Moving, on every line at once. In every round, each leader makes a card request to each of their subordinates whenever cards can move: offer cards that belong in that subordinate's branch, and ask for the same number back. Do not wait for one exchange to finish before starting another on a different line.
-    5. Replies. When your leader asks for cards, send back cards that belong to someone outside your own branch. For D, E, F and G, that is any card that is not your planned value. For B and C, it is any card that belongs neither to you nor to your subordinates.
-    6. Passing on. A leader always accepts cards meant for others and passes them on in the next round, even if this temporarily breaks the leader's own set of four of a kind.
-    7. Status. After every exchange, tell your leader what you now hold. If nothing can move on any line, a leader takes a card they do not need, to get cards moving again.
-    8. Continue until all seven have four of a kind.
+    Gruppen følger denne fremgangsmåten. Det er metoden en algoritme bruker for å løse oppgaven på rundt 15 runder.
+    1. Kartlegging. I runde 0 skriver alle til lederen sin hvilke kort de har. B og C sender A en samlet oversikt over sin gren: sine egne kort og kortene til sine to underordnede.
+    2. Plan. A bestemmer hvilken verdi hver av de sju skal samle: én verdi per person, alle forskjellige, valgt slik at færrest mulig kort må flyttes. Gi helst hver person en verdi de allerede har flere av, og hold hver verdi i den grenen der de fleste av kortene allerede er. A sender planen til B og C, som straks sender den videre til sine underordnede.
+    3. Medarbeiderne blir ferdige først. D, E, F og G fullføres først. Lederne B og C, og til slutt A, fullfører sine egne sett sist. Til alle en leders underordnede har fire like, er lederens egen hånd et gjennomgangssted for andres kort, ikke en samling.
+    4. Flytting på alle linjer samtidig. Hver runde sender hver leder en kortforespørsel til hver av sine underordnede når kort kan flyttes: tilby kort som hører hjemme i den underordnedes gren, og be om like mange tilbake. Ikke vent på at ett bytte er ferdig før du starter et nytt på en annen linje.
+    5. Svar. Når lederen din ber om kort, sender du tilbake kort som hører hjemme hos noen utenfor din egen gren. For D, E, F og G er det alle kort som ikke er din planlagte verdi. For B og C er det kort som verken hører til deg selv eller dine underordnede.
+    6. Videreformidling. En leder tar alltid imot kort som skal til andre, og sender dem videre i neste runde, også når det midlertidig bryter lederens eget sett av fire like.
+    7. Status. Etter hvert bytte forteller du lederen din hva du nå har. Hvis ingenting kan flyttes på noen linje, tar en leder imot et kort den ikke trenger, for å få kortene i bevegelse igjen.
+    8. Fortsett til alle sju har fire like.
