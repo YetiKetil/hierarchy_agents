@@ -1,0 +1,19 @@
+# PROCEDURE FROM THE ANSWER KEY (ENGLISH)
+# The procedure spelled out the way the answer key (byraakrat.py) solves the task:
+# one plan, every line in use every round, the employees D, E, F and G finished first,
+# and the leaders completing their own sets last, passing cards on until then.
+# The answer key solves card deals 1 and 2 in 14 and 16 rounds. How close do the agents get?
+arver: prosedyre.yaml
+navn: prosedyre_fasit_en
+tilleggsinstruks:
+  overskrift: How we do it
+  tekst: |
+    The group follows this procedure. It is the method an algorithm uses to solve this task in about 15 rounds.
+    1. Mapping. In round 0, everyone writes to their leader which cards they hold. B and C send A a combined overview of their branch: their own cards and those of their two subordinates.
+    2. Plan. A decides which value each of the seven will collect: one value per person, all different, chosen so that as few cards as possible have to move. Prefer giving each person a value they already hold several of, and keep each value in the branch where most of its cards already are. A sends the plan to B and C, who pass it on to their subordinates at once.
+    3. The employees finish first. D, E, F and G are completed first. The leaders B and C, and finally A, complete their own sets last. Until all of a leader's subordinates have four of a kind, the leader's own hand is a passing place for other people's cards, not a collection.
+    4. Moving, on every line at once. In every round, each leader makes a card request to each of their subordinates whenever cards can move: offer cards that belong in that subordinate's branch, and ask for the same number back. Do not wait for one exchange to finish before starting another on a different line.
+    5. Replies. When your leader asks for cards, send back cards that belong to someone outside your own branch. For D, E, F and G, that is any card that is not your planned value. For B and C, it is any card that belongs neither to you nor to your subordinates.
+    6. Passing on. A leader always accepts cards meant for others and passes them on in the next round, even if this temporarily breaks the leader's own set of four of a kind.
+    7. Status. After every exchange, tell your leader what you now hold. If nothing can move on any line, a leader takes a card they do not need, to get cards moving again.
+    8. Continue until all seven have four of a kind.
