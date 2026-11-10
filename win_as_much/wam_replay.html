@@ -135,7 +135,7 @@ dialog footer { padding: .8rem 1.4rem; border-top: 1px solid var(--linje); text-
     <p class="sammendrag" id="sammendrag"></p>
     <div class="topp">
       <div class="kort"><h2>Choices and totals</h2><div class="tabell" id="tabell"></div></div>
-      <div class="kort graf"><h2>Running totals</h2><div id="graf"></div><div class="forklaring" id="forklaring"></div></div>
+      <div class="kort graf"><h2 id="grafTittel">Running totals</h2><div id="graf"></div><div class="forklaring" id="forklaring"></div></div>
     </div>
 
     <div class="stegrad" id="stegrad"></div>
@@ -168,7 +168,27 @@ dialog footer { padding: .8rem 1.4rem; border-top: 1px solid var(--linje); text-
   let L = null, r = 0, s = 0, spiller = false, tid = null;
   const $ = (id) => document.getElementById(id);
   const esc = (x) => String(x ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-  const fmt = (n) => (n > 0 ? "+" : n < 0 ? "−" : "") + Math.abs(n).toLocaleString("en-GB").replace(/,/g, "\u2009");
+  const fmtTall = (n) => (n > 0 ? "+" : n < 0 ? "−" : "") + Math.abs(n).toLocaleString("en-GB").replace(/,/g, "\u2009");
+  const K = () => (L && L.config) || {};
+  function fmt(n) {   // amounts in the condition's own units, e.g. "NOK 2.0 million"
+    const m = K().money;
+    if (!m) return fmtTall(n);
+    let v = (Math.abs(n) * (m.scale || 1)).toFixed(m.decimals || 0).replace(/\B(?=(\d{3})+(?!\d))/g, "\u2009");
+    if (m.decimal_comma) v = v.replace(".", ",");
+    return (n > 0 ? "+" : n < 0 ? "−" : "") + (m.template || "{v}").replace("{v}", v);
+  }
+  function fmtAkse(n) {   // short numbers on the chart axis; the unit goes in the heading
+    const m = K().money;
+    if (!m) return fmtTall(n);
+    let v = (Math.abs(n) * (m.scale || 1)).toFixed(m.decimals || 0);
+    if (m.decimal_comma) v = v.replace(".", ",");
+    return (n > 0 ? "+" : n < 0 ? "−" : "") + v;
+  }
+  const enhet = () => (K().money ? (K().money.template || "").replace("{v}", "").replace(/\s+/g, " ").trim() : "");
+  const gNavn = (g) => ((K().group_names || {})[g]) || `Group ${g}`;
+  const kort = (c) => ((K().choice_short || {})[c]) || c;
+  const valgNavn = (c) => ((K().choice_names || {})[c]) || c;
+  const rundeOrd = () => (K().language !== "no" && K().texts && K().texts.Round) || "Round";
 
   // ------------------------------------------------------------ loading
   function apne(filer) {
@@ -196,7 +216,7 @@ dialog footer { padding: .8rem 1.4rem; border-top: 1px solid var(--linje); text-
   function velg(i) {
     stopp(); L = logger[i].d; r = 0; s = 0;
     $("tom").classList.add("skjult"); $("visning").classList.remove("skjult");
-    $("fokus").innerHTML = `<option value="alle">All groups</option>` + G.map((g) => `<option value="${g}">Group ${g}</option>`).join("");
+    $("fokus").innerHTML = `<option value="alle">All groups</option>` + G.map((g) => `<option value="${g}">${esc(gNavn(g))}</option>`).join("");
     tegn();
   }
 
@@ -228,7 +248,9 @@ dialog footer { padding: .8rem 1.4rem; border-top: 1px solid var(--linje); text-
     const slutt = r === L.rounds.length - 1 && navaerende() === "result";
     const lofter = m.promises_made ? ` Representatives’ promises kept: ${m.promises_kept} of ${m.promises_made}.` : "";
     $("sammendrag").innerHTML = `<strong>${esc(L.condition)}</strong>, seed ${L.seed}<br>` + (slutt
-      ? `The administrator stopped the game after ${m.rounds} rounds. Together the groups ended at ${fmt(m.collective)}; choosing Y every round would have given ${fmt(m.ideal)}.${lofter}`
+      ? (m.collapsed_in_round
+          ? `<b>The shared buffer ran out in ${rundeOrd().toLowerCase()} ${m.collapsed_in_round}: everyone lost everything.</b> Together the groups had reached ${fmt(m.collective)}; choosing ${esc(valgNavn("Y"))} every time would have given ${fmt(m.ideal)}.${lofter}`
+          : `The game was stopped after ${m.rounds} rounds. Together the groups ended at ${fmt(m.collective)}; choosing ${esc(valgNavn("Y"))} every time would have given ${fmt(m.ideal)}.${m.reserve != null ? ` The shared buffer never ran out; its lowest point was ${fmt(m.lowest_buffer)}.` : ""}${lofter}`)
       : `The overall result is shown after the last round.`);
     tegnTabell(); tegnGraf(); tegnSteg(); tegnInnhold();
     $("spill").textContent = spiller ? "Pause" : "Play";
@@ -241,12 +263,12 @@ dialog footer { padding: .8rem 1.4rem; border-top: 1px solid var(--linje); text-
       `<th>Total</th></tr></thead><tbody>`;
     G.forEach((g) => {
       let tot = 0;
-      h += `<tr><td class="gruppe">Group ${g}</td>`;
+      h += `<tr><td class="gruppe">${esc(gNavn(g))}</td>`;
       runder.forEach((rec, i) => {
         const ok = vist(i);
         if (ok) tot = rec.result.totals[g];
         const c = rec.result.choices[g];
-        h += `<td class="valg klikk ${ok ? c : "ukjent"} ${i === r ? "na" : ""}" data-r="${i}" tabindex="0" title="Round ${rec.round}">${ok ? c : "?"}</td>`;
+        h += `<td class="valg klikk ${ok ? c : "ukjent"} ${i === r ? "na" : ""}" data-r="${i}" tabindex="0" title="${rundeOrd()} ${rec.round}">${ok ? esc(kort(c)) : "?"}</td>`;
       });
       h += `<td class="sum">${fmt(tot)}</td></tr>`;
     });
@@ -260,7 +282,9 @@ dialog footer { padding: .8rem 1.4rem; border-top: 1px solid var(--linje); text-
     const ideal = [0]; runder.forEach((rec) => ideal.push(ideal[ideal.length - 1] + 1000 * rec.multiplier));
     const serier = G.map((g) => [0, ...runder.map((rec) => rec.result.totals[g])]);
     const synlig = r + (navaerende() === "result" ? 1 : 0);
-    const alle = [...ideal, ...serier.flat()];
+    const reserve = K().reserve;
+    const bufferLinje = reserve != null ? [reserve, ...runder.map((rec) => rec.result.buffer ?? null)] : null;
+    const alle = [...ideal, ...serier.flat(), ...(bufferLinje || []).filter((v) => v != null)];
     const lo = Math.min(0, ...alle), hi = Math.max(0, ...alle);
     const W = 600, H = 300, pl = 58, pr = 10, pt = 10, pb = 28;
     const x = (i) => pl + (W - pl - pr) * i / Math.max(1, n);
@@ -268,22 +292,24 @@ dialog footer { padding: .8rem 1.4rem; border-top: 1px solid var(--linje); text-
     let svg = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Running totals per group">`;
     [lo, 0, hi].forEach((v) => {
       svg += `<line x1="${pl}" x2="${W - pr}" y1="${y(v)}" y2="${y(v)}" stroke="var(--linje)" stroke-width="${v === 0 ? 1.5 : 1}"/>` +
-             `<text x="${pl - 6}" y="${y(v) + 4}" font-size="12" text-anchor="end" fill="var(--dempet)">${fmt(v)}</text>`;
+             `<text x="${pl - 6}" y="${y(v) + 4}" font-size="12" text-anchor="end" fill="var(--dempet)">${fmtAkse(v)}</text>`;
     });
     for (let i = 0; i <= n; i++) svg += `<text x="${x(i)}" y="${H - 8}" font-size="11" text-anchor="middle" fill="var(--dempet)">${i}</text>`;
     const linje = (vals, farge, strek, bredde) => `<polyline points="${vals.slice(0, synlig + 1).map((v, i) => `${x(i)},${y(v)}`).join(" ")}" fill="none" stroke="${farge}" stroke-width="${bredde}" ${strek ? `stroke-dasharray="${strek}"` : ""} stroke-linejoin="round"/>`;
     svg += linje(ideal, "var(--gull)", "6 5", 2.5);
+    if (bufferLinje) svg += linje(bufferLinje, "var(--x)", "2 4", 2.5);
     serier.forEach((v, i) => { svg += linje(v, FARGER[i], "", 3); });
     svg += `</svg>`;
     $("graf").innerHTML = svg;
-    $("forklaring").innerHTML = G.map((g, i) => `<span style="--c:${FARGER[i]}">Group ${g}</span>`).join("") + `<span style="--c:var(--gull)">Each group if all chose Y</span>`;
+    $("grafTittel").textContent = "Running totals" + (enhet() ? ` (${enhet()})` : "");
+    $("forklaring").innerHTML = G.map((g, i) => `<span style="--c:${FARGER[i]}">${esc(gNavn(g))}</span>`).join("") + `<span style="--c:var(--gull)">Each group if all chose ${esc(valgNavn("Y"))}</span>` + (K().reserve != null ? `<span style="--c:var(--x)">Shared buffer left</span>` : "");
   }
 
   function tegnSteg() {
     const rec = L.rounds[r], liste = steg(r), na = naSteg();
     const faser = [];
     liste.forEach((x, i) => { if (!faser.length || faser[faser.length - 1].st !== x.st) faser.push({ st: x.st, forste: i }); });
-    $("stegrad").innerHTML = `<span class="tittel">Round ${rec.round}${rec.multiplier > 1 ? ` · ×${rec.multiplier}` : ""}</span>` +
+    $("stegrad").innerHTML = `<span class="tittel">${rundeOrd()} ${rec.round}${rec.multiplier > 1 ? ` · ×${rec.multiplier}` : ""}</span>` +
       faser.map((f) => {
         const aktiv = f.st === na.st, ferdig = f.forste < s && !aktiv;
         const teller = aktiv && na.av ? ` ${na.k}/${na.av}` : "";
@@ -306,39 +332,40 @@ dialog footer { padding: .8rem 1.4rem; border-top: 1px solid var(--linje); text-
     if (st === "private") {
       h = `<div class="grupper">` + fokusG().filter((g) => !bot(g)).map((g) => {
         const pv = Object.entries(rec.private).filter(([a]) => a.startsWith(g));
-        return `<div class="gruppekort"><h3>Group ${g}</h3>` + ($("private").checked
-          ? `<div class="private">${pv.map(([a, v]) => `<span class="chip ${v.vote || ""}">${a}: ${v.vote || "–"}</span>`).join("")}</div>`
+        return `<div class="gruppekort"><h3>${esc(gNavn(g))}</h3>` + ($("private").checked
+          ? `<div class="private">${pv.map(([a, v]) => `<span class="chip ${v.vote || ""}">${a}: ${v.vote ? esc(valgNavn(v.vote)) : "–"}</span>`).join("")}</div>`
           : `<p class="stille">Private votes are hidden.</p>`) +
           ($("tanker").checked ? pv.map(([a, v]) => v.notes ? `<div class="tanke melding"><b>${a}</b> thinks: ${esc(v.notes)}</div>` : "").join("") : "") + `</div>`;
       }).join("") + `</div>`;
     } else if (st === "prep") {
-      h = `<div class="grupper">` + fokusG().filter((g) => rec.prep[g]).map((g) => `<div class="gruppekort"><h3>Group ${g}<span>sends ${esc(rec.representatives[g])}</span></h3>` +
+      h = `<div class="grupper">` + fokusG().filter((g) => rec.prep[g]).map((g) => `<div class="gruppekort"><h3>${esc(gNavn(g))}<span>sends ${esc(rec.representatives[g])}</span></h3>` +
         rec.prep[g].map((p) => melding(p.agent, p.message, [`nominates ${p.nominee}`], p.notes)).join("") + `</div>`).join("") + `</div>`;
     } else if (st === "meeting") {
-      const reps = Object.entries(rec.representatives).map(([g, a]) => `${a} (Group ${g})`).join(", ");
+      const reps = Object.entries(rec.representatives).map(([g, a]) => `${a} (${gNavn(g)})`).join(", ");
       const k = naSteg().k;
       h = `<p class="stille">Only the representatives are present: ${esc(reps)}.</p>` +
-        rec.meeting_log.slice(0, k).map((e, i) => melding(`${e.agent} · Group ${e.group}`, e.statement,
-          [`statement ${e.turn}`, ...(e.commitment ? [`commits to: ${e.commitment}`] : [])], e.notes, i === k - 1 ? "na" : "")).join("");
+        rec.meeting_log.slice(0, k).map((e, i) => melding(`${e.agent} · ${gNavn(e.group)}`, e.statement,
+          [`statement ${e.turn}`, ...(e.commitment ? [`commits to: ${e.commitment === "none" ? "nothing" : valgNavn(e.commitment)}`] : [])], e.notes, i === k - 1 ? "na" : "")).join("");
     } else if (st === "reports") {
       h = `<p class="stille">The rest of each group only knows what its representative tells them.</p><div class="grupper">` +
-        fokusG().filter((g) => rec.reports[g]).map((g) => `<div class="gruppekort"><h3>Group ${g}</h3>` +
+        fokusG().filter((g) => rec.reports[g]).map((g) => `<div class="gruppekort"><h3>${esc(gNavn(g))}</h3>` +
           melding(`${rec.reports[g].agent} reports`, rec.reports[g].report, [], rec.reports[g].notes) + `</div>`).join("") + `</div>`;
     } else if (st === "discussion") {
       h = `<div class="grupper">` + fokusG().map((g) => {
-        if (bot(g)) return `<div class="gruppekort"><h3>Group ${g}</h3><p class="stille">A rule-based group: no discussion.</p></div>`;
+        if (bot(g)) return `<div class="gruppekort"><h3>${esc(gNavn(g))}</h3><p class="stille">A rule-based group: no discussion.</p></div>`;
         const d = rec.decisions[g], k = naSteg().k, ferdig = k >= d.turns;
-        return `<div class="gruppekort"><h3>Group ${g}${ferdig ? `<span class="beslutning ${d.choice}">hands in ${d.choice}</span>` : ""}</h3>` +
-          (rec.discussion[g] || []).filter((m) => m.turn <= k).map((m) => melding(m.agent, m.message, [`proposes ${m.proposal}`], m.notes, m.proposal)).join("") +
+        return `<div class="gruppekort"><h3>${esc(gNavn(g))}${ferdig ? `<span class="beslutning ${d.choice}">hands in ${esc(valgNavn(d.choice))}</span>` : ""}</h3>` +
+          (rec.discussion[g] || []).filter((m) => m.turn <= k).map((m) => melding(m.agent, m.message, [`proposes ${m.proposal ? valgNavn(m.proposal) : "–"}`], m.notes, m.proposal)).join("") +
           (ferdig ? `<p class="stille">${d.unanimous ? "All agreed" : "Decided by majority"} after ${d.turns} turn${d.turns === 1 ? "" : "s"}.</p>` : "") + `</div>`;
       }).join("") + `</div>`;
     } else {
       const res = rec.result;
       h = `<div class="resultat">` + G.map((g) => {
         const c = res.choices[g], com = (rec.commitments || {})[g];
-        const lofte = com === "X" || com === "Y" ? (com === c ? `<span class="holdt">kept the promise (${com})</span>` : `<span class="brudd">promised ${com}, chose ${c}</span>`) : "";
-        return `<div class="linje"><b>Group ${g}</b><span class="beslutning ${c}">${c}</span><span>${fmt(res.points[g])}</span><span>total ${fmt(res.totals[g])}</span>${lofte}</div>`;
-      }).join("") + `<p class="stille">${res.n_x} X and ${5 - res.n_x} Y${rec.multiplier > 1 ? `, everything ×${rec.multiplier}` : ""}.</p></div>`;
+        const lofte = com === "X" || com === "Y" ? (com === c ? `<span class="holdt">kept the promise (${esc(valgNavn(com))})</span>` : `<span class="brudd">promised ${esc(valgNavn(com))}, chose ${esc(valgNavn(c))}</span>`) : "";
+        return `<div class="linje"><b>${esc(gNavn(g))}</b><span class="beslutning ${c}">${esc(valgNavn(c))}</span><span>${fmt(res.points[g])}</span><span>total ${fmt(res.totals[g])}</span>${lofte}</div>`;
+      }).join("") + `<p class="stille">${res.n_x} × ${esc(valgNavn("X"))} and ${5 - res.n_x} × ${esc(valgNavn("Y"))}${rec.multiplier > 1 ? `, everything ×${rec.multiplier}` : ""}.</p>` +
+        (res.buffer != null ? `<p class="${rec.collapse ? "brudd" : "stille"}">${rec.collapse ? "COLLAPSE – the shared buffer has run out: " : "Shared buffer left: "}${fmt(res.buffer)}</p>` : "") + `</div>`;
     }
     boks.innerHTML = h || `<p class="stille">Nothing to show in this step.</p>`;
     const sist = boks.querySelector(".melding.na");

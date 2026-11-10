@@ -28,6 +28,7 @@ import llm  # noqa: E402
 from wam_agents import (bot_choice, debrief_prompt, group_kind, make_members, round_prompt,  # noqa: E402
                         system_prompt, tool_discuss, tool_meeting, tool_prepare, tool_report, tool_write_down)
 from wam_engine import GROUPS, Game, load_condition  # noqa: E402
+from wam_texts import T, choice_name, choice_short, from_choice, group_name  # noqa: E402
 
 CSV_FIELDS = ["time", "condition", "seed", "rounds", "collective", "ideal", "y_share", "unanimous_share",
               "private_matches_group", "promises_made", "promises_kept"] + [f"total_{g}" for g in GROUPS] + \
@@ -75,104 +76,102 @@ class Runner:
         list(self.pool.map(fn, groups))
 
     # ------------------------------------------------------------------ the steps of a round
+    def _round_head(self, rec, always_mult=False):
+        cfg, m = self.cfg, rec["multiplier"]
+        return T(cfg, "step_round", n=rec["round"], mult=T(cfg, "step_mult", m=m) if (m > 1 or always_mult) else "")
+
     def private_votes(self, rec, llm_groups):
-        n, m = rec["round"], rec["multiplier"]
-        meeting = " This round starts with a representatives' meeting." if rec["meeting"] else ""
-        step = (f"ROUND {n}" + (f" (result ×{m})" if m > 1 else "") + f".{meeting}\nSTEP: Before your group confers, "
-                "write down your own vote for this round. Nobody else sees it.")
+        cfg = self.cfg
+        meeting = T(cfg, "step_meeting_first") if rec["meeting"] else ""
+        step = self._round_head(rec) + meeting + "\n" + T(cfg, "step_private")
 
         def one(a):   # private votes are independent, so all members vote at the same time
-            out = self.ask(a, "private_vote", tool_write_down(), step)
-            vote = out.get("vote") if out.get("vote") in ("X", "Y") else None
+            out = self.ask(a, "private_vote", tool_write_down(cfg), step)
+            vote = from_choice(cfg, out.get("vote"))
             rec["private"][a] = {"vote": vote, "notes": out.get("notes", "")}
             if vote:
-                self.game.tell([a], f"You wrote down your own vote: {vote}.")
+                self.game.tell([a], T(cfg, "told_vote", c=choice_name(cfg, vote)))
         self.in_groups(one, [a for g in llm_groups for a in self.game.agents[g]])
 
     def prepare(self, rec, llm_groups):
-        n, m = rec["round"], rec["multiplier"]
-        step = (f"ROUND {n} (result ×{m}).\nSTEP: Before this round, each group sends one representative to meet the "
-                "representatives of the other groups. Tell your group what you think the representative should aim for, "
-                "and nominate a representative (you may nominate yourself).")
+        cfg = self.cfg
+        step = self._round_head(rec, True) + "\n" + T(cfg, "step_prepare")
 
         def one(g):
             msgs, noms = [], {}
             for a in self.game.agents[g]:
-                out = self.ask(a, "prepare", tool_prepare(self.game.agents[g]), step)
+                out = self.ask(a, "prepare", tool_prepare(cfg, self.game.agents[g]), step)
                 msg = (out.get("message") or "").strip()
                 noms[a] = out.get("nominee")
                 msgs.append({"agent": a, "message": msg, "nominee": out.get("nominee"), "notes": out.get("notes", "")})
-                self.game.tell_group(g, f"{a}: “{msg}” (nominates {out.get('nominee')} as representative)")
+                self.game.tell_group(g, T(cfg, "told_prep", a=a, msg=msg, nom=out.get("nominee")))
             rep = self.game.choose_representative(g, noms)
             rec["prep"][g] = msgs
             rec["representatives"][g] = rep
-            self.game.tell_group(g, f"Your group chose {rep} as its representative.")
+            self.game.tell_group(g, T(cfg, "told_rep", rep=rep))
         self.in_groups(one, llm_groups)
 
     def meeting(self, rec, llm_groups):
-        g_ = self.game
-        n, m = rec["round"], rec["multiplier"]
-        turns = int(self.cfg.get("meeting_turns", 3))
+        g_, cfg = self.game, self.cfg
+        turns = int(cfg.get("meeting_turns", 3))
         reps = {g: rec["representatives"][g] for g in llm_groups}
         rec["commitments"] = {}
-        present = ", ".join(f"Group {g}: {reps[g]}" for g in llm_groups)
+        present = ", ".join(T(cfg, "meeting_present", group=group_name(cfg, g), rep=reps[g]) for g in llm_groups)
+        opening = T(cfg, "meeting_open", present=present)
         silent = [g for g in GROUPS if g not in llm_groups]
-        opening = f"The representatives' meeting begins. Present: {present}."
         if silent:
-            opening += " " + " ".join(f"Group {g}'s representative is present but says nothing." for g in silent)
+            opening += " " + " ".join(T(cfg, "meeting_silent", group=group_name(cfg, g)) for g in silent)
         g_.tell(list(reps.values()), opening)
         for t in range(1, turns + 1):
             order = list(llm_groups)
             g_.rng.shuffle(order)
             for g in order:
                 last = t == turns
-                step = (f"ROUND {n} (result ×{m}).\nSTEP: You are Group {g}'s representative in the meeting with the other "
-                        f"groups' representatives. Only the representatives are present. Statement {t} of {turns}."
-                        + (" This is your last statement in the meeting. Also state what, if anything, you have "
-                           "committed your group to." if last else ""))
-                out = self.ask(reps[g], "meeting", tool_meeting(last), step)
+                step = (self._round_head(rec, True) + "\n" + T(cfg, "step_meeting", group=group_name(cfg, g), t=t, T=turns)
+                        + (T(cfg, "step_meeting_last") if last else ""))
+                out = self.ask(reps[g], "meeting", tool_meeting(cfg, last), step)
                 text = (out.get("statement") or "").strip()
+                commit = (from_choice(cfg, out.get("commitment")) or ("none" if out.get("commitment") else None)) if last else None
                 rec["meeting_log"].append({"turn": t, "group": g, "agent": reps[g], "statement": text,
-                                           "notes": out.get("notes", ""), "commitment": out.get("commitment") if last else None})
+                                           "notes": out.get("notes", ""), "commitment": commit})
                 if last:
-                    rec["commitments"][g] = out.get("commitment")
-                g_.tell(list(reps.values()), f"[Meeting] {reps[g]} (Group {g}): “{text}”")
+                    rec["commitments"][g] = commit
+                g_.tell(list(reps.values()), T(cfg, "told_meeting", rep=reps[g], group=group_name(cfg, g), text=text))
                 if self.verbose:
                     print(f"   [meeting t{t}] {reps[g]}: {text[:300]}", flush=True)
 
     def reports(self, rec, llm_groups):
-        n, m = rec["round"], rec["multiplier"]
-        step = (f"ROUND {n} (result ×{m}).\nSTEP: The meeting is over. Report back to your group. They only know what "
-                "you tell them.")
+        cfg = self.cfg
+        step = self._round_head(rec, True) + "\n" + T(cfg, "step_report")
 
         def one(g):
             rep = rec["representatives"][g]
-            out = self.ask(rep, "report", tool_report(), step)
+            out = self.ask(rep, "report", tool_report(cfg), step)
             text = (out.get("report") or "").strip()
             rec["reports"][g] = {"agent": rep, "report": text, "notes": out.get("notes", "")}
-            self.game.tell_group(g, f"Report from your representative {rep}: “{text}”")
+            self.game.tell_group(g, T(cfg, "told_report", rep=rep, text=text))
             if self.verbose:
                 print(f"   [report G{g}] {rep}: {text[:300]}", flush=True)
         self.in_groups(one, llm_groups)
 
     def discussion(self, rec, llm_groups):
-        n, m = rec["round"], rec["multiplier"]
-        turns = int(self.cfg.get("discussion_turns", 3))
+        cfg = self.cfg
+        turns = int(cfg.get("discussion_turns", 3))
 
         def one(g):
             log, decision = [], None
             last_prop = {a: (rec["private"].get(a) or {}).get("vote") for a in self.game.agents[g]}
             for t in range(1, turns + 1):
-                step = (f"ROUND {n}" + (f" (result ×{m})" if m > 1 else "") + ".\nSTEP: Discuss with your group which "
-                        f"choice to hand in to the administrator. Turn {t} of {turns}. The choice is handed in as soon as "
-                        f"all three of you propose the same, or by majority after turn {turns}.")
+                step = self._round_head(rec) + "\n" + T(cfg, "step_discuss", t=t, T=turns)
                 for a in self.game.agents[g]:
-                    out = self.ask(a, "discussion", tool_discuss(), step)
+                    out = self.ask(a, "discussion", tool_discuss(cfg), step)
                     msg = (out.get("message") or "").strip()
-                    if out.get("proposal") in ("X", "Y"):
-                        last_prop[a] = out["proposal"]
+                    prop = from_choice(cfg, out.get("proposal"))
+                    if prop:
+                        last_prop[a] = prop
                     log.append({"turn": t, "agent": a, "message": msg, "proposal": last_prop[a], "notes": out.get("notes", "")})
-                    self.game.tell_group(g, f"{a}: “{msg}” (proposes {last_prop[a]})")
+                    shown = choice_name(cfg, last_prop[a]) if last_prop[a] else "–"
+                    self.game.tell_group(g, T(cfg, "told_discuss", a=a, msg=msg, p=shown))
                 props = [p for p in last_prop.values() if p]
                 if len(props) == len(last_prop) and len(set(props)) == 1:
                     decision = {"choice": props[0], "unanimous": True, "turns": t}
@@ -183,8 +182,8 @@ class Runner:
                 decision = {"choice": choice, "unanimous": len(set(props)) == 1 and len(props) == 3, "turns": turns}
             rec["discussion"][g] = log
             rec["decisions"][g] = decision
-            self.game.tell_group(g, f"Your group hands in {decision['choice']} "
-                                    f"({'all agreed' if decision['unanimous'] else 'by majority'}).")
+            how = T(cfg, "all_agreed") if decision["unanimous"] else T(cfg, "by_majority")
+            self.game.tell_group(g, T(cfg, "told_decision", c=choice_name(cfg, decision["choice"]), how=how))
         self.in_groups(one, llm_groups)
 
     # ------------------------------------------------------------------ the game
@@ -212,9 +211,14 @@ class Runner:
                 if not self.quiet:
                     res = rec["result"]
                     kind = " meeting" if rec["meeting"] else "        "
+                    buf = f" | buffer {res['buffer']:+}" if "buffer" in res else ""
                     print(f"{label} round {n:>2} ×{rec['multiplier']:<2}{kind} | " +
-                          " ".join(f"G{g}:{res['choices'][g]}" for g in GROUPS) + f" | {res['n_x']} X | totals " +
-                          " ".join(f"{res['totals'][g]:+}" for g in GROUPS), flush=True)
+                          " ".join(f"G{g}:{choice_short(self.cfg, res['choices'][g])}" for g in GROUPS) +
+                          f" | {res['n_x']} {choice_short(self.cfg, 'X')} | totals " +
+                          " ".join(f"{res['totals'][g]:+}" for g in GROUPS) + buf, flush=True)
+                if g_.collapsed:
+                    print(f"{label} COLLAPSE in round {n}: the shared buffer ran out.", flush=True)
+                    break
         except RuntimeError as e:
             stopped_by_error = str(e)
             print(f"{label} STOPPED: {e}", flush=True)
@@ -236,6 +240,7 @@ class Runner:
             "time": datetime.now().isoformat(timespec="seconds"),
             "config": self.cfg,
             "stopped_by_error": stopped_by_error,
+            "collapsed_in_round": g_.collapsed,
             "rounds": g_.rounds,
             "measures": g_.measures(),
             "debrief": debrief,
@@ -328,7 +333,8 @@ def main():
         log = Runner(cfg, seed, test=a.test, verbose=a.verbose, quiet=a.quiet).play()
         path = save(log, a.logs)
         m = log["measures"]
-        print(f"Saved {path}  (collective {m['collective']:+} of a possible {m['ideal']:+}, "
+        fate = f", COLLAPSED in round {m['collapsed_in_round']}" if m.get("collapsed_in_round") else ""
+        print(f"Saved {path}  (collective {m['collective']:+} of a possible {m['ideal']:+}{fate}, "
               f"promises kept {m['promises_kept']}/{m['promises_made']}, {log['tokens_total'].get('calls', 0)} API calls)")
 
 

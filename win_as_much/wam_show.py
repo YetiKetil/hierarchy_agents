@@ -49,8 +49,12 @@ def main():
                     print(f"  {msg['agent']} (proposes {msg['proposal']}): “{msg['message']}”{th(msg['notes'])}")
                 print(f"  => hands in {d['choice']} ({'all agreed' if d['unanimous'] else 'by majority'})")
         res = rec["result"]
-        print("\nRESULT: " + ", ".join(f"G{g} {res['choices'][g]} {res['points'][g]:+}" for g in GROUPS) +
-              " | totals " + ", ".join(f"G{g} {res['totals'][g]:+}" for g in GROUPS))
+        cn = L["config"].get("choice_names") or {}
+        print("\nRESULT: " + ", ".join(f"G{g} {cn.get(res['choices'][g], res['choices'][g])} {res['points'][g]:+}" for g in GROUPS) +
+              " | totals " + ", ".join(f"G{g} {res['totals'][g]:+}" for g in GROUPS) +
+              (f" | shared buffer {res['buffer']:+}" if "buffer" in res else ""))
+        if rec.get("collapse"):
+            print("COLLAPSE: the shared buffer ran out.")
     print(f"\nCollective {m['collective']:+} of a possible {m['ideal']:+}. Promises kept {m['promises_kept']}/{m['promises_made']}.")
 
 

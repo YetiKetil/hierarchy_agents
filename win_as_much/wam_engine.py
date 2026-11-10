@@ -17,6 +17,8 @@ from pathlib import Path
 
 import yaml
 
+from wam_texts import T, choice_short, group_name, money
+
 GROUPS = ["1", "2", "3", "4", "5"]
 
 # number of groups choosing X -> (what each X group gets, what each Y group gets), before the multiplier
@@ -76,6 +78,7 @@ class Game:
         self.notes = {a: "" for a in self.all_agents}
         self.current = None                    # record of the round being played
         self.stopped = False
+        self.collapsed = None                  # the round in which the shared buffer ran out, if it did
         self.rep_count = {g: 0 for g in GROUPS}
 
     # ------------------------------------------------------------------ schedule
@@ -127,40 +130,64 @@ class Game:
         rec["result"] = {"choices": choices, "points": points, "totals": dict(self.totals), "n_x": n_x}
         self.rounds.append(rec)
         line = self.announcement(rec)
+        reserve = self.cfg.get("reserve")
+        if reserve is not None:
+            left = reserve + sum(self.totals.values())
+            rec["result"]["buffer"] = left
+            line += " " + T(self.cfg, "buffer", amount=money(self.cfg, left, signed=left < 0))
         self.tell(self.all_agents, line)
-        if rec["round"] >= self.stop_after():
+        if reserve is not None and rec["result"]["buffer"] < 0:
             self.stopped = True
-            self.tell(self.all_agents, "The administrator has stopped the exercise. There will be no more rounds.")
+            self.collapsed = rec["round"]
+            rec["collapse"] = True
+            self.tell(self.all_agents, T(self.cfg, "collapse"))
+        elif rec["round"] >= self.stop_after():
+            self.stopped = True
+            self.tell(self.all_agents, T(self.cfg, "stopped"))
         self.current = None
         return rec
 
     def announcement(self, rec):
+        cfg = self.cfg
         res, m = rec["result"], rec["multiplier"]
         n_x = res["n_x"]
         x_gets, y_gets = PAYOFF[n_x]
         parts = []
         if x_gets is not None:
-            parts.append(f"each X group {'wins' if x_gets > 0 else 'loses'} {abs(x_gets) * m:,}".replace(",", " "))
+            parts.append(T(cfg, "x_gain" if x_gets > 0 else "x_loss", amount=money(cfg, x_gets * m)))
         if y_gets is not None:
-            parts.append(f"each Y group {'wins' if y_gets > 0 else 'loses'} {abs(y_gets) * m:,}".replace(",", " "))
-        if self.cfg.get("reveal_choices", True):
-            who = ", ".join(f"Group {g}: {res['choices'][g]}" for g in GROUPS)
+            parts.append(T(cfg, "y_gain" if y_gets > 0 else "y_loss", amount=money(cfg, y_gets * m)))
+        if cfg.get("reveal_choices", True):
+            who = ", ".join(f"{group_name(cfg, g)}: {self.cname(res['choices'][g])}" for g in GROUPS)
         else:
-            who = "individual choices are not revealed"
-        mult = f" (×{m})" if m > 1 else ""
-        totals = ", ".join(f"Group {g} {fmt(res['totals'][g])}" for g in GROUPS)
-        return (f"RESULT OF ROUND {rec['round']}{mult}: {who}. That is {n_x} X and {5 - n_x} Y, so "
-                f"{' and '.join(parts)}. Totals now: {totals}.")
+            who = T(cfg, "hidden_choices")
+        mult = T(cfg, "mult_suffix", m=m) if m > 1 else ""
+        totals = ", ".join(f"{group_name(cfg, g)} {money(cfg, res['totals'][g], signed=True)}" for g in GROUPS)
+        return T(cfg, "result", n=rec["round"], mult=mult, who=who, n_x=n_x, n_y=5 - n_x,
+                 parts=T(cfg, "and").join(parts), totals=totals)
+
+    def cname(self, c):
+        return (self.cfg.get("choice_names") or {}).get(c, c)
 
     def scoreboard(self):
         """A compact table of all finished rounds, for the prompts."""
+        cfg = self.cfg
         if not self.rounds:
-            return "(no rounds played yet)"
-        lines = ["Round  Mult  " + "  ".join(f"G{g}" for g in GROUPS)]
+            return T(cfg, "no_rounds")
+        lines = []
+        legend = T(cfg, "sb_legend")
+        if legend:
+            lines.append(legend)
+        lines.append(T(cfg, "sb_head") + "  ".join(f"G{g}" for g in GROUPS))
         for rec in self.rounds:
-            ch = rec["result"]["choices"] if self.cfg.get("reveal_choices", True) else {g: "?" for g in GROUPS}
-            lines.append(f"{rec['round']:>5}  ×{rec['multiplier']:<3} " + "   ".join(ch[g] for g in GROUPS))
-        lines.append("Totals: " + ", ".join(f"Group {g} {fmt(self.totals[g])}" for g in GROUPS))
+            ch = rec["result"]["choices"]
+            cells = [choice_short(cfg, ch[g]) if cfg.get("reveal_choices", True) else "?" for g in GROUPS]
+            lines.append(f"{rec['round']:>5}  ×{rec['multiplier']:<3} " + "   ".join(cells))
+        lines.append(T(cfg, "sb_totals") + ", ".join(f"{group_name(cfg, g)} {money(cfg, self.totals[g], signed=True)}" for g in GROUPS))
+        if cfg.get("reserve") is not None and self.rounds:
+            left = self.rounds[-1]["result"].get("buffer")
+            if left is not None:
+                lines.append(T(cfg, "buffer", amount=money(cfg, left, signed=left < 0)))
         return "\n".join(lines)
 
     # ------------------------------------------------------------------ measures
@@ -196,4 +223,7 @@ class Game:
             "promises": promises,
             "promises_kept": sum(p["kept"] for p in promises),
             "promises_made": len(promises),
+            "reserve": self.cfg.get("reserve"),
+            "collapsed_in_round": self.collapsed,
+            "lowest_buffer": min((rec["result"].get("buffer") for rec in self.rounds if rec["result"].get("buffer") is not None), default=None),
         }

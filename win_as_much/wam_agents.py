@@ -14,10 +14,7 @@ import llm  # noqa: E402  (the shared provider layer from the HIERARCHY kit)
 
 from wam_engine import GROUPS, SCHEDULE_31  # noqa: E402
 
-NOTES = {"type": "string",
-         "description": "Your private thoughts and plans. Nobody else sees them. You will see them again next "
-                        "time it is your turn (they replace your earlier notes)."}
-CHOICE = {"type": "string", "enum": ["X", "Y"]}
+from wam_texts import T, choice_name, group_name  # noqa: E402
 
 
 def _tool(name, description, props, required):
@@ -25,48 +22,58 @@ def _tool(name, description, props, required):
             "input_schema": {"type": "object", "properties": props, "required": required}}
 
 
-def tool_write_down():
-    return _tool("write_down", "Write down your own vote for this round. Nobody else sees it.",
-                 {"notes": NOTES, "vote": CHOICE}, ["notes", "vote"])
+def _notes(cfg):
+    return {"type": "string", "description": T(cfg, "notes_desc")}
 
 
-def tool_prepare(members):
-    return _tool("prepare", "Speak to your group before the representatives' meeting, and nominate a representative.",
-                 {"notes": NOTES, "message": {"type": "string", "description": "What you say to your group."},
-                  "nominee": {"type": "string", "enum": members, "description": "Who should represent the group."}},
+def _choice(cfg, description=None):
+    spec = {"type": "string", "enum": [choice_name(cfg, "X"), choice_name(cfg, "Y")]}
+    if description:
+        spec["description"] = description
+    return spec
+
+
+def tool_write_down(cfg):
+    return _tool("write_down", T(cfg, "write_down_desc"), {"notes": _notes(cfg), "vote": _choice(cfg)}, ["notes", "vote"])
+
+
+def tool_prepare(cfg, members):
+    return _tool("prepare", T(cfg, "prepare_desc"),
+                 {"notes": _notes(cfg), "message": {"type": "string", "description": T(cfg, "message_desc")},
+                  "nominee": {"type": "string", "enum": members, "description": T(cfg, "nominee_desc")}},
                  ["notes", "message", "nominee"])
 
 
-def tool_meeting(last):
-    props = {"notes": NOTES, "statement": {"type": "string", "description": "What you say in the meeting."}}
+def tool_meeting(cfg, last):
+    props = {"notes": _notes(cfg), "statement": {"type": "string", "description": T(cfg, "statement_desc")}}
     req = ["notes", "statement"]
     if last:
-        props["commitment"] = {"type": "string", "enum": ["X", "Y", "none"],
-                               "description": "What, if anything, you have committed your group to choosing in this round."}
+        props["commitment"] = {"type": "string", "enum": [choice_name(cfg, "X"), choice_name(cfg, "Y"), T(cfg, "none")],
+                               "description": T(cfg, "commitment_desc")}
         req.append("commitment")
-    return _tool("speak_in_meeting", "Make your statement in the representatives' meeting.", props, req)
+    return _tool("speak_in_meeting", T(cfg, "meeting_desc"), props, req)
 
 
-def tool_report():
-    return _tool("report_to_group", "Report back to your group after the meeting.",
-                 {"notes": NOTES, "report": {"type": "string", "description": "What you tell your group."}},
+def tool_report(cfg):
+    return _tool("report_to_group", T(cfg, "report_desc"),
+                 {"notes": _notes(cfg), "report": {"type": "string", "description": T(cfg, "report_field_desc")}},
                  ["notes", "report"])
 
 
-def tool_discuss():
-    return _tool("discuss", "Speak in your group's discussion and say which choice you now propose.",
-                 {"notes": NOTES, "message": {"type": "string", "description": "What you say to your group."},
-                  "proposal": {**CHOICE, "description": "The choice you now propose the group hands in."}},
+def tool_discuss(cfg):
+    return _tool("discuss", T(cfg, "discuss_desc"),
+                 {"notes": _notes(cfg), "message": {"type": "string", "description": T(cfg, "message_desc")},
+                  "proposal": _choice(cfg, T(cfg, "proposal_desc"))},
                  ["notes", "message", "proposal"])
 
 
 # ---------------------------------------------------------------------------- prompts
 
-def schedule_text(stop_shown=31):
+def schedule_text(cfg, stop_shown=31):
     lines = []
     for n, mult, meeting in SCHEDULE_31[:stop_shown]:
-        what = "representatives' meeting, then group decision" if meeting else "group decision"
-        lines.append(f"Round {n}: {what}" + (f" (result ×{mult})" if mult > 1 else ""))
+        what = T(cfg, "sched_meeting") if meeting else T(cfg, "sched_plain")
+        lines.append(T(cfg, "sched_line", n=n, what=what, mult=T(cfg, "sched_mult", m=mult) if mult > 1 else ""))
     return "\n".join(lines)
 
 
@@ -74,59 +81,53 @@ def system_prompt(game, agent):
     cfg = game.cfg
     g = agent[:-1]
     others = [a for a in game.agents[g] if a != agent]
-    parts = [f"You are participant {agent}, a member of Group {g}. Five groups of three people take part in this "
-             f"exercise. The other members of your group are {others[0]} and {others[1]}."]
+    parts = [T(cfg, "you_are", agent=agent, group=group_name(cfg, g), o1=others[0], o2=others[1])]
     sheet = cfg["rules_text"].strip()
     if cfg.get("show_schedule", True):
-        sheet += "\n\nScore scheme – the consecutive rounds:\n" + schedule_text()
-    parts.append("THE SHEET EVERY PARTICIPANT HAS RECEIVED\n" + sheet)
+        sheet += "\n\n" + T(cfg, "sched_head") + "\n" + schedule_text(cfg)
+    parts.append(T(cfg, "sheet_head") + "\n" + sheet)
     extra = ((cfg.get("group_settings") or {}).get(g) or {}).get("extra") or cfg.get("extra_for_all")
     if extra:
-        parts.append("ADDITIONAL INFORMATION\n" + extra.strip())
-    how = [
-        "Each round, you first write down your own vote privately. Then your group confers until it agrees, "
-        "and the group's choice is handed in to the administrator.",
-        "In rounds with a representatives' meeting, your group first chooses one representative, who meets the "
-        "representatives of the other groups. Only the representatives are present at the meeting. Afterwards the "
-        "representative reports back, and then the group decides.",
-        "After each round, the administrator announces " + ("every group's choice and " if cfg.get("reveal_choices", True) else "")
-        + "the scores.",
-        "You can only talk to your own group, and to the other representatives if you are your group's representative.",
-        "You act by calling the tool you are given. Your notes are private.",
-    ]
+        parts.append(T(cfg, "extra_head") + "\n" + extra.strip())
+    how = [T(cfg, "how_1"), T(cfg, "how_2"),
+           T(cfg, "how_3", reveal=T(cfg, "how_reveal") if cfg.get("reveal_choices", True) else ""),
+           T(cfg, "how_4"), T(cfg, "how_5")]
     if cfg.get("tell_end"):
-        how.append(f"The administrator has told everyone that the exercise ends after round {game.stop_after()}.")
-    parts.append("HOW IT WORKS HERE\n" + "\n".join("- " + h for h in how))
+        how.append(T(cfg, "how_end", n=game.stop_after()))
+    parts.append(T(cfg, "how_head") + "\n" + "\n".join("- " + h for h in how))
     return "\n\n".join(parts)
 
 
 def history_text(game, agent):
-    memory = game.cfg.get("memory_rounds")
+    cfg = game.cfg
+    memory = cfg.get("memory_rounds")
     now = game.current["round"] if game.current else (game.rounds[-1]["round"] + 1 if game.rounds else 1)
     lines, last = [], None
     for n, text in game.history[agent]:
         if memory is not None and n < now - memory:
             continue
         if n != last:
-            lines.append(f"Round {n}:")
+            lines.append(T(cfg, "round_label", n=n))
             last = n
         lines.append("  " + text)
-    return "\n".join(lines) if lines else "(nothing yet)"
+    return "\n".join(lines) if lines else T(cfg, "nothing_yet")
 
 
 def round_prompt(game, agent, step):
-    parts = ["SCOREBOARD\n" + game.scoreboard(),
-             "WHAT YOU HAVE SEEN AND HEARD SO FAR (oldest first)\n" + history_text(game, agent)]
+    cfg = game.cfg
+    parts = [T(cfg, "h_scoreboard") + "\n" + game.scoreboard(),
+             T(cfg, "h_seen") + "\n" + history_text(game, agent)]
     if game.notes[agent]:
-        parts.append("YOUR PRIVATE NOTES FROM LAST TIME\n" + game.notes[agent])
+        parts.append(T(cfg, "h_notes") + "\n" + game.notes[agent])
     parts.append(step)
     return "\n\n".join(parts)
 
 
 def debrief_prompt(game, agent):
-    qs = game.cfg["debrief"]["questions"]
-    return ("SCOREBOARD\n" + game.scoreboard() + "\n\nEVERYTHING YOU SAW AND HEARD\n" + history_text(game, agent) +
-            "\n\nThe exercise is over. Answer these questions briefly and honestly, in the first person:\n" +
+    cfg = game.cfg
+    qs = cfg["debrief"]["questions"]
+    return (T(cfg, "h_scoreboard") + "\n" + game.scoreboard() + "\n\n" + T(cfg, "h_everything") + "\n" +
+            history_text(game, agent) + "\n\n" + T(cfg, "debrief_intro") + "\n" +
             "\n".join(f"{i}. {q}" for i, q in enumerate(qs, 1)))
 
 
@@ -135,11 +136,11 @@ def debrief_prompt(game, agent):
 class Member:
     """One language-model participant."""
 
-    def __init__(self, agent, provider):
-        self.agent, self.provider = agent, provider
+    def __init__(self, agent, provider, reminder="IMPORTANT: Answer by calling the tool “{tool}”."):
+        self.agent, self.provider, self.reminder = agent, provider, reminder
 
     def act(self, system, prompt, tool):
-        return self.provider.act(system, prompt, tool, reminder=f"IMPORTANT: Answer by calling the tool “{tool['name']}”.")
+        return self.provider.act(system, prompt, tool, reminder=self.reminder.format(tool=tool["name"]))
 
     def reply(self, system, prompt):
         return self.provider.reply(system, prompt)
@@ -196,7 +197,7 @@ def make_members(game, test):
                 prov = llm.make_provider(provider_name, model, max_tokens=cfg.get("max_tokens", 4000),
                                          temperature=cfg.get("temperature"), force_tool=False,
                                          debrief_max_tokens=cfg.get("debrief_max_tokens", 3000))
-            members[a] = Member(a, prov)
+            members[a] = Member(a, prov, T(cfg, "reminder", tool="{tool}"))
     return members
 
 

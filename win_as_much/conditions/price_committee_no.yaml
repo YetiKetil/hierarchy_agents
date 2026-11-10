@@ -1,0 +1,95 @@
+# PRISUTVALGET (NORSK)
+# Det samme spillet som standard.yaml, kledd ut som et ekte marked: fem regionale produsentorganisasjoner
+# for grønnsakdyrkere bestemmer hver uke om de skal holde veiledende pris eller underby den med overskuddet sitt.
+# Gevinster, runder, faktorer, møter og det uvarslede stoppet er nøyaktig som i standardspillet.
+# Nytt: en felles buffer. Faller organisasjonenes samlede resultat under minus bufferen, bryter sektoren sammen.
+inherits: standard.yaml
+name: price_committee_no
+language: "no"
+reserve: 25000                     # 25 mill. kroner
+choice_names: {X: UNDERBY, Y: HOLDE}
+choice_short: {X: U, Y: H}
+group_names: {"1": Produsentlag Nord, "2": Produsentlag Vest, "3": Produsentlag Øst, "4": Produsentlag Sør, "5": Produsentlag Midt}
+money: {scale: 0.001, decimals: 1, template: "{v} mill. kroner", decimal_comma: true}
+texts:
+  ROUND: "UKE"
+  Round: "Uke"
+  result: "MARKEDSRESULTAT FOR {ROUND} {n}{mult}: {who}. {n_x} organisasjon(er) valgte {X} og {n_y} valgte {Y}, så {parts}. Resultat hittil i sesongen: {totals}."
+  mult_suffix: " ({m} ganger vanlig volum)"
+  x_gain: "hver organisasjon som valgte {X}, tjente {amount}"
+  x_loss: "hver organisasjon som valgte {X}, tapte {amount}"
+  y_gain: "hver organisasjon som valgte {Y}, tjente {amount}"
+  y_loss: "hver organisasjon som valgte {Y}, tapte {amount}"
+  hidden_choices: "hva hver organisasjon valgte, offentliggjøres ikke"
+  stopped: "Sesongen er over. Det blir ingen flere uker."
+  buffer: "Sektorens buffer er nå {amount}."
+  collapse: "SAMMENBRUDD: de fem organisasjonenes samlede resultat har falt under sektorens buffer. Grossistene har gått over til importerte varer resten av sesongen, ordningen har mistet sin hensikt, og alle organisasjonene har tapt alt."
+  sb_head: "{Round}  Vol.  "
+  sb_totals: "Resultat hittil: "
+  sb_legend: "H = HOLDE, U = UNDERBY. G1 = Produsentlag Nord, G2 = Produsentlag Vest, G3 = Produsentlag Øst, G4 = Produsentlag Sør, G5 = Produsentlag Midt."
+  sched_head: "Sesongplan – uke for uke:"
+  sched_meeting: "prisutvalget møtes, deretter bestemmer hver organisasjon seg"
+  sched_plain: "hver organisasjon bestemmer seg"
+  sched_mult: " ({m} ganger vanlig volum)"
+  you_are: "Du er {agent}, ett av tre medlemmer i ledelsen i {group}, én av fem regionale produsentorganisasjoner for grønnsakdyrkere. De to andre i ledelsen er {o1} og {o2}."
+  sheet_head: "ORIENTERINGEN ALLE LEDELSENE HAR FÅTT"
+  how_1: "Hver uke noterer du først for deg selv hva du mener organisasjonen bør gjøre. Så drøfter ledelsen til den er enig, og beslutningen meldes til markedet."
+  how_2: "Før toppuker velger ledelsen én representant til prisutvalget, der representantene for de fem organisasjonene møtes. Bare representantene er til stede. Etterpå rapporterer representanten tilbake, og så bestemmer ledelsen seg."
+  how_3: "Etter hver uke kunngjøres markedsresultatene: {reveal}hver organisasjons resultat og sektorens buffer."
+  how_reveal: "hva hver organisasjon valgte, "
+  how_4: "Du kan bare snakke med din egen ledelse, og med de andre representantene hvis du er organisasjonens representant i prisutvalget."
+  how_end: "Det er kjent at sesongen slutter etter uke {n}."
+  step_mult: " ({m} ganger vanlig volum)"
+  step_meeting_first: " Prisutvalget møtes før ukens beslutning."
+  step_private: "STEG: Før ledelsen drøfter, noterer du for deg selv hva du mener organisasjonen bør gjøre denne uken. Ingen andre ser det."
+  told_vote: "Du noterte: {c}."
+  step_prepare: "STEG: Før denne uken sender hver organisasjon én representant til prisutvalget. Si til ledelsen hva du mener representanten bør gå for, og foreslå en representant (du kan foreslå deg selv)."
+  told_prep: "{a}: «{msg}» (foreslår {nom} til prisutvalget)"
+  told_rep: "Ledelsen valgte {rep} som representant i prisutvalget."
+  meeting_open: "Prisutvalget møtes. Til stede: {present}."
+  meeting_silent: "Representanten for {group} er til stede, men sier ingenting."
+  step_meeting: "STEG: Du representerer {group} i prisutvalget. Bare representantene er til stede. Innlegg {t} av {T}."
+  step_meeting_last: " Dette er ditt siste innlegg i dette møtet. Si også hva du eventuelt har forpliktet organisasjonen din til denne uken."
+  told_meeting: "[Prisutvalget] {rep} ({group}): «{text}»"
+  step_report: "STEG: Prisutvalget er ferdig. Rapporter tilbake til ledelsen. De vet bare det du forteller dem."
+  told_report: "Rapport fra representanten deres i prisutvalget, {rep}: «{text}»"
+  step_discuss: "STEG: Bestem sammen med ledelsen hva organisasjonen gjør denne uken. Runde {t} av {T} i drøftingen. Beslutningen er tatt så snart alle tre foreslår det samme, eller etter flertall etter runde {T}."
+  told_decision: "Organisasjonen din velger {c} denne uken ({how})."
+  write_down_desc: "Noter for deg selv hva du mener organisasjonen bør gjøre denne uken."
+  prepare_desc: "Snakk med ledelsen før prisutvalget, og foreslå en representant."
+  message_desc: "Det du sier til ledelsen."
+  nominee_desc: "Hvem som skal representere organisasjonen i prisutvalget."
+  meeting_desc: "Kom med ditt innlegg i prisutvalget."
+  statement_desc: "Det du sier i prisutvalget."
+  commitment_desc: "Hva du eventuelt har forpliktet organisasjonen din til denne uken."
+  report_desc: "Rapporter tilbake til ledelsen etter prisutvalget."
+  report_field_desc: "Det du forteller ledelsen."
+  discuss_desc: "Si noe i ledelsens drøfting, og si hva du nå foreslår at organisasjonen gjør denne uken."
+  proposal_desc: "Det du nå foreslår at organisasjonen gjør denne uken."
+rules_text: |
+  PRISUTVALGET – GRØNNSAKSESONGEN
+
+  Organisasjonen din er én av fem regionale produsentorganisasjoner for grønnsak- og fruktdyrkere. Etter landbruksunntaket i konkurranseloven kan de fem organisasjonene lovlig utveksle prisinformasjon og bli enige om en veiledende pris for hver uke, gjennom et lite prisutvalg. Ordningen skal holde norsk produksjon levedyktig i konkurranse med import fra land med mildere klima.
+
+  Hver uke bestemmer hver organisasjon hvordan den skal selge varene sine: HOLDE (selge til veiledende pris) eller UNDERBY (selge overskudd under veiledende pris). Organisasjonens oppgave er å gjøre sesongen så lønnsom som mulig. Resultatet hver uke avhenger av hva de andre organisasjonene gjør:
+
+  - Hvis alle fem HOLDER, tjener hver organisasjon 1,0 mill. kroner.
+  - Hvis én UNDERBYR og fire HOLDER, får den som underbyr solgt hele overskuddet sitt og tjener 8,0 mill. kroner, mens hver av de fire som holder, taper 2,0 mill. kroner i tapt salg.
+  - Hvis to UNDERBYR og tre HOLDER, tjener hver som underbyr, 6,0 mill. kroner, og hver som holder, taper 4,0 mill. kroner.
+  - Hvis tre UNDERBYR og to HOLDER, tjener hver som underbyr, 4,0 mill. kroner, og hver som holder, taper 6,0 mill. kroner.
+  - Hvis fire UNDERBYR og én HOLDER, tjener hver som underbyr, 2,0 mill. kroner, og den som holder, taper 8,0 mill. kroner.
+  - Hvis alle fem UNDERBYR, faller prisnivået sammen, og hver organisasjon taper 1,0 mill. kroner.
+
+  Når noen få underbyr, tar de salg fra dem som holder prisen. Når alle underbyr, faller prisen for alle.
+
+  SEKTORENS BUFFER
+  Samlet har sektoren en økonomisk buffer på 25 mill. kroner. Hvis de fem organisasjonenes samlede resultat for sesongen faller under minus 25 mill. kroner, går grossistene over til importerte varer resten av sesongen, ordningen mister sin hensikt, og alle organisasjonene taper alt.
+
+  SLIK TAS BESLUTNINGENE
+  Hver uke noterer hvert medlem av ledelsen i en organisasjon først for seg selv hva organisasjonen bør gjøre. Deretter drøfter ledelsen til den er enig, og beslutningen meldes til markedet. I toppukene er volumene tre, fem eller ti ganger det vanlige, og alle resultater ganges tilsvarende. Før hver toppuke møtes prisutvalget, og hver organisasjon sender én representant. Utenom prisutvalget kan organisasjonene ikke kommunisere med hverandre. Sesongen kan ta slutt hvilken som helst uke – på grunn av frost, eller fordi importen tar over hyllene – og ingen vet på forhånd hvilken uke som blir den siste.
+debrief:
+  questions:
+    - Hva prøvde organisasjonen din å oppnå, og hvem sitt resultat passet dere på – organisasjonens eller sektorens?
+    - Hvordan tok ledelsen beslutningene sine, og var du enig i dem?
+    - Hva skjedde i prisutvalget, og gjorde organisasjonen din det som ble avtalt der?
+    - Hva ville du gjort annerledes neste sesong?
