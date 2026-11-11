@@ -35,6 +35,7 @@ python wam_run.py conditions/standard.yaml --model gemini-3.5-flash-lite --verbo
 | `disguised.yaml` | The same game without its name: a neutral title and wording, with identical payoffs, rounds and meetings. Does cooperation survive when the agents cannot recognise the exercise? |
 | `price_committee_en.yaml` | The same game as a real market: five regional producer organisations of vegetable growers decide each week whether to HOLD the recommended price or UNDERCUT it. Amounts in NOK, weeks instead of rounds, and a price committee instead of the representatives’ meeting. Adds a shared buffer of NOK 25 million: if the sector’s combined result falls below minus the buffer, it collapses and the game ends. |
 | `price_committee_no.yaml` | The same scenario in Norwegian: *Prisutvalget*, with HOLDE and UNDERBY. |
+| `price_committee_routine_en.yaml`, `price_committee_routine_no.yaml` | The same scenario without any mention of law: the committee is a long-established arrangement whose secretariat publishes a recommended price every week, and the meetings are about the market and whether the organisations will follow it. The legal wording in the first version made the agents behave like compliance officers. |
 
 All the settings are explained in `standard.yaml`. A condition can inherit from another (`inherits: standard.yaml`) and only list what is different.
 
